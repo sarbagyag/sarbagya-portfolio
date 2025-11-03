@@ -8,6 +8,7 @@ import {
   FileText,
   ExternalLink,
   Youtube,
+  Instagram,
 } from "lucide-react";
 import Button from "../UI/Button";
 import { contactInfo } from "../../data/skills";
@@ -277,6 +278,17 @@ const Hero: React.FC = () => {
             whileTap={{ scale: 0.95 }}
           >
             <Youtube className="w-5 h-5 sm:w-6 sm:h-6 text-text-secondary group-hover:text-red-600 transition-colors" />
+          </motion.a>
+          <motion.a
+            href="https://www.instagram.com/sarbu.wav"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-3 bg-white rounded-full border border-neutral-200 hover:border-pink-500 hover:bg-pink-50 transition-all shadow-sm hover:shadow-md group"
+            aria-label="Instagram"
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Instagram className="w-5 h-5 sm:w-6 sm:h-6 text-text-secondary group-hover:text-pink-600 transition-colors" />
           </motion.a>
         </motion.div>
 
