@@ -142,7 +142,7 @@ export const contactInfo: ContactInfo = {
   email: "sarbagyaghoshrestha@gmail.com",
   phone: "+977 9851402011",
   linkedin: "https://linkedin.com/in/sarbagyashrestha",
-  github: "https://github.com/sarbagya42",
+  github: "https://github.com/fernsky",
   location: "Kathmandu, Nepal",
   website: "https://sarbagyaghoshrestha.dev",
   cv: "/build/resume/sarbagya-gho-shrestha-cv.pdf",
@@ -199,8 +199,9 @@ export const researchInterests: ResearchInterest[] = [
 
 // Languages
 export const languages = [
-  { name: "English", level: "Fluent (Professional Working Proficiency)" },
+  { name: "English", level: "Fluent (Proficient)" },
   { name: "Nepali", level: "Native" },
+  { name: "Newari", level: "Native" },
   { name: "Hindi", level: "Intermediate" },
 ];
 

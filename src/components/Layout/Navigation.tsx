@@ -14,6 +14,7 @@ const Navigation: React.FC = () => {
 
   const navItems: NavItem[] = [
     { label: "Home", href: "#home" },
+    { label: "Showcase", href: "#showcase" },
     { label: "Projects", href: "#projects" },
     { label: "Experience", href: "#experience" },
     { label: "About", href: "#about" },

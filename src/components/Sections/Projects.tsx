@@ -169,7 +169,7 @@ const Projects: React.FC = () => {
             View more projects on my GitHub
           </p>
           <Button
-            href="https://github.com/timalsinsarbagya"
+            href="https://github.com/fernsky"
             variant="secondary"
             size="lg"
             external

@@ -40,12 +40,15 @@ const Experience: React.FC = () => {
       variants={containerVariants}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="text-center mb-16" variants={itemVariants as any}>
+        <motion.div
+          className="text-center mb-16"
+          variants={itemVariants as any}
+        >
           <h2 className="section-title text-center">
             Professional <span className="gradient-text">Experience</span>
           </h2>
           <p className="section-subtitle mt-4 mx-auto">
-            Research positions and technical roles
+            Motivation and work history
           </p>
         </motion.div>
 
@@ -69,7 +72,9 @@ const Experience: React.FC = () => {
 
                 {/* Content */}
                 <div className="flex-1 md:w-1/2">
-                  <Card className={`p-6 ${index % 2 === 0 ? "md:mr-8" : "md:ml-8"}`}>
+                  <Card
+                    className={`p-6 ${index % 2 === 0 ? "md:mr-8" : "md:ml-8"}`}
+                  >
                     {/* Header */}
                     <div className="flex justify-between items-start mb-4">
                       <div>
@@ -81,7 +86,8 @@ const Experience: React.FC = () => {
                         <div className="flex items-center gap-1 justify-end">
                           <Calendar size={14} />
                           <span>
-                            {formatDate(exp.startDate)} - {exp.endDate ? formatDate(exp.endDate) : "Present"}
+                            {formatDate(exp.startDate)} -{" "}
+                            {exp.endDate ? formatDate(exp.endDate) : "Present"}
                           </span>
                         </div>
                         <div className="text-xs mt-1">
@@ -114,7 +120,10 @@ const Experience: React.FC = () => {
                         </h4>
                         <ul className="space-y-1">
                           {exp.achievements.map((achievement, idx) => (
-                            <li key={idx} className="flex items-start gap-2 text-sm text-text-secondary">
+                            <li
+                              key={idx}
+                              className="flex items-start gap-2 text-sm text-text-secondary"
+                            >
                               <span className="text-accent-600 mt-1">•</span>
                               <span>{achievement}</span>
                             </li>

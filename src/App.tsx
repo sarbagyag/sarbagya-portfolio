@@ -7,12 +7,15 @@ import Experience from "./components/Sections/Experience";
 import About from "./components/Sections/About";
 import Contact from "./components/Sections/Contact";
 import Hero from "./components/Sections/Hero";
+import Showcase from "./components/Sections/Showcase";
+import BinaryRain from "./components/Effects/BinaryRain";
 import "./App.css";
 
 const App: React.FC = () => {
   return (
     <div className="App bg-bg-dark text-text-primary min-h-screen font-mono overflow-x-hidden">
       {/* Background Effects */}
+      <BinaryRain opacity={0.08} />
 
       {/* Navigation */}
       <Navigation />
@@ -26,6 +29,7 @@ const App: React.FC = () => {
             transition={{ duration: 0.5 }}
           >
             <Hero />
+            <Showcase />
             {/* <Research /> */}
             <Projects />
             <Experience />

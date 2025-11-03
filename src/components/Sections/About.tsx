@@ -38,7 +38,10 @@ const About: React.FC = () => {
       variants={containerVariants}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="text-center mb-16" variants={itemVariants as any}>
+        <motion.div
+          className="text-center mb-16"
+          variants={itemVariants as any}
+        >
           <h2 className="section-title text-center">
             About <span className="gradient-text">Me</span>
           </h2>
@@ -104,7 +107,7 @@ const About: React.FC = () => {
         {/* Certifications & Languages */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Certifications */}
-          <motion.div variants={itemVariants}>
+          {/* <motion.div variants={itemVariants}>
             <h3 className="text-xl font-bold text-text-primary mb-6 flex items-center gap-3">
               <Award className="text-accent-600" />
               Certifications
@@ -122,7 +125,7 @@ const About: React.FC = () => {
                 </Card>
               ))}
             </div>
-          </motion.div>
+          </motion.div> */}
 
           {/* Languages */}
           <motion.div variants={itemVariants}>
