@@ -46,7 +46,7 @@ const Projects: React.FC = () => {
             Technical <span className="gradient-text">Projects</span>
           </h2>
           <p className="section-subtitle mt-4 mx-auto">
-            Systems-level and ML projects demonstrating research capabilities
+            Problem solving through code. Here are some of my notable projects.
           </p>
         </motion.div>
 
