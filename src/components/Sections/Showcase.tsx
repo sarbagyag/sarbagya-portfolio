@@ -63,11 +63,15 @@ const Showcase: React.FC = () => {
       title: "iCMS",
       description: "Integrated Content Management Systems for government",
       featured: {
-        name: "SDDO Dang",
-        url: "https://sddodang.lumbini.gov.np",
+        name: "FANSEP-Ministry of Agriculture and Livestock Development (MoALD)",
+        url: "https://fansep.moald.gov.np/ne",
         image: "/icms-main.png",
       },
       otherProjects: [
+        {
+          name: "SDDO Dang",
+          url: "https://sddodang.lumbini.gov.np",
+        },
         {
           name: "SDO Dolpa - Karnali",
           url: "https://icms.sdodolpa.karnali.easypalika.com",
