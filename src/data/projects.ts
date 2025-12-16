@@ -2,6 +2,35 @@ import { Project } from "../types";
 
 export const projects: Project[] = [
   {
+    id: "eshasan",
+    title: "eShasan: The OS for Digital Governance",
+    description:
+      "The comprehensive digital ecosystem driving the modernization of Nepal's public sector. A Multi-Tenant Digital Governance Platform unifying internal office automation, public service delivery, and citizen engagement.",
+    longDescription:
+      "Architected by Ninja Infosys, eShasan represents the cutting edge of GovTech engineering. It transforms complex bureaucratic processes into a streamlined, reactive digital experience using a Cloud-Native Microservices Architecture. The platform integrates Office Automation (Darta Chalani) with a robust Integrated Content Management System (ICMS), breaking down administrative silos. Features a modular Microfrontend architecture (Module Federation), polyglot backend services (Go, NestJS), and event-driven consistency via Apache Kafka. Containerized on Docker and orchestrated via Kubernetes for national-scale resilience.",
+    technologies: [
+      "Next.js",
+      "Module Federation",
+      "Go",
+      "NestJS",
+      "Kafka",
+      "Kubernetes",
+      "Docker",
+      "Microservices",
+    ],
+    featured: true,
+    category: "systems",
+    startDate: "2024-01",
+    status: "ongoing",
+    impact: "Future-proof digital infrastructure for national-scale governance",
+    metrics: [
+      "Multi-Tenant Architecture",
+      "Unified Command & Control (C2)",
+      "Digital Office Automation",
+      "100+ Government Portals",
+    ],
+  },
+  {
     id: "8bit-breadboard-computer",
     title: "8-bit Breadboard Computer (Ben Eater Inspired)",
     description:

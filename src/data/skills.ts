@@ -16,6 +16,9 @@ export const skills: Skill[] = [
   {
     category: "Frontend Development",
     skills: [
+      "Microfrontend (MFE)",
+      "Module Federation",
+      "Webpack",
       "Next.js",
       "React.js",
       "Redux.js",
@@ -29,6 +32,8 @@ export const skills: Skill[] = [
   {
     category: "Backend Development",
     skills: [
+      "Go",
+      "Microservices",
       "NestJS",
       "Express.js",
       "tRPC",
@@ -36,7 +41,6 @@ export const skills: Skill[] = [
       "Django REST Framework",
       "Node.js",
       "API Design",
-      "Microservices",
     ],
     proficiency: "advanced",
   },
