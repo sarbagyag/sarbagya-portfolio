@@ -138,7 +138,7 @@ const Hero: React.FC = () => {
           <div className="px-4 sm:px-6 py-3 bg-white rounded-xl border border-neutral-200 shadow-sm">
             <p className="text-sm sm:text-base text-text-secondary">
               <span className="font-semibold text-text-primary">
-                B.E. Electronics & Communication
+                B.E. Electronics, Communication & Information 
               </span>
               {" • "}IOE, Pulchowk Campus {" • "} Class of 2025
             </p>
