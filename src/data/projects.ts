@@ -47,6 +47,7 @@ export const projects: Project[] = [
       "Control Unit",
       "Custom RAM",
     ],
+    liveUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7199849262543749120/",
     featured: true,
     category: "systems",
     startDate: "2024-01",

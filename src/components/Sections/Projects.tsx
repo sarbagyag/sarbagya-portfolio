@@ -154,7 +154,7 @@ const Projects: React.FC = () => {
                       className="flex items-center gap-2 text-text-secondary hover:text-primary-600 transition-colors text-sm font-medium"
                     >
                       <ExternalLink size={16} />
-                      <span>Demo</span>
+                      <span>View Here</span>
                     </a>
                   )}
                 </div>
