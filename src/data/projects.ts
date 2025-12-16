@@ -152,7 +152,7 @@ export const projects: Project[] = [
     featured: true,
     category: "systems",
     startDate: "2025-06",
-    status: "ongoing",
+    status: "completed",
     impact: "Powering 100+ government websites nationwide",
     metrics: [
       "100+ government sites live",
