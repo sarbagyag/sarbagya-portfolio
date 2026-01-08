@@ -85,7 +85,7 @@ export const projects: Project[] = [
     featured: true,
     category: "systems",
     startDate: "2024-09",
-    endDate: "2025-01",
+    endDate: "2026-01",
     status: "completed",
     impact: "Digitized 10+ municipalities, serving 100,000+ citizens",
     metrics: [
@@ -119,7 +119,7 @@ export const projects: Project[] = [
     featured: true,
     category: "systems",
     startDate: "2024-09",
-    endDate: "2025-01",
+    endDate: "2026-01",
     status: "completed",
     impact: "Enabled real-time field survey monitoring for 10+ municipalities",
     metrics: [
@@ -151,7 +151,7 @@ export const projects: Project[] = [
     liveUrl: "http://sddodang.lumbini.gov.np/ne",
     featured: true,
     category: "systems",
-    startDate: "2025-06",
+    startDate: "2026-06",
     status: "completed",
     impact: "Powering 100+ government websites nationwide",
     metrics: [

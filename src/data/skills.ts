@@ -96,7 +96,7 @@ export const education: Education[] = [
     degree: "Bachelor of Engineering (B.E.)",
     field: "Electronics, Communication and Information Engineering",
     startDate: "2021-05",
-    endDate: "2025-05",
+    endDate: "2026-05",
     gpa: "",
     location: "Pulchowk Campus, Lalitpur, Nepal",
     description:

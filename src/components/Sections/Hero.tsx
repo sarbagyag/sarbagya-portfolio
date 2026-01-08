@@ -140,7 +140,7 @@ const Hero: React.FC = () => {
               <span className="font-semibold text-text-primary">
                 B.E. Electronics, Communication & Information 
               </span>
-              {" • "}IOE, Pulchowk Campus {" • "} Class of 2025
+              {" • "}IOE, Pulchowk Campus {" • "} Class of 2026
             </p>
           </div>
         </motion.div>

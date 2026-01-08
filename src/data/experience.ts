@@ -7,7 +7,7 @@ export const experience: Experience[] = [
     company: "Ninja Infosys",
     location: "Kathmandu District, Nepal",
     type: "job",
-    startDate: "2025-06",
+    startDate: "2026-06",
     endDate: "",
     description:
       "Overseeing both project execution and technical leadership for Digital e-Palika, a digital governance platform now serving 50+ municipalities across Nepal. The platform streamlines local government services like citizen service delivery, revenue collection, and grievance handling.",
@@ -36,8 +36,8 @@ export const experience: Experience[] = [
     company: "Intensive Study and Research Center",
     location: "Kathmandu, Bāgmatī, Nepal",
     type: "job",
-    startDate: "2025-01",
-    endDate: "2025-06",
+    startDate: "2026-01",
+    endDate: "2026-06",
     description:
       "Visionary technologist driving large-scale digital transformation to modernize governance and public services in Nepal. Architected and delivered secure, scalable platforms—such as Survey Management Systems and Digital Profile Delivery Systems—that form the foundation for smarter, data-informed municipal operations.",
     responsibilities: [

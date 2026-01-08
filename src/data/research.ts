@@ -10,7 +10,7 @@ export const research: Research[] = [
     supervisor: ["Prof. Dr. Henri Gavin (Duke University)"],
     status: "completed",
     startDate: "2024-10",
-    endDate: "2025-05",
+    endDate: "2026-05",
     paperStatus: "In Preparation",
     technologies: [
       "Python",
@@ -45,7 +45,7 @@ export const research: Research[] = [
     supervisor: ["Dr. Babu R. Dawadi (IOE)", "Prof. Dr. Pietro Manzoni (UPV)"],
     status: "completed",
     startDate: "2024-04",
-    endDate: "2025-04",
+    endDate: "2026-04",
     paperStatus: "Accepted",
     technologies: [
       "C++",

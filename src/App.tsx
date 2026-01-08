@@ -44,7 +44,7 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <p className="text-text-secondary text-sm">
-              © 2025 Sarbagya Gho Shrestha.
+              © 2026 Sarbagya Gho Shrestha.
             </p>
           </div>
         </div>
