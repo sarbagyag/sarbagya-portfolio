@@ -2,7 +2,6 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "./components/Layout/Navigation";
 import Projects from "./components/Sections/Projects";
-import Research from "./components/Sections/Research";
 import Experience from "./components/Sections/Experience";
 import About from "./components/Sections/About";
 import Contact from "./components/Sections/Contact";

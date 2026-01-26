@@ -6,7 +6,6 @@ import {
   Github,
   Linkedin,
   FileText,
-  ExternalLink,
   Youtube,
   Instagram,
 } from "lucide-react";

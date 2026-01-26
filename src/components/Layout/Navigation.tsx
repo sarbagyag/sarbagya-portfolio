@@ -7,19 +7,19 @@ interface NavItem {
   href: string;
 }
 
+const navItems: NavItem[] = [
+  { label: "Home", href: "#home" },
+  { label: "Showcase", href: "#showcase" },
+  { label: "Projects", href: "#projects" },
+  { label: "Experience", href: "#experience" },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
+];
+
 const Navigation: React.FC = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const navItems: NavItem[] = [
-    { label: "Home", href: "#home" },
-    { label: "Showcase", href: "#showcase" },
-    { label: "Projects", href: "#projects" },
-    { label: "Experience", href: "#experience" },
-    { label: "About", href: "#about" },
-    { label: "Contact", href: "#contact" },
-  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,7 +48,7 @@ const Navigation: React.FC = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [navItems]);
+  }, []);
 
   useEffect(() => {
     if (isMobileMenuOpen) {

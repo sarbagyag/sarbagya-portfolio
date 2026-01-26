@@ -1,13 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Award, BookOpen, Languages } from "lucide-react";
+import { BookOpen, Languages } from "lucide-react";
 import Card from "../UI/Card";
 import {
   skills,
   education,
-  certifications,
   languages,
-  researchInterests,
 } from "../../data/skills";
 
 const About: React.FC = () => {

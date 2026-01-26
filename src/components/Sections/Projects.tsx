@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, ExternalLink, Calendar, TrendingUp } from "lucide-react";
+import { Github, ExternalLink, TrendingUp } from "lucide-react";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 import { projects, getFeaturedProjects } from "../../data/projects";
