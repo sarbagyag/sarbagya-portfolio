@@ -97,7 +97,7 @@ export const education: Education[] = [
     field: "Electronics, Communication and Information Engineering",
     startDate: "2021-05",
     endDate: "2026-05",
-    gpa: "",
+    gpa: "75%",
     location: "Pulchowk Campus, Lalitpur, Nepal",
     description:
       "Comprehensive engineering program with focus on electronics, communication systems, information theory, and signal processing. Strong foundation in mathematics, algorithms, and systems design.",

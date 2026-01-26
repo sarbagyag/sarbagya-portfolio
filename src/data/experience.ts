@@ -7,8 +7,8 @@ export const experience: Experience[] = [
     company: "Ninja Infosys",
     location: "Kathmandu District, Nepal",
     type: "job",
-    startDate: "2026-06",
-    endDate: "",
+    startDate: "2025-06",
+    endDate: "2026-01",
     description:
       "Overseeing both project execution and technical leadership for Digital e-Palika, a digital governance platform now serving 50+ municipalities across Nepal. The platform streamlines local government services like citizen service delivery, revenue collection, and grievance handling.",
     responsibilities: [
