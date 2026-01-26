@@ -57,6 +57,8 @@ module.exports = {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         serif: ['Playfair Display', 'Georgia', 'serif'],
         mono: ['JetBrains Mono', 'Menlo', 'monospace'],
+        outfit: ['Outfit', 'sans-serif'],
+        cormorant: ['Cormorant Garamond', 'serif'],
       },
       fontSize: {
         'display-lg': ['4.5rem', { lineHeight: '1', letterSpacing: '-0.02em' }],

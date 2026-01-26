@@ -99,12 +99,12 @@ const Hero: React.FC = () => {
         </motion.div>
 
         {/* Main Heading */}
-        <motion.h1
+        <motion.h2
           variants={itemVariants}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-text-primary mb-4 sm:mb-6"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold font-cormorant text-text-primary mb-4 sm:mb-6"
         >
           Sarbagya Gho Shrestha
-        </motion.h1>
+        </motion.h2>
 
         {/* Title */}
         <motion.div variants={itemVariants} className="mb-6 sm:mb-8">
