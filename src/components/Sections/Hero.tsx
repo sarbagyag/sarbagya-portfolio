@@ -89,7 +89,7 @@ const Hero: React.FC = () => {
             />
             <div className="relative">
               <img
-                src="/sarbagya_no_glare.png"
+                src="/sarbagya-pokhara-2.jpg"
                 alt="Sarbagya Gho Shrestha"
                 className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full object-cover border-4 border-white shadow-2xl ring-2 ring-primary-100 transition-transform duration-300 group-hover:scale-105"
                 loading="eager"
