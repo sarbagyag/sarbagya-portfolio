@@ -112,20 +112,10 @@ const Hero: React.FC = () => {
             Engineer | Innovator | Artist
           </p>
           <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-3xl mx-auto">
-            Digital Transformation Architect • AI/ML • Embedded Systems • Full
-            Stack Engineer • Edge AI • Music Producer
+            Full Stack • AI/ML • Embedded Systems • Edge AI • Music Producer
           </p>
-        </motion.div>
-
-        {/* Mission Statement */}
-        <motion.div
-          variants={itemVariants}
-          className="mb-8 sm:mb-12 max-w-4xl mx-auto"
-        >
-          <p className="text-sm sm:text-base md:text-lg text-text-secondary leading-relaxed italic">
-            I build systems that move — from governance to flight — and craft
-            sounds that connect. Blending logic, emotion, and purpose in
-            everything I create.
+          <p className="text-sm sm:text-base md:text-lg text-text-tertiary mt-2 italic">
+            Building things that work and sounds that connect.
           </p>
         </motion.div>
 
