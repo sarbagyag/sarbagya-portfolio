@@ -2,6 +2,91 @@ import { Project } from "../types";
 
 export const projects: Project[] = [
   {
+    id: "maya-genie",
+    title: "Maya Genie - AI Conversational Commerce Platform",
+    description:
+      "Developing an intelligent nutrition assistance chatbot for Nepali market using RAG architecture. Enables customers to receive personalized nutrition recommendations and place orders through natural language.",
+    longDescription:
+      "Architecting Maya Genie, an AI-powered conversational commerce platform for Mandala Foods. The system uses Retrieval Augmented Generation (RAG) to provide context-aware nutrition guidance by integrating product catalog knowledge with AI inference. Customers can interact naturally to get personalized recommendations based on their health goals and dietary preferences, then seamlessly place orders through the conversation. Building scalable infrastructure for production deployment with vector databases for semantic search and efficient retrieval.",
+    technologies: [
+      "RAG Architecture",
+      "Vector Databases",
+      "Conversational AI",
+      "NLP",
+      "Python",
+      "LangChain",
+      "PostgreSQL",
+      "Docker",
+    ],
+    featured: true,
+    category: "systems",
+    startDate: "2024-08",
+    status: "ongoing",
+    impact: "Enabling conversational commerce for nutrition-focused e-commerce in Nepal",
+    metrics: [
+      "RAG-powered nutrition recommendations",
+      "Natural language order placement",
+      "Product catalog knowledge integration",
+      "Localized for Nepali market",
+    ],
+  },
+  {
+    id: "mandala-internal-chatbot",
+    title: "Mandala Foods Internal AI Chatbot",
+    description:
+      "Built an internal AI assistant for Mandala Foods operations using n8n automation and RAG-based decision systems. Streamlines internal queries, SOPs, and operational knowledge access.",
+    longDescription:
+      "Developed an internal AI chatbot for Mandala Foods to enhance team productivity and operational efficiency. The system leverages n8n workflow automation with RAG-based architecture to provide instant access to company SOPs, policies, and operational knowledge. Integrated with multiple business systems including CRM, inventory, and customer support platforms. Built automated data pipelines for business intelligence and reporting. Deployed on production infrastructure with Docker containerization.",
+    technologies: [
+      "n8n Automation",
+      "RAG Architecture",
+      "Docker",
+      "PostgreSQL",
+      "API Integrations",
+      "Workflow Automation",
+    ],
+    featured: true,
+    category: "systems",
+    startDate: "2024-08",
+    status: "completed",
+    impact: "Reduced manual operational overhead through AI-powered internal assistance",
+    metrics: [
+      "RAG-based knowledge retrieval",
+      "Multi-system integrations",
+      "Automated business workflows",
+      "Production Docker deployment",
+    ],
+  },
+  {
+    id: "vikunja-task-tracking",
+    title: "Vikunja Task Tracking System",
+    description:
+      "Deployed and customized Vikunja as an internal task tracking and project management system for Mandala Foods. Configured production infrastructure with monitoring and data acquisition capabilities.",
+    longDescription:
+      "Implemented Vikunja as the internal task tracking and project management solution for Mandala Foods operations. Configured production-grade infrastructure including Docker containerization, Traefik reverse proxy for traffic management and SSL termination, and PostgreSQL database backend. Extended the system with custom integrations for fruit processing operations data acquisition and monitoring. Set up automated backups, logging, and DNS configuration for reliable production deployment.",
+    technologies: [
+      "Vikunja",
+      "Docker",
+      "Traefik",
+      "PostgreSQL",
+      "Redis",
+      "Linux Administration",
+      "SSL/TLS",
+      "DNS Management",
+    ],
+    featured: true,
+    category: "systems",
+    startDate: "2024-08",
+    status: "completed",
+    impact: "Streamlined internal operations and project management for food tech startup",
+    metrics: [
+      "Production-grade infrastructure",
+      "Traefik reverse proxy setup",
+      "Automated SSL management",
+      "Custom data acquisition integrations",
+    ],
+  },
+  {
     id: "eshasan",
     title: "eShasan: The OS for Digital Governance",
     description:

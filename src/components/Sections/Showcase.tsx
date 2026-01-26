@@ -21,6 +21,36 @@ interface ShowcaseCategory {
 const Showcase: React.FC = () => {
   const categories: ShowcaseCategory[] = [
     {
+      title: "n8n Automation",
+      description: "RAG-powered workflow automation and AI agents",
+      featured: {
+        name: "Mandala Foods RAG Chat Engine",
+        url: "https://n8n.mandalafoods.co",
+        image: "/n8n-mandala-rag.png",
+      },
+      otherProjects: [],
+    },
+    {
+      title: "AI Chatbot",
+      description: "Internal AI assistant for operations and knowledge access",
+      featured: {
+        name: "Mandala Internal Support Chatbot",
+        url: "https://internal.mandalafoods.co",
+        image: "/mandala-chatbot.png",
+      },
+      otherProjects: [],
+    },
+    {
+      title: "Task Management",
+      description: "Kanban-style project and task tracking for operations",
+      featured: {
+        name: "Vikunja Task Tracking System",
+        url: "https://tasks.mandalafoods.co",
+        image: "/vikunja-mandala-foods.png",
+      },
+      otherProjects: [],
+    },
+    {
       title: "Digital Profiles",
       description: "Modern digital governance platforms for municipalities",
       featured: {
@@ -223,33 +253,35 @@ const Showcase: React.FC = () => {
                     </a>
                   </div>
 
-                  {/* Divider */}
-                  <div className="border-t border-neutral-200 my-4" />
-
-                  {/* Other Projects */}
-                  <div className="flex-1">
-                    <p className="text-xs font-semibold text-text-tertiary uppercase tracking-wide mb-3">
-                      Other Projects
-                    </p>
-                    <ul className="space-y-2">
-                      {category.otherProjects.map((project, idx) => (
-                        <li key={idx}>
-                          <a
-                            href={project.url}
-                            className="text-sm text-text-secondary hover:text-primary-600 flex items-center gap-2 group/item transition-colors"
-                          >
-                            <ArrowRight
-                              size={14}
-                              className="text-primary-400 opacity-0 group-hover/item:opacity-100 -ml-5 group-hover/item:ml-0 transition-all"
-                            />
-                            <span className="group-hover/item:translate-x-1 transition-transform">
-                              {project.name}
-                            </span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {/* Divider & Other Projects - only show if there are other projects */}
+                  {category.otherProjects.length > 0 && (
+                    <>
+                      <div className="border-t border-neutral-200 my-4" />
+                      <div className="flex-1">
+                        <p className="text-xs font-semibold text-text-tertiary uppercase tracking-wide mb-3">
+                          Other Projects
+                        </p>
+                        <ul className="space-y-2">
+                          {category.otherProjects.map((project, idx) => (
+                            <li key={idx}>
+                              <a
+                                href={project.url}
+                                className="text-sm text-text-secondary hover:text-primary-600 flex items-center gap-2 group/item transition-colors"
+                              >
+                                <ArrowRight
+                                  size={14}
+                                  className="text-primary-400 opacity-0 group-hover/item:opacity-100 -ml-5 group-hover/item:ml-0 transition-all"
+                                />
+                                <span className="group-hover/item:translate-x-1 transition-transform">
+                                  {project.name}
+                                </span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </>
+                  )}
 
                   {/* View All Link */}
                   {/* <div className="mt-4 pt-4 border-t border-neutral-100">
