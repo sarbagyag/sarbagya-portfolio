@@ -17,10 +17,10 @@
         }
 
         body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            font-size: 11pt;
-            line-height: 1.4;
-            color: #000;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10.5pt;
+            line-height: 1.45;
+            color: #1d1d1f;
             max-width: 8.5in;
             margin: 0 auto;
             padding: 0.5in;
@@ -28,11 +28,12 @@
         }
 
         h1 {
-            font-size: 24pt;
-            font-weight: bold;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 26pt;
+            font-weight: 600;
             text-align: center;
             margin-bottom: 8pt;
-            letter-spacing: 1px;
+            letter-spacing: -0.5px;
         }
 
         .contact {
@@ -40,6 +41,7 @@
             font-size: 10pt;
             margin-bottom: 12pt;
             line-height: 1.6;
+            color: #424245;
         }
 
         .contact a {
@@ -48,37 +50,45 @@
         }
 
         .summary {
-            font-style: italic;
-            text-align: justify;
+            text-align: center;
             margin-bottom: 16pt;
-            font-size: 10.5pt;
+            font-size: 10pt;
+            color: #424245;
         }
 
         h2 {
-            font-size: 12pt;
-            font-weight: bold;
+            font-size: 11pt;
+            font-weight: 600;
             text-transform: uppercase;
-            border-bottom: 2px solid #000;
+            border-bottom: 1.5px solid #1d1d1f;
             margin-top: 14pt;
             margin-bottom: 8pt;
-            padding-bottom: 2pt;
+            padding-bottom: 3pt;
+            letter-spacing: 0.5px;
         }
 
         .job-header {
             display: flex;
             justify-content: space-between;
-            font-weight: bold;
             margin-top: 8pt;
+        }
+
+        .job-company {
+            font-weight: 600;
+        }
+
+        .job-date {
+            color: #424245;
         }
 
         .job-title {
             font-style: italic;
-            font-weight: normal;
             margin-bottom: 4pt;
+            color: #424245;
         }
 
         ul {
-            margin-left: 20pt;
+            margin-left: 18pt;
             margin-top: 4pt;
             margin-bottom: 8pt;
         }
@@ -89,16 +99,27 @@
         }
 
         .tech-stack {
-            font-weight: bold;
-            margin-top: 4pt;
+            font-size: 9.5pt;
+            color: #636366;
+            margin-top: 2pt;
         }
 
-        .mission {
-            text-align: center;
-            font-style: italic;
-            margin-top: 20pt;
+        .skills-row {
+            margin-bottom: 4pt;
+        }
+
+        .skills-label {
+            font-weight: 600;
+        }
+
+        .project-links {
+            margin-top: 8pt;
             font-size: 10pt;
-            color: #333;
+        }
+
+        .project-links a {
+            color: #0066cc;
+            text-decoration: none;
         }
 
         @media print {
@@ -113,178 +134,203 @@
     <h1>Sarbagya Gho Shrestha</h1>
 
     <div class="contact">
-        <span>sarbagyaghoshrestha@gmail.com</span>
-        | +977 9851402011 | Madhyapur Thimi-8, Bode, Bhaktapur<br>
+        sarbagyaghoshrestha@gmail.com | +977 9851402011 | Bhaktapur, Nepal<br>
         <a href="https://linkedin.com/in/sarbagyashrestha">linkedin.com/in/sarbagyashrestha</a> |
         <a href="https://github.com/fernsky">github.com/fernsky</a> |
         <a href="https://sarbagya.vercel.app">sarbagya.vercel.app</a>
     </div>
 
-    <div class="summary">
-        I'm passionate about shaping systems that connect technology, people, and purpose. From digital governance to
-        embedded
-        systems and flight control, I build solutions that move, designed with precision, purpose, and imagination.
-        Beyond
-        code, I express myself through music, blending logic and emotion into everything I create.
+    <div class="summary" style="text-align: left;">
+        Engineer eager to learn, grow, and build technology that makes a real difference. Interested in systems that
+        connect people and purpose—from digital governance to embedded hardware. Always adapting, always improving.
     </div>
 
-    <h2>Work Experience</h2>
+    <h2>Work Experience (3.5+ Years)</h2>
 
     <div class="job-header">
-        <span><strong>Ninja Infosys</strong></span>
-        <span><strong>Jun. 2026 – Present</strong></span>
+        <span class="job-company">Ninja Infosys (merged with ISRC)</span>
+        <span class="job-date">Feb 2025 – Feb 2026</span>
     </div>
-    <div class="job-title">Project Manager & Tech Lead | Kathmandu District, Nepal</div>
+    <div class="job-title"> Tech Lead | Kathmandu, Nepal</div>
     <ul>
-        <li>Leading technical architecture and project execution for the Digital e-Palika platform serving <strong>50+
-                municipalities</strong> across Nepal, streamlining citizen services, revenue collection, and grievance
-            handling.</li>
-        <li>Architected and engineered the <strong>Integrated Content Management System (ICMS)</strong> now powering
-            <strong>100+ government websites</strong> nationwide with a microservices architecture using Kafka and
-            Kubernetes.</li>
-        <li>Coordinating cross-functional teams, managing timelines, and aligning stakeholders to ensure successful
-            delivery of features meeting real-world governance needs while maintaining system scalability and security.
-        </li>
-        <li class="tech-stack">Tech Stack: Next.js, NestJS, Kafka, Kubernetes, PostgreSQL, Docker, Redis, CI/CD</li>
+        <li>Leading technical architecture for Digital e-Palika platform serving 50+ municipalities, streamlining
+            citizen services, revenue collection, and grievance handling.</li>
+        <li>Architected the Integrated Content Management System (ICMS) powering 100+ government websites nationwide
+            using microservices with Kafka and Kubernetes.</li>
+        <li>Coordinating cross-functional teams and stakeholders to deliver governance solutions while maintaining
+            system scalability and security.</li>
+        <li class="tech-stack">Tech: Next.js, NestJS, Kafka, Kubernetes, PostgreSQL, Docker, Redis, CI/CD</li>
     </ul>
 
     <div class="job-header">
-        <span><strong>Intensive Study and Research Center</strong></span>
-        <span><strong>May. 2024 – Jun. 2026</strong></span>
+        <span class="job-company">Intensive Study and Research Center (ISRC)</span>
+        <span class="job-date">Jan 2024 – Feb 2025</span>
     </div>
     <div class="job-title">Full Stack Engineer & DevOps Lead | Kathmandu, Nepal</div>
     <ul>
-        <li>Architected and deployed <strong>digital profile systems for 10+ municipalities</strong> including Pokhara
-            Metropolitan City in just <strong>4 months with a 2-person team</strong> (with Trilochan Bhusal), serving
-            100,000+ citizens.</li>
-        <li>Engineered a comprehensive <strong>Survey Management System (SMS)</strong> with custom ODK Fetcher,
-            processing <strong>100,000+ survey responses</strong> with real-time analytics dashboards and live
-            monitoring capabilities.</li>
-        <li>Directed end-to-end DevOps pipelines (CI/CD, Docker, AWS EC2/S3, Jenkins) ensuring resilient systems for
-            resource-constrained regions with 99.9% uptime.</li>
-        <li>Led field training initiatives, empowering <strong>300+ local officials and enumerators</strong> with
-            digital skills for sustainable civic digitization.</li>
-        <li class="tech-stack">Tech Stack: Next.js, NestJS, tRPC, PostgreSQL, MongoDB, Docker, AWS, ODK Collect/Central,
-            Nginx, PM2</li>
+        <li>Deployed digital profile systems for 10+ municipalities including Pokhara Metropolitan City in 4 months with
+            a 2-person team, serving 100,000+ citizens.</li>
+        <li>Built a Survey Management System with custom ODK Fetcher, processing 100,000+ survey responses with
+            real-time analytics and live monitoring.</li>
+        <li>Managed end-to-end DevOps pipelines (CI/CD, Docker, AWS EC2/S3, Jenkins) ensuring 99.9% uptime for
+            resource-constrained regions.</li>
+        <li>Trained 300+ local officials and enumerators in digital tools for sustainable civic digitization.</li>
+        <li class="tech-stack">Tech: Next.js, NestJS, tRPC, PostgreSQL, MongoDB, Docker, AWS, ODK Collect/Central, Nginx
+        </li>
     </ul>
 
-      <div class="job-header">
-        <span><strong>Ibtidaa Softwares Pvt. Ltd.</strong></span>
-        <span><strong>Oct. 2022 – Apr. 2024</strong></span>
+    <div class="job-header">
+        <span class="job-company">Ibtidaa Softwares Pvt. Ltd.</span>
+        <span class="job-date">Oct 2022 – Nov 2023</span>
     </div>
     <div class="job-title">Full Stack Developer & Tech Lead | Nepal (Hybrid)</div>
     <ul>
-        <li>Developed and maintained the "Bidesh" App/Website using Next.js for RP Srijan Way To Success.</li>
+        <li>Developed the "Bidesh" App/Website using Next.js for RP Srijan Way To Success.</li>
         <li>Built an Event Management and Visualization Tool using Django and JavaScript for Shramik Sanjal with
             Chart.js integration.</li>
-        <li class="tech-stack">Tech Stack: Next.js, NestJS, PostgreSQL, MongoDB, Express.js, Django REST Framework,
-            Redux.js, Jenkins</li>
+        <li class="tech-stack">Tech: Next.js, NestJS, PostgreSQL, MongoDB, Django REST Framework, Redux.js, Jenkins</li>
     </ul>
 
     <div class="job-header">
-        <span><strong>IEEE Pulchowk Student Branch</strong></span>
-        <span><strong>Apr. 2023 – Jun. 2024</strong></span>
-    </div>
-    <div class="job-title">Chair & Creative Director | Lalitpur District, Nepal</div>
-    <ul>
-        <li>Led IEEE Pulchowk Student Branch as Chair, organizing technical events and workshops, and coordinating
-            student activities.</li>
-        <li>Served as Creative Director, managing visual communications and promotional content for the branch.</li>
-    </ul>
-
-    <div class="job-header">
-        <span><strong>PointZeroo</strong></span>
-        <span><strong>Jan. 2022 – Sep. 2022</strong></span>
+        <span class="job-company">PointZeroo</span>
+        <span class="job-date">Jan 2022 – Sep 2022</span>
     </div>
     <div class="job-title">Frontend Developer | Nepal (Hybrid)</div>
     <ul>
         <li>Maintained an e-commerce website and developed a web application for SSoChe, Pulchowk Campus.</li>
-        <li class="tech-stack">Tech Stack: JavaScript, HTML5, CSS, React, MongoDB, Node.js</li>
+        <li class="tech-stack">Tech: JavaScript, React, MongoDB, Node.js, HTML5, CSS</li>
+    </ul>
+
+    <h2>Leadership</h2>
+
+    <div class="job-header">
+        <span class="job-company">IEEE Pulchowk Student Branch</span>
+        <span class="job-date">Apr 2023 – Jun 2024</span>
+    </div>
+    <div class="job-title">Chair & Creative Director | Lalitpur, Nepal</div>
+    <ul>
+        <li>Led the IEEE Pulchowk Student Branch as Chair, organizing technical events, workshops, and coordinating
+            student activities.</li>
+        <li>Managed visual communications and promotional content for the branch as Creative Director.</li>
     </ul>
 
     <h2>Key Projects</h2>
 
     <div class="job-header">
-        <span><strong>8-bit Breadboard Computer (Ben Eater Inspired)</strong></span>
-        <span><strong>Jan. 2024 – May 2024</strong></span>
+        <span class="job-company">8-bit Breadboard Computer (Ben Eater Inspired)</span>
+        <span class="job-date">Jan 2024 – May 2024</span>
     </div>
     <div class="job-title">6th Semester Minor Project, IOE Pulchowk Campus</div>
     <ul>
         <li>Built a complete 8-bit computer from scratch using discrete logic ICs with a team (Rohit Joshi, Yugal
             Pariyar).</li>
-        <li>Innovatively created a <strong>custom 128-bit RAM module</strong> due to IC unavailability, demonstrating
-            problem-solving and determination.</li>
-        <li>Implemented the full architecture: ALU, control unit, registers, program counter, instruction decoder, clock
+        <li>Created a custom 128-bit RAM module due to IC unavailability, demonstrating adaptability and
+            problem-solving.</li>
+        <li>Implemented full architecture: ALU, control unit, registers, program counter, instruction decoder, clock
             module.</li>
-        <li>Hardware-only project showcasing a deep understanding of computer architecture from first principles.</li>
-
-        <li>
-            Presentation: <a href="https://www.linkedin.com/feed/update/urn:li:activity:7199849262543749120/">8-bit Breadboard Computer with 128-bit Custom RAM</a>
-        </li>
+        <li>Presentation: <a href="https://www.linkedin.com/feed/update/urn:li:activity:7199849262543749120/">8-bit
+                Breadboard Computer with Custom RAM</a></li>
     </ul>
-   
-    <hr/>
 
-    <div style="margin-top: 8pt;">
-        <strong>Digital Profile Platforms</strong> – Live: <a
-            href="https://pokhara.digprofile.com/en">pokhara.digprofile.com (Pokhara Digital Profile) </a><br>
-        <strong>Survey Management System</strong> – Live: <a
-            href="https://duduwa-admin.vercel.app">duduwa-admin.vercel.app (Survey Management System)</a><br>
-        <strong>ICMS Platform</strong> – Demo: <a href="http://fansep.moald.gov.np/ne">fansep.moald.gov.np (ICMS, FANSEP)</a>
+    <div class="job-header">
+        <span class="job-company">Nepali Text To Speech</span>
+        <span class="job-date">2024</span>
     </div>
+    <div class="job-title">Deep Learning Project</div>
+    <div class="job-title">8th Semester Major Project, IOE Pulchowk Campus</div>
+    <ul>
+        <li>Developed a Nepali language text-to-speech platform using Tacotron, synthesizing natural-sounding speech to
+            improve accessibility for Nepali-speaking audiences.</li>
+    </ul>
+
+    <div class="job-header">
+        <span class="job-company">Digital Profile Platforms</span>
+        <span class="job-date">2025</span>
+    </div>
+    <div class="job-title">Municipal Data Infrastructure | <a
+            href="https://pokhara.digprofile.com/en">pokhara.digprofile.com</a></div>
+    <ul>
+        <li>Built comprehensive digital profile systems for 10+ municipalities including Pokhara Metropolitan City,
+            enabling data-driven governance for 100,000+ citizens.</li>
+    </ul>
+
+    <div class="job-header">
+        <span class="job-company">Survey Management System</span>
+        <span class="job-date">2024</span>
+    </div>
+    <div class="job-title">Data Collection Platform | <a
+            href="https://kerabari-admin.vercel.app">kerabari-admin.vercel.app</a></div>
+    <ul>
+        <li>Engineered a survey platform with custom ODK Fetcher, processing 100,000+ responses with real-time analytics
+            and live field monitoring.</li>
+    </ul>
+
+    <div class="job-header">
+        <span class="job-company">ICMS Platform</span>
+        <span class="job-date">2025</span>
+    </div>
+    <div class="job-title">Government CMS | <a href="http://fansep.moald.gov.np/ne">fansep.moald.gov.np</a></div>
+    <ul>
+        <li>Architected the Integrated Content Management System powering 100+ government websites nationwide using
+            microservices with Kafka and Kubernetes.</li>
+    </ul>
 
     <h2>Education</h2>
 
     <div class="job-header">
-        <span><strong>Tribhuvan University, IOE, Pulchowk Campus</strong></span>
-        <span><strong>May 2021 – May 2026</strong></span>
+        <span class="job-company">Tribhuvan University, IOE, Pulchowk Campus</span>
+        <span class="job-date">May 2021 – May 2026</span>
     </div>
-    <div class="job-title">Bachelor of Engineering (B.E.) – Electronics, Communication and Information Engineering |
-        Lalitpur, Nepal</div>
-    <div style="font-style: italic; font-size: 10pt; margin-bottom: 8pt;">Achievements: IEEE Chair, Creative Director,
-        Pulchowk Music Club Executive Member</div>
+    <div class="job-header">
+        <span class="job-title">B.E. in Electronics, Communication and Information Engineering</span>
+        <span class="job-date">GPA: 3.37/4 (74.64%)</span>
+    </div>
 
     <div class="job-header">
-        <span><strong>SOS Hermann Gmeiner School</strong></span>
-        <span><strong>2019 – 2021</strong></span>
+        <span class="job-company">SOS Hermann Gmeiner School</span>
+        <span class="job-date">2019 – 2021</span>
     </div>
-    <div class="job-title">+2 Science (Physics and Mathematics) – Grade: A+ | Sanothimi, Bhaktapur</div>
-    <div style="font-style: italic; font-size: 10pt; margin-bottom: 8pt;">Achievements: Bestmanship Awardee 2019, Music
-        Club President</div>
+    <div class="job-header">
+        <span class="job-title">+2 Science (Physics and Mathematics)</span>
+        <span class="job-date">Grade: A+</span>
+    </div>
+
+    <div class="job-header">
+        <span class="job-company">SOS Hermann Gmeiner School</span>
+        <span class="job-date">2019</span>
+    </div>
+    <div class="job-header">
+        <span class="job-title">SEE</span>
+        <span class="job-date">Grade: A+</span>
+    </div>
+
+    <br />
 
     <h2>Technical Skills</h2>
 
-    <div style="margin-bottom: 4pt;"><strong>Languages:</strong> TypeScript/JavaScript, Python, C/C++, Go, SQL, Shell
-        Scripting</div>
-    <div style="margin-bottom: 4pt;"><strong>Frontend:</strong> Next.js, React.js, Redux.js, Module Federation (MFE),
-        HTML5, CSS/Tailwind CSS, Responsive Design</div>
-    <div style="margin-bottom: 4pt;"><strong>Backend:</strong> NestJS, Express.js, tRPC, gRPC, Django, Django REST
-        Framework, Node.js, Microservices</div>
-    <div style="margin-bottom: 4pt;"><strong>Databases:</strong> PostgreSQL, MongoDB, Redis, SQL, Data Modeling</div>
-    <div style="margin-bottom: 4pt;"><strong>DevOps & Cloud:</strong> Docker, Kubernetes, Kafka, Jenkins, AWS (EC2, S3,
-        Lambda), CI/CD, Nginx, PM2, Coolify</div>
-    <div style="margin-bottom: 4pt;"><strong>Data Systems:</strong> ODK Collect, ODK Central, Data Visualization,
-        Real-time Analytics</div>
-    <div style="margin-bottom: 8pt;"><strong>Hardware & AI:</strong> Embedded Systems, Digital Logic, Computer
-        Architecture, Machine Learning, UAVs, Avionics</div>
+    <div class="skills-row"><span class="skills-label">Languages:</span> TypeScript/JavaScript, Python, C/C++, Go, SQL,
+        Shell Scripting</div>
+    <div class="skills-row"><span class="skills-label">Frontend:</span> Next.js, React.js, Redux.js, Module Federation,
+        Tailwind CSS</div>
+    <div class="skills-row"><span class="skills-label">Backend:</span> NestJS, Express.js, tRPC, gRPC, Django, Node.js,
+        Microservices</div>
+    <div class="skills-row"><span class="skills-label">Databases:</span> PostgreSQL, MongoDB, Redis</div>
+    <div class="skills-row"><span class="skills-label">DevOps & Cloud:</span> Docker, Kubernetes, Kafka, Jenkins, AWS
+        (EC2, S3, Lambda), CI/CD, Nginx</div>
+    <div class="skills-row"><span class="skills-label">Other:</span> ODK Collect/Central, Embedded Systems, Digital
+        Logic, Machine Learning, UAVs</div>
 
-    <h2>Areas of Interest</h2>
-
-    <div style="margin-bottom: 4pt;"><strong>Digital Governance:</strong> E-government solutions, civic tech, full-stack
-        development for public administration</div>
-    <div style="margin-bottom: 4pt;"><strong>AI & Embedded Systems:</strong> Machine learning, hardware design, UAVs,
-        avionics, IoT applications</div>
-    <div style="margin-bottom: 4pt;"><strong>Distributed Systems:</strong> Scalable architectures, microservices, Kafka,
-        Kubernetes, system design</div>
-    <div style="margin-bottom: 8pt;"><strong>Creative Arts:</strong> Music production and performance, 100K+ views on
-        Instagram as a music artist</div>
-
-    <h2>Impact & Achievements</h2>
+    <h2>Highlights</h2>
 
     <ul>
-        <li><strong>100+ government websites</strong> powered by the ICMS platform at national scale</li>
-        <li><strong>50+ municipalities</strong> digitized through the Digital e-Palika platform</li>
-        <li><strong>10+ municipal digital profiles</strong> deployed in 4 months with a 2-person team</li>
-        <li><strong>100,000+ citizen records</strong> processed and <strong>300+ officials</strong> trained</li>
-        <li><strong>Custom 128-bit RAM</strong> built for the 8-bit breadboard computer project</li>
-        <li><strong>100K+ views</strong> as a music artist
+        <li>100+ government websites powered by the ICMS platform</li>
+        <li>50+ municipalities digitized through Digital e-Palika</li>
+        <li>10+ municipal digital profiles deployed in 4 months with a 2-person team</li>
+        <li>100,000+ citizen records processed and 300+ officials trained</li>
+        <li>Custom 128-bit RAM built for 8-bit breadboard computer project</li>
+        <li>100K+ views as a music artist on Instagram</li>
+    </ul>
+
+</body>
+
+</html>
