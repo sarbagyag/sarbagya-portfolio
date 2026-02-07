@@ -144,8 +144,8 @@ const Hero: React.FC = () => {
             size="lg"
             onClick={() => {
               const link = document.createElement("a");
-              link.href = "/resume/sarbagya-resume.pdf";
-              link.download = "sarbagya-resume.pdf";
+              link.href = "/resume/sarbagya-updated-resume.pdf";
+              link.download = "sarbagya-updated-resume.pdf";
               link.click();
             }}
             icon={<FileText size={20} />}
