@@ -47,7 +47,7 @@ export const projects: Project[] = [
     ],
     featured: true,
     category: "systems",
-    startDate: "2024-08",
+    startDate: "2026-01",
     status: "completed",
     impact: "Reduced manual operational overhead through AI-powered internal assistance",
     metrics: [
@@ -76,7 +76,7 @@ export const projects: Project[] = [
     ],
     featured: true,
     category: "systems",
-    startDate: "2024-08",
+    startDate: "2026-01",
     status: "completed",
     impact: "Streamlined internal operations and project management for food tech startup",
     metrics: [
@@ -106,7 +106,7 @@ export const projects: Project[] = [
     ],
     featured: true,
     category: "systems",
-    startDate: "2024-01",
+    startDate: "2026-01",
     status: "ongoing",
     impact: "Future-proof digital infrastructure for national-scale governance",
     metrics: [

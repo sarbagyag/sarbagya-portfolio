@@ -50,6 +50,17 @@ export interface Publication {
   citations?: number;
 }
 
+export interface ExperienceSubRole {
+  title: string;
+  company: string;
+  startDate: string;
+  endDate?: string;
+  description: string;
+  responsibilities: string[];
+  technologies: string[];
+  achievements?: string[];
+}
+
 export interface Experience {
   id: string;
   title: string;
@@ -63,6 +74,7 @@ export interface Experience {
   technologies: string[];
   achievements?: string[];
   companyUrl?: string;
+  subRoles?: ExperienceSubRole[];
 }
 
 export interface Skill {

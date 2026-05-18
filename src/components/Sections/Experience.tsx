@@ -146,6 +146,44 @@ const Experience: React.FC = () => {
                       </div>
                     </div>
 
+                    {/* Sub-roles */}
+                    {exp.subRoles && exp.subRoles.length > 0 && (
+                      <div className="mt-4 pt-4 border-t border-neutral-200 space-y-4">
+                        {exp.subRoles.map((role, roleIdx) => (
+                          <div key={roleIdx} className="pl-4 border-l-2 border-primary-200">
+                            <div className="flex justify-between items-start mb-1">
+                              <span className="font-semibold text-sm text-text-primary">
+                                {role.company}
+                              </span>
+                              <span className="text-xs text-text-tertiary flex items-center gap-1">
+                                <Calendar size={11} />
+                                {formatDate(role.startDate)} –{" "}
+                                {role.endDate ? formatDate(role.endDate) : "Present"}
+                              </span>
+                            </div>
+                            <div className="text-xs italic text-text-secondary mb-2">
+                              {role.title}
+                            </div>
+                            <ul className="space-y-1">
+                              {role.responsibilities.map((r, i) => (
+                                <li key={i} className="flex items-start gap-2 text-sm text-text-secondary">
+                                  <span className="text-primary-400 mt-1">•</span>
+                                  <span>{r}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              {role.technologies.map((tech) => (
+                                <span key={tech} className="tech-tag text-xs">
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
                     {exp.companyUrl && (
                       <div className="mt-4 pt-4 border-t border-neutral-200">
                         <a

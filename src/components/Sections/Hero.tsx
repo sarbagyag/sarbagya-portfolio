@@ -89,7 +89,7 @@ const Hero: React.FC = () => {
             />
             <div className="relative">
               <img
-                src="/sarbagya-pokhara-2.jpg"
+                src="/sarbagya-hero.png"
                 alt="Sarbagya Gho Shrestha"
                 className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full object-cover border-4 border-white shadow-2xl ring-2 ring-primary-100 transition-transform duration-300 group-hover:scale-105"
                 loading="eager"
@@ -127,7 +127,7 @@ const Hero: React.FC = () => {
           <div className="px-4 sm:px-6 py-3 bg-white rounded-xl border border-neutral-200 shadow-sm">
             <p className="text-sm sm:text-base text-text-secondary">
               <span className="font-semibold text-text-primary">
-                B.E. Electronics, Communication & Information 
+                B.E. Electronics, Communication & Information
               </span>
               {" • "}IOE, Pulchowk Campus {" • "} Class of 2025
             </p>
@@ -172,7 +172,7 @@ const Hero: React.FC = () => {
           </Button>
         </motion.div>
 
-        {/* Impact Highlights */}
+        {/* Impact Highlights
         <motion.div
           variants={itemVariants}
           className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16 max-w-4xl mx-auto"
@@ -219,7 +219,7 @@ const Hero: React.FC = () => {
               Music Artist
             </div>
           </motion.div>
-        </motion.div>
+        </motion.div> */}
 
         {/* Social Links */}
         <motion.div
