@@ -144,9 +144,9 @@ export const certifications: Certification[] = [
 
 export const contactInfo: ContactInfo = {
   email: "sarbagyaghoshrestha@gmail.com",
-  phone: "+977 9851402011",
+  phone: "+977 9823833365",
   linkedin: "https://linkedin.com/in/sarbagyashrestha",
-  github: "https://github.com/fernsky",
+  github: "https://github.com/sarbagyag",
   location: "Kathmandu, Nepal",
   website: "https://sarbagyaghoshrestha.dev",
   cv: "/build/resume/sarbagya-gho-shrestha-cv.pdf",

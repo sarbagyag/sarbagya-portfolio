@@ -104,6 +104,25 @@
             margin-top: 2pt;
         }
 
+        .job-sub-company {
+            font-weight: 600;
+            font-style: normal;
+            color: #1d1d1f;
+            margin-top: 6pt;
+            margin-bottom: 1pt;
+        }
+
+        .job-sub-header {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0;
+        }
+
+        .job-sub-date {
+            color: #424245;
+            font-size: 10pt;
+        }
+
         .skills-row {
             margin-bottom: 4pt;
         }
@@ -134,37 +153,24 @@
     <h1>Sarbagya Gho Shrestha</h1>
 
     <div class="contact">
-        sarbagyaghoshrestha@gmail.com | +977 9851402011 | Bhaktapur, Nepal<br>
+        sarbagyaghoshrestha@gmail.com | +977 9823833365 | Bhaktapur, Nepal<br>
         <a href="https://linkedin.com/in/sarbagyashrestha">linkedin.com/in/sarbagyashrestha</a> |
-        <a href="https://github.com/fernsky">github.com/fernsky</a> |
-        <a href="https://sarbagya.vercel.app">sarbagya.vercel.app</a>
+        <a href="https://github.com/sarbagyag">github.com/sarbagyag</a> |
+        <a href="https://sarbagya.vercel.app">https://sarbagya.vercel.app</a>
     </div>
 
     <div class="summary" style="text-align: left;">
-        Engineer eager to learn, grow, and build technology that makes a real difference. Interested in systems that
-        connect people and purpose—from digital governance to embedded hardware. Always adapting, always improving.
+        Engineer who builds with intent. Drawn to technology that connects people to services, automates the meaningful,
+        and scales what matters, whether that's governance infrastructure serving thousands of citizens or a startup's
+        first intelligent system. Comfortable at any layer of the stack, from embedded hardware to distributed systems.
+        Always learning, always shipping.
     </div>
 
     <h2>Work Experience (3.5+ Years)</h2>
 
     <div class="job-header">
-        <span class="job-company">Ninja Infosys (merged with ISRC)</span>
-        <span class="job-date">Feb 2025 – Feb 2026</span>
-    </div>
-    <div class="job-title"> Tech Lead | Kathmandu, Nepal</div>
-    <ul>
-        <li>Leading technical architecture for Digital e-Palika platform serving 50+ municipalities, streamlining
-            citizen services, revenue collection, and grievance handling.</li>
-        <li>Architected the Integrated Content Management System (ICMS) powering 100+ government websites nationwide
-            using microservices with Kafka and Kubernetes.</li>
-        <li>Coordinating cross-functional teams and stakeholders to deliver governance solutions while maintaining
-            system scalability and security.</li>
-        <li class="tech-stack">Tech: Next.js, NestJS, Kafka, Kubernetes, PostgreSQL, Docker, Redis, CI/CD</li>
-    </ul>
-
-    <div class="job-header">
-        <span class="job-company">Intensive Study and Research Center (ISRC)</span>
-        <span class="job-date">Jan 2024 – Feb 2025</span>
+        <span class="job-company">Intensive Study and Research Center (ISRC)<span style="font-weight: 400;">, <em>later</em> Ninja Infosys</span></span>
+        <span class="job-date">Jan 2024 – Feb 2026</span>
     </div>
     <div class="job-title">Full Stack Engineer & DevOps Lead | Kathmandu, Nepal</div>
     <ul>
@@ -172,11 +178,51 @@
             a 2-person team, serving 100,000+ citizens.</li>
         <li>Built a Survey Management System with custom ODK Fetcher, processing 100,000+ survey responses with
             real-time analytics and live monitoring.</li>
-        <li>Managed end-to-end DevOps pipelines (CI/CD, Docker, AWS EC2/S3, Jenkins) ensuring 99.9% uptime for
+        <li>Managed end-to-end DevOps pipelines (CI/CD, Docker, AWS EC2/S3, MinIO, Jenkins) ensuring 99.9% uptime for
             resource-constrained regions.</li>
         <li>Trained 300+ local officials and enumerators in digital tools for sustainable civic digitization.</li>
-        <li class="tech-stack">Tech: Next.js, NestJS, tRPC, PostgreSQL, MongoDB, Docker, AWS, ODK Collect/Central, Nginx
+        <li class="tech-stack">Tech: Next.js, NestJS, tRPC, PostgreSQL, MongoDB, Docker, AWS, MinIO, ODK Collect/Central, Nginx
         </li>
+    </ul>
+
+    <div style="margin-left: 20pt;">
+        <div style="font-weight: 600; margin-bottom: 2pt;">Ninja Infosys <span style="font-weight: 400; color: #424245; font-size: 9.5pt;">· Feb 2025 – Feb 2026</span></div>
+        <div class="job-title">Tech Lead | Kathmandu, Nepal</div>
+        <ul>
+            <li>Lead technical architecture for Digital e-Palika platform serving 50+ municipalities, streamlining
+                citizen services, revenue collection, and grievance handling.</li>
+            <li>Architected the Integrated Content Management System (ICMS) powering 100+ government websites nationwide
+                on a distributed, event-driven microservices architecture built for high availability.</li>
+            <li>Coordinated cross-functional teams and stakeholders to deliver governance solutions while maintaining
+                system scalability, resilience, and security across containerised deployments.</li>
+            <li class="tech-stack">Tech: Next.js, NestJS, Kafka, Kubernetes, PostgreSQL, Docker, Redis, CI/CD</li>
+        </ul>
+    </div>
+
+    <div class="job-header">
+        <span class="job-company">Mandala Foods <span style="font-weight: 400; font-size: 10pt;">— AI &amp; Automation Consultant</span></span>
+        <span class="job-date">2025 – Present</span>
+    </div>
+    <div class="job-title">Fruit upcycling startup · Remote, Nepal</div>
+    <ul>
+        <li>Sole technical architect for AI and automation infrastructure; designed and deployed <strong>Maya</strong> — an
+            internal RAG-based knowledge chatbot enabling staff to query SOPs and operational documentation through
+            natural language.</li>
+        <li>Architected <strong>Maya Genie</strong>, a multi-channel conversational commerce platform (WhatsApp, Viber,
+            Messenger) with a Go-based message orchestration gateway, LangChain RAG cognitive core, structured function
+            calling, and Nepal payment gateway integrations (Khalti, eSewa) — submitted to the <em>AI by HER: Global
+            Impact Challenge</em>.</li>
+        <li>Built a public-facing product chatbot on a loosely coupled microservices architecture keeping channels,
+            orchestration, and cognitive core independently deployable.</li>
+        <li>Engineered a Go document sync service processing Vikunja task attachments (XLSX, CSV, DOCX), normalising and
+            auto-uploading to Google Drive to feed the n8n RAG embedding pipeline.</li>
+        <li>Self-hosted and maintained a production VPS (Ubuntu 24.04, 12-core AMD EPYC, 48 GB RAM) running 10+
+            Dockerised services — n8n in queue mode, Supabase (pgvector), Traefik, Open WebUI, and a Claude API
+            proxy.</li>
+        <li>Built n8n automation workflows for document ingestion, Gemini-powered embedding pipelines, operational
+            reporting, and industry news digests.</li>
+        <li class="tech-stack">Tech: Go, Python, LangChain, n8n, Docker, Traefik, PostgreSQL, Supabase (pgvector),
+            Google Gemini Embeddings, Anthropic Claude API, Redis, Open WebUI, RAG Architecture, Microservices</li>
     </ul>
 
     <div class="job-header">
