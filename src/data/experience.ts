@@ -3,7 +3,7 @@ import { Experience } from "../types";
 export const experience: Experience[] = [
   {
     id: "isrc-ninja-combined",
-    title: "Full Stack Engineer & DevOps Lead → Tech Lead",
+    title: "Full Stack Engineer / Tech Lead",
     company: "Intensive Study and Research Center (ISRC), later Ninja Infosys",
     location: "Kathmandu, Nepal",
     type: "job",
