@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import { BookOpen, Languages } from "lucide-react";
 import Card from "../UI/Card";
 import type { education as educationTable, skills as skillsTable } from "@/db/schema";
@@ -17,47 +16,20 @@ interface AboutProps {
 }
 
 const About: React.FC<AboutProps> = ({ education, skills, languages }) => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5 },
-    },
-  };
-
   return (
-    <motion.section
-      id="about"
-      className="section py-20 bg-bg-secondary"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-      variants={containerVariants}
-    >
+    <section id="about" className="section py-20 bg-bg-secondary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="text-center mb-16"
-          variants={itemVariants as any}
-        >
+        <div className="text-center mb-16">
           <h2 className="section-title text-center">
             About <span className="gradient-text">Me</span>
           </h2>
           <p className="section-subtitle mt-4 mx-auto">
             Academic background, skills, and qualifications
           </p>
-        </motion.div>
+        </div>
 
         {/* Education */}
-        <motion.div variants={itemVariants} className="mb-16">
+        <div className="mb-16">
           <h3 className="text-2xl font-bold text-text-primary mb-6 flex items-center gap-3">
             <BookOpen className="text-link" />
             Education
@@ -85,10 +57,10 @@ const About: React.FC<AboutProps> = ({ education, skills, languages }) => {
               </Card>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Skills */}
-        <motion.div variants={itemVariants} className="mb-16">
+        <div className="mb-16">
           <h3 className="text-2xl font-bold text-text-primary mb-6">
             Technical Skills
           </h3>
@@ -108,12 +80,12 @@ const About: React.FC<AboutProps> = ({ education, skills, languages }) => {
               </Card>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Certifications & Languages */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Certifications */}
-          {/* <motion.div variants={itemVariants}>
+          {/* <div>
             <h3 className="text-xl font-bold text-text-primary mb-6 flex items-center gap-3">
               <Award className="text-accent-600" />
               Certifications
@@ -131,10 +103,10 @@ const About: React.FC<AboutProps> = ({ education, skills, languages }) => {
                 </Card>
               ))}
             </div>
-          </motion.div> */}
+          </div> */}
 
           {/* Languages */}
-          <motion.div variants={itemVariants}>
+          <div>
             <h3 className="text-xl font-bold text-text-primary mb-6 flex items-center gap-3">
               <Languages className="text-link" />
               Languages
@@ -156,10 +128,10 @@ const About: React.FC<AboutProps> = ({ education, skills, languages }) => {
                 ))}
               </div>
             </Card>
-          </motion.div>
+          </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

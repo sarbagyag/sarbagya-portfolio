@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import { Calendar, MapPin, ExternalLink, Award } from "lucide-react";
 import Card from "../UI/Card";
 import type { experience as experienceTable, experienceSubRoles as experienceSubRolesTable } from "@/db/schema";
@@ -27,23 +26,6 @@ const getExperienceDuration = (exp: { startDate: string; endDate: string | null 
 };
 
 const Experience: React.FC<{ experience: ExperienceEntry[] }> = ({ experience }) => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5 },
-    },
-  };
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -53,26 +35,16 @@ const Experience: React.FC<{ experience: ExperienceEntry[] }> = ({ experience })
   };
 
   return (
-    <motion.section
-      id="experience"
-      className="section py-20 bg-bg-card"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-      variants={containerVariants}
-    >
+    <section id="experience" className="section py-20 bg-bg-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="text-center mb-16"
-          variants={itemVariants as any}
-        >
+        <div className="text-center mb-16">
           <h2 className="section-title text-center">
             Professional <span className="gradient-text">Experience</span>
           </h2>
           <p className="section-subtitle mt-4 mx-auto">
             Motivation and work history
           </p>
-        </motion.div>
+        </div>
 
         {/* Timeline */}
         <div className="relative">
@@ -82,9 +54,8 @@ const Experience: React.FC<{ experience: ExperienceEntry[] }> = ({ experience })
           {/* Experience Items */}
           <div className="space-y-12">
             {experience.map((exp, index) => (
-              <motion.div
+              <div
                 key={exp.id}
-                variants={itemVariants}
                 className={`relative flex flex-col ${
                   index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                 } gap-8`}
@@ -221,12 +192,12 @@ const Experience: React.FC<{ experience: ExperienceEntry[] }> = ({ experience })
                     )}
                   </Card>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

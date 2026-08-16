@@ -36,10 +36,25 @@ if (!process.env.DATABASE_URL && process.env.NODE_ENV !== "test") {
 // need this — each serverless invocation gets a fresh module scope anyway.
 const globalForDb = globalThis as unknown as { __dbClient?: ReturnType<typeof postgres> };
 
+// idle_timeout / connect_timeout matter as much as the pooler mode does:
+// without them, this one cached connection can sit idle indefinitely and
+// get silently dropped server-side by Supabase's transaction pooler — the
+// client never notices, so the *next* query just hangs on a dead socket
+// until some OS-level TCP timeout eventually gives up (the escalating
+// 5s -> 15s -> 100s+ stalls this was causing). idle_timeout makes
+// postgres.js close and reopen the connection itself before it can go
+// stale; connect_timeout caps how long a fresh connection attempt can hang.
+const clientOptions = {
+  prepare: false,
+  max: 1,
+  idle_timeout: 20,
+  connect_timeout: 10,
+} as const;
+
 const client =
   process.env.NODE_ENV === "production"
-    ? postgres(connectionString, { prepare: false, max: 1 })
-    : (globalForDb.__dbClient ??= postgres(connectionString, { prepare: false, max: 1 }));
+    ? postgres(connectionString, clientOptions)
+    : (globalForDb.__dbClient ??= postgres(connectionString, clientOptions));
 
 export const db = drizzle(client, { schema });
 export * from "./schema";

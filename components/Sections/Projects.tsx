@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { Github, ExternalLink, TrendingUp, ArrowUpRight } from "lucide-react";
 import Card from "../UI/Card";
@@ -16,50 +15,20 @@ const Projects: React.FC<{ projects: Project[] }> = ({ projects }) => {
   const featuredProjects = projects.filter((p) => p.featured);
   const displayProjects = filter === "featured" ? featuredProjects : projects;
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5 },
-    },
-  };
-
   return (
-    <motion.section
-      id="projects"
-      className="section py-20 bg-bg-secondary"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-      variants={containerVariants}
-    >
+    <section id="projects" className="section py-20 bg-bg-secondary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="text-center mb-16"
-          variants={itemVariants as any}
-        >
+        <div className="text-center mb-16">
           <h2 className="section-title text-center">
             Technical <span className="gradient-text">Projects</span>
           </h2>
           <p className="section-subtitle mt-4 mx-auto">
             Problem solving through code. Here are some of my notable projects.
           </p>
-        </motion.div>
+        </div>
 
         {/* Filter Buttons */}
-        <motion.div
-          variants={itemVariants}
-          className="flex justify-center gap-4 mb-12"
-        >
+        <div className="flex justify-center gap-4 mb-12">
           <button
             onClick={() => setFilter("featured")}
             className={`px-6 py-3 rounded-lg font-semibold transition-all ${
@@ -80,13 +49,12 @@ const Projects: React.FC<{ projects: Project[] }> = ({ projects }) => {
           >
             All Projects ({projects.length})
           </button>
-        </motion.div>
+        </div>
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayProjects.map((project) => (
-            <motion.div key={project.id} variants={itemVariants}>
-              <Card className="p-6 h-full flex flex-col">
+            <Card key={project.id} className="p-6 h-full flex flex-col">
                 {project.imageUrl && (
                   <img
                     src={project.imageUrl}
@@ -180,12 +148,11 @@ const Projects: React.FC<{ projects: Project[] }> = ({ projects }) => {
                   )}
                 </div>
               </Card>
-            </motion.div>
           ))}
         </div>
 
         {/* CTA */}
-        <motion.div variants={itemVariants} className="text-center mt-16">
+        <div className="text-center mt-16">
           <p className="text-text-secondary mb-6">
             View more projects on my GitHub
           </p>
@@ -198,9 +165,9 @@ const Projects: React.FC<{ projects: Project[] }> = ({ projects }) => {
           >
             Visit GitHub
           </Button>
-        </motion.div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

@@ -38,16 +38,12 @@ const Card: React.FC<CardProps> = ({
 
   const classes = `${baseClasses} ${variantClasses[variant]} ${hoverClasses} ${className}`;
 
+  // No entrance animation here on purpose — this renders once per card in
+  // grids/lists across the site, each with its own viewport observer; that
+  // was a real source of scroll jank on mobile. whileTap is the one bit of
+  // motion worth keeping: it's interaction feedback, not decoration.
   return (
-    <motion.div
-      className={classes}
-      onClick={onClick}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
-      whileTap={onClick ? { scale: 0.98 } : {}}
-    >
+    <motion.div className={classes} onClick={onClick} whileTap={onClick ? { scale: 0.98 } : {}}>
       {children}
     </motion.div>
   );

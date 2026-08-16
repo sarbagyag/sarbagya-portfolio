@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import {
   User,
@@ -65,16 +64,6 @@ const items: OverviewItem[] = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
-};
-
-const itemVariants = {
-  hidden: { y: 16, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.4 } },
-};
-
 // A compact site map below the Hero — gives visitors (especially on mobile,
 // where the nav is tucked behind a hamburger) an immediate sense of
 // everything the site has, without duplicating each page's full content.
@@ -82,34 +71,27 @@ export default function SiteOverview() {
   return (
     <section id="overview" className="py-16 sm:py-20 bg-bg-secondary">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={containerVariants}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map((item) => (
-            <motion.div key={item.href} variants={itemVariants}>
-              <Link
-                href={item.href}
-                className="group flex items-start gap-4 p-5 h-full rounded-xl border border-border-color bg-bg-card hover:border-primary-400 hover:-translate-y-0.5 transition-all duration-carbon-moderate-01 ease-carbon-productive"
-              >
-                <span className="p-2.5 rounded-lg bg-link-subtle text-link shrink-0">{item.icon}</span>
-                <span className="min-w-0">
-                  <span className="flex items-center gap-1.5 font-semibold text-text-primary group-hover:text-link transition-colors">
-                    {item.label}
-                    <ArrowRight
-                      size={14}
-                      className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
-                    />
-                  </span>
-                  <span className="block text-sm text-text-secondary mt-1">{item.description}</span>
+            <Link
+              key={item.href}
+              href={item.href}
+              className="group flex items-start gap-4 p-5 h-full rounded-xl border border-border-color bg-bg-card hover:border-primary-400 hover:-translate-y-0.5 transition-all duration-carbon-moderate-01 ease-carbon-productive"
+            >
+              <span className="p-2.5 rounded-lg bg-link-subtle text-link shrink-0">{item.icon}</span>
+              <span className="min-w-0">
+                <span className="flex items-center gap-1.5 font-semibold text-text-primary group-hover:text-link transition-colors">
+                  {item.label}
+                  <ArrowRight
+                    size={14}
+                    className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                  />
                 </span>
-              </Link>
-            </motion.div>
+                <span className="block text-sm text-text-secondary mt-1">{item.description}</span>
+              </span>
+            </Link>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

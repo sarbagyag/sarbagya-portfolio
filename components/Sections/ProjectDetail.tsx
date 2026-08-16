@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft, Github, ExternalLink, FileText, TrendingUp, Calendar } from "lucide-react";
 import type { projects as projectsTable } from "@/db/schema";
@@ -11,7 +10,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
   return (
     <article className="section py-20 min-h-screen bg-bg-primary">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+        <div>
           <Link
             href="/projects"
             className="inline-flex items-center gap-2 text-sm font-medium text-link hover:text-link-hover transition-colors mb-8"
@@ -113,7 +112,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
               </a>
             )}
           </div>
-        </motion.div>
+        </div>
       </div>
     </article>
   );

@@ -56,31 +56,10 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
           className="mb-8 flex justify-center"
         >
           <div className="relative group">
-            {/* Animated gradient border */}
-            <motion.div
-              className="absolute -inset-1 bg-gradient-to-r from-primary-600 to-accent-600 rounded-full opacity-75 blur-md"
-              animate={{
-                opacity: [0.75, 1, 0.75],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            {/* Pulsing ring */}
-            <motion.div
-              className="absolute -inset-2 border-2 border-primary-300/30 rounded-full"
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.3, 0.1, 0.3],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
+            {/* Gradient border — static now (was a continuous blur+opacity
+                loop, one of the more expensive animation patterns on
+                mobile; not essential, so it's gone rather than throttled) */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary-600 to-accent-600 rounded-full opacity-75 blur-md" />
             <div className="relative">
               <img
                 src={profile.avatarUrl || "/sarbagya-hero.jpg"}

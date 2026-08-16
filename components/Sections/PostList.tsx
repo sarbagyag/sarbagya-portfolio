@@ -1,7 +1,6 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
 import Card from "@/components/UI/Card";
@@ -21,40 +20,20 @@ interface PostListProps {
 // type under the hood (see db/schema.ts postTypeEnum), just filtered and
 // labeled differently per section.
 export default function PostList({ posts, basePath, title, subtitle, emptyMessage }: PostListProps) {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
-  };
-
   return (
     <section className="section py-20 min-h-screen bg-bg-primary">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="text-center mb-16"
-          initial="hidden"
-          animate="visible"
-          variants={itemVariants}
-        >
+        <div className="text-center mb-16">
           <h1 className="section-title text-center">{title}</h1>
           <p className="section-subtitle mt-4 mx-auto">{subtitle}</p>
-        </motion.div>
+        </div>
 
         {posts.length === 0 ? (
           <p className="text-center text-text-secondary">{emptyMessage}</p>
         ) : (
-          <motion.div
-            className="space-y-6"
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-          >
+          <div className="space-y-6">
             {posts.map((post) => (
-              <motion.div key={post.slug} variants={itemVariants}>
+              <div key={post.slug}>
                 <Link href={`${basePath}/${post.slug}`}>
                   <Card className="p-6 sm:p-8 group">
                     {post.coverImageUrl && (
@@ -99,9 +78,9 @@ export default function PostList({ posts, basePath, title, subtitle, emptyMessag
                     </div>
                   </Card>
                 </Link>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         )}
       </div>
     </section>

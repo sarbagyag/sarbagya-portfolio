@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -19,7 +18,7 @@ export default function PostDetail({ post, basePath, backLabel }: PostDetailProp
   return (
     <article className="section py-20 min-h-screen bg-bg-primary">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+        <div>
           <Link
             href={basePath}
             className="inline-flex items-center gap-2 text-sm font-medium text-link hover:text-link-hover transition-colors mb-8"
@@ -62,7 +61,7 @@ export default function PostDetail({ post, basePath, backLabel }: PostDetailProp
           <div className="prose-carbon">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.contentMarkdown}</ReactMarkdown>
           </div>
-        </motion.div>
+        </div>
       </div>
     </article>
   );

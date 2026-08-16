@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import { Mail, Github, Linkedin, MapPin, Send, FileText } from "lucide-react";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
@@ -42,45 +41,21 @@ const Contact: React.FC<{ profile: Profile }> = ({ profile }) => {
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5 },
-    },
-  };
-
   return (
-    <motion.section
-      id="contact"
-      className="section py-20 bg-gradient-to-b from-bg-primary to-link-subtle"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-      variants={containerVariants}
-    >
+    <section id="contact" className="section py-20 bg-gradient-to-b from-bg-primary to-link-subtle">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="text-center mb-16" variants={itemVariants as any}>
+        <div className="text-center mb-16">
           <h2 className="section-title text-center">
             Get in <span className="gradient-text">Touch</span>
           </h2>
           <p className="section-subtitle mt-4 mx-auto">
             Interested in collaboration or have questions? Feel free to reach out
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Info */}
-          <motion.div variants={itemVariants}>
+          <div>
             <Card className="p-8 h-full">
               <h3 className="text-2xl font-bold text-text-primary mb-6">
                 Contact Information
@@ -152,10 +127,10 @@ const Contact: React.FC<{ profile: Profile }> = ({ profile }) => {
                 </div>
               </div>
             </Card>
-          </motion.div>
+          </div>
 
           {/* Contact Form */}
-          <motion.div variants={itemVariants}>
+          <div>
             <Card className="p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -254,10 +229,10 @@ const Contact: React.FC<{ profile: Profile }> = ({ profile }) => {
                 )}
               </form>
             </Card>
-          </motion.div>
+          </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

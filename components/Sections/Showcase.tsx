@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { ExternalLink, ArrowRight } from "lucide-react";
 
@@ -155,27 +154,6 @@ const Showcase: React.FC = () => {
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-      },
-    },
-  };
-
   return (
     <section
       id="showcase"
@@ -183,35 +161,19 @@ const Showcase: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary mb-4">
             Project Showcase
           </h2>
           <p className="text-base sm:text-lg text-text-secondary max-w-2xl mx-auto">
             A closer look at platforms I've built and shipped
           </p>
-        </motion.div>
+        </div>
 
         {/* Showcase Grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {categories.map((category, index) => (
-            <motion.div
-              key={category.title}
-              variants={cardVariants}
-              className="group"
-            >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {categories.map((category) => (
+            <div key={category.title} className="group">
               {/* Card */}
               <div className="bg-bg-card rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-border-color hover:border-primary-300 flex flex-col h-full">
                 {/* Featured Project Image */}
@@ -301,18 +263,12 @@ const Showcase: React.FC = () => {
                   </div> */}
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* CTA Section */}
-        <motion.div
-          className="mt-16 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
+        <div className="mt-16 text-center">
           <p className="text-text-secondary mb-6">
             Interested in building your own digital platform?
           </p>
@@ -323,7 +279,7 @@ const Showcase: React.FC = () => {
             Let's Talk
             <ArrowRight size={18} />
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

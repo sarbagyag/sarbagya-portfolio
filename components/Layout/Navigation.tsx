@@ -57,15 +57,12 @@ const Navigation: React.FC = () => {
 
   return (
     <>
-      <motion.nav
+      <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-bg-dark/95 backdrop-blur-md shadow-md border-b border-border-color"
             : "bg-transparent"
         }`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
@@ -138,43 +135,32 @@ const Navigation: React.FC = () => {
               transition={{ duration: 0.3 }}
             >
               <div className="px-4 py-6 space-y-2 max-h-[calc(100vh-5rem)] overflow-y-auto">
-                {navItems.map((item, index) => (
-                  <motion.div
+                {navItems.map((item) => (
+                  <Link
                     key={item.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    href={item.href}
+                    className={`block w-full text-left px-4 py-3 text-base font-medium rounded-lg transition-colors ${
+                      isActive(item.href)
+                        ? "text-link bg-link-subtle"
+                        : "text-text-secondary hover:text-link hover:bg-link-subtle"
+                    }`}
                   >
-                    <Link
-                      href={item.href}
-                      className={`block w-full text-left px-4 py-3 text-base font-medium rounded-lg transition-colors ${
-                        isActive(item.href)
-                          ? "text-link bg-link-subtle"
-                          : "text-text-secondary hover:text-link hover:bg-link-subtle"
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  </motion.div>
+                    {item.label}
+                  </Link>
                 ))}
-                <motion.a
+                <a
                   href="/resume/sarbagya-updated-resume.pdf"
                   download="sarbagya-updated-resume.pdf"
                   className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 mt-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ duration: 0.3, delay: navItems.length * 0.05 }}
                 >
                   <FileText size={18} />
                   Download CV
-                </motion.a>
+                </a>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.nav>
+      </nav>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>

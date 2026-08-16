@@ -6,22 +6,36 @@ interface BinaryRainProps {
   opacity?: number;
 }
 
+const MOBILE_BREAKPOINT = 768; // matches Tailwind's `md`
+
 const BinaryRain: React.FC<BinaryRainProps> = ({ opacity = 0.03 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    // Purely decorative — skip it entirely on mobile. Two reasons: it's not
+    // essential, and mobile browsers fire `resize` constantly as the address
+    // bar collapses/expands during scroll, which was clearing/restarting the
+    // canvas on every scroll tick and reading as visible flicker.
+    if (window.innerWidth < MOBILE_BREAKPOINT) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Set canvas size
+    // Set canvas size — only reacts to width changes. Height-only changes
+    // (mobile address bar, if this ever runs near the breakpoint on a
+    // resizable window) shouldn't clear and restart the whole effect.
+    let lastWidth = window.innerWidth;
     const resizeCanvas = () => {
+      if (window.innerWidth === lastWidth) return;
+      lastWidth = window.innerWidth;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
-    resizeCanvas();
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     window.addEventListener("resize", resizeCanvas);
 
     // Binary rain configuration
@@ -67,7 +81,7 @@ const BinaryRain: React.FC<BinaryRainProps> = ({ opacity = 0.03 }) => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0"
+      className="fixed inset-0 pointer-events-none z-0 hidden md:block"
       style={{ opacity }}
     />
   );
