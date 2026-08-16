@@ -1,0 +1,83 @@
+# Deploy alongside your existing Traefik + Vikunja stack. Same pattern as
+# /opt/vikunja: an internal network for db<->api<->minio traffic, joined to
+# the external `proxy` network only on the services Traefik needs to reach.
+#
+# Single domain, path-routed: https://portfolio.mandalafoods.co/api/*  -> api
+#                              https://portfolio.mandalafoods.co/media/* -> minio
+# No path-stripping needed either way — the Go router already expects an
+# /api prefix, and the MinIO bucket is literally named "media", so
+# /media/<key> lines up with MinIO's own /<bucket>/<key> URL shape exactly.
+
+services:
+  db:
+    image: postgres:16
+    container_name: portfolio_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    networks:
+      - portfolio_internal
+
+  minio:
+    image: minio/minio:latest
+    container_name: portfolio_minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+    volumes:
+      - ./minio-data:/data
+    networks:
+      - proxy
+      - portfolio_internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portfolio-media.rule=Host(`${PORTFOLIO_DOMAIN}`) && PathPrefix(`/media`)"
+      - "traefik.http.routers.portfolio-media.entrypoints=websecure"
+      - "traefik.http.routers.portfolio-media.tls.certresolver=le"
+      - "traefik.http.services.portfolio-media.loadbalancer.server.port=9000"
+      - "traefik.docker.network=proxy"
+    # MinIO's admin console (:9001) is deliberately not exposed via Traefik —
+    # reach it with `docker compose exec minio ...` or an SSH tunnel if needed.
+
+  api:
+    build: ./server
+    container_name: portfolio_api
+    restart: unless-stopped
+    depends_on:
+      - db
+      - minio
+    environment:
+      PORT: 8080
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?sslmode=disable
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      MINIO_BUCKET: ${MINIO_BUCKET}
+      MINIO_USE_SSL: "false"
+      MINIO_PUBLIC_URL: https://${PORTFOLIO_DOMAIN}
+    networks:
+      - proxy
+      - portfolio_internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portfolio-api.rule=Host(`${PORTFOLIO_DOMAIN}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.portfolio-api.entrypoints=websecure"
+      - "traefik.http.routers.portfolio-api.tls.certresolver=le"
+      - "traefik.http.services.portfolio-api.loadbalancer.server.port=8080"
+      - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true
+  portfolio_internal:
+    driver: bridge
