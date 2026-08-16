@@ -1,0 +1,572 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fonts (IBM Plex + Cormorant flourish) are loaded via next/font in app/layout.tsx */
+
+/*
+ * Carbon Design System theme tokens as CSS custom properties.
+ * :root = Carbon "White" (light) theme, .dark = Carbon "Gray 100" (dark)
+ * theme. next-themes toggles the `dark` class on <html>; every color in
+ * tailwind.config.js (carbon.*, bg-*, text-*, border-color, link*) reads
+ * from these variables, so the whole app is theme-aware without needing
+ * `dark:` variants sprinkled through every component.
+ *
+ * Values are stored as space-separated "R G B" channels (no `rgb()`, no
+ * `#`) rather than hex, per Tailwind's documented pattern for CSS-variable
+ * colors — tailwind.config.js wraps them as `rgb(var(--x) / <alpha-value>)`,
+ * which is what makes opacity modifiers (`bg-bg-dark/95`, etc.) work.
+ */
+:root {
+  --cds-background: 255 255 255; /* #ffffff */
+  --cds-layer-01: 244 244 244; /* #f4f4f4 */
+  --cds-layer-02: 255 255 255; /* #ffffff */
+  --cds-layer-03: 244 244 244; /* #f4f4f4 */
+  --cds-layer-hover-01: 232 232 232; /* #e8e8e8 */
+  --cds-layer-hover-02: 232 232 232; /* #e8e8e8 */
+  --cds-border-subtle-00: 224 224 224; /* #e0e0e0 */
+  --cds-border-subtle-01: 198 198 198; /* #c6c6c6 */
+  --cds-border-strong-01: 141 141 141; /* #8d8d8d */
+  --cds-text-primary: 22 22 22; /* #161616 */
+  --cds-text-secondary: 82 82 82; /* #525252 */
+  --cds-text-placeholder: 168 168 168; /* #a8a8a8 */
+  --cds-text-on-color: 255 255 255; /* #ffffff */
+  --cds-icon-primary: 22 22 22; /* #161616 */
+  --cds-icon-secondary: 82 82 82; /* #525252 */
+  --cds-link-primary: 15 98 254; /* #0f62fe */
+  --cds-link-primary-hover: 0 67 206; /* #0043ce */
+  --cds-link-subtle: 237 245 255; /* #edf5ff */
+  --cds-link-subtle-hover: 208 226 255; /* #d0e2ff */
+  --cds-focus: 15 98 254; /* #0f62fe */
+  --cds-support-error: 218 30 40; /* #da1e28 */
+  --cds-support-success: 36 161 72; /* #24a148 */
+  --cds-support-warning: 241 194 27; /* #f1c21b */
+  --cds-support-info: 0 67 206; /* #0043ce */
+}
+
+.dark {
+  --cds-background: 22 22 22; /* #161616 */
+  --cds-layer-01: 38 38 38; /* #262626 */
+  --cds-layer-02: 57 57 57; /* #393939 */
+  --cds-layer-03: 82 82 82; /* #525252 */
+  --cds-layer-hover-01: 51 51 51; /* #333333 */
+  --cds-layer-hover-02: 76 76 76; /* #4c4c4c */
+  --cds-border-subtle-00: 57 57 57; /* #393939 */
+  --cds-border-subtle-01: 82 82 82; /* #525252 */
+  --cds-border-strong-01: 111 111 111; /* #6f6f6f */
+  --cds-text-primary: 244 244 244; /* #f4f4f4 */
+  --cds-text-secondary: 198 198 198; /* #c6c6c6 */
+  --cds-text-placeholder: 111 111 111; /* #6f6f6f */
+  --cds-text-on-color: 255 255 255; /* #ffffff */
+  --cds-icon-primary: 244 244 244; /* #f4f4f4 */
+  --cds-icon-secondary: 198 198 198; /* #c6c6c6 */
+  --cds-link-primary: 120 169 255; /* #78a9ff */
+  --cds-link-primary-hover: 166 200 255; /* #a6c8ff */
+  --cds-link-subtle: 28 42 74; /* #1c2a4a */
+  --cds-link-subtle-hover: 38 54 94; /* #26365e */
+  --cds-focus: 255 255 255; /* #ffffff */
+  --cds-support-error: 250 77 86; /* #fa4d56 */
+  --cds-support-success: 66 190 101; /* #42be65 */
+  --cds-support-warning: 241 194 27; /* #f1c21b */
+  --cds-support-info: 69 137 255; /* #4589ff */
+}
+
+@layer base {
+  * {
+    @apply border-border-color;
+  }
+
+  html {
+    @apply scroll-smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-bg-primary text-text-primary font-sans;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-semibold;
+  }
+
+  /* Typography Scale */
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl leading-tight;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl leading-tight;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl leading-snug;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+
+  p {
+    @apply leading-relaxed;
+  }
+
+  a {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-neutral-100;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary-400 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-500;
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-primary-100 text-primary-900;
+  }
+
+  ::-moz-selection {
+    @apply bg-primary-100 text-primary-900;
+  }
+
+  /* Focus States */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-bg-primary rounded-sm;
+  }
+
+  /* Image Optimization */
+  img {
+    @apply max-w-full h-auto;
+  }
+
+  /* GPU Acceleration for Animations */
+  .animate-gpu {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Skip to Content Link */
+  .skip-to-content {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50;
+    @apply px-4 py-2 bg-primary-600 text-white rounded-md;
+    @apply focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+}
+
+@layer utilities {
+  /* Text Utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Container Utilities */
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Shadow Utilities */
+  .shadow-soft {
+    box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Animation Utilities */
+  .animate-in {
+    animation: slideUp 0.5s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent;
+  }
+
+  /* Card Hover Effect */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .card-hover:hover {
+    @apply -translate-y-1 shadow-card-hover;
+  }
+
+  /* Link Underline Animation */
+  .link-underline {
+    @apply relative;
+  }
+
+  .link-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-current transition-all duration-300;
+  }
+
+  .link-underline:hover::after {
+    @apply w-full;
+  }
+
+  /* Badge Styles */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-link-subtle text-link;
+  }
+
+  .badge-accent {
+    @apply badge bg-carbon-support-success/15 text-carbon-support-success;
+  }
+
+  .badge-neutral {
+    @apply badge bg-bg-secondary text-text-secondary;
+  }
+
+  /* Section Spacing */
+  .section {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .section-sm {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  /* Typography Utilities */
+  .heading-primary {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary;
+  }
+
+  .heading-secondary {
+    @apply text-3xl md:text-4xl lg:text-5xl font-semibold text-text-primary;
+  }
+
+  .heading-tertiary {
+    @apply text-2xl md:text-3xl font-semibold text-text-primary;
+  }
+
+  .body-large {
+    @apply text-lg md:text-xl text-text-secondary leading-relaxed;
+  }
+
+  .body-regular {
+    @apply text-base md:text-lg text-text-secondary leading-relaxed;
+  }
+
+  /* Grid Utilities */
+  .grid-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .grid-auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    @apply text-black bg-white;
+  }
+
+  .no-print {
+    @apply hidden;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+}
+
+/*
+ * Legacy component classes carried over from the CRA-era App.css, restyled
+ * for the Carbon Gray 100 dark theme (see tailwind.config.js carbon.* /
+ * primary / accent / neutral tokens). Section components (.section-title,
+ * .tech-tag, .status-badge, .metric-card, etc.) still reference these.
+ */
+@layer components {
+  .section-title {
+    @apply text-4xl sm:text-[2.5rem] font-bold text-text-primary mb-4 relative;
+  }
+
+  .section-title::after {
+    content: "";
+    @apply absolute -bottom-2 left-1/2 -translate-x-1/2 w-16 h-1 rounded-sm;
+    background: linear-gradient(to right, theme("colors.primary.500"), theme("colors.accent.400"));
+  }
+
+  .section-title.text-center::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .section-subtitle {
+    @apply text-lg sm:text-xl text-text-secondary max-w-2xl;
+  }
+
+  .card {
+    @apply bg-bg-card border border-border-color rounded-xl transition-all duration-300 ease-carbon-productive;
+  }
+
+  .card:hover {
+    @apply -translate-y-1 shadow-card-hover border-primary-400;
+  }
+
+  .research-card {
+    @apply border-l-4;
+    border-left-color: theme("colors.primary.500");
+    background: linear-gradient(to right, rgba(15, 98, 254, 0.06) 0%, theme("colors.bg-card") 8%);
+  }
+
+  .external-link {
+    @apply text-link relative transition-colors duration-200;
+  }
+
+  .external-link:hover {
+    @apply text-link-hover;
+  }
+
+  /* Status badges — all theme-aware via the carbon.support-* / link tokens,
+     so they hold up in both light and dark instead of assuming one theme. */
+  .status-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide;
+  }
+
+  .status-badge.completed,
+  .status-badge.job {
+    @apply bg-carbon-support-success/15 text-carbon-support-success;
+  }
+
+  .status-badge.ongoing,
+  .status-badge.research {
+    @apply bg-carbon-support-warning/15 text-carbon-support-warning;
+  }
+
+  .status-badge.under-review,
+  .status-badge.internship {
+    @apply bg-link-subtle text-link;
+  }
+
+  .status-badge.published {
+    @apply bg-carbon-support-info/15 text-carbon-support-info;
+  }
+
+  /* Metric display */
+  .metric-card {
+    @apply text-center p-6 bg-bg-card rounded-xl border border-border-color transition-all duration-300;
+  }
+
+  .metric-card:hover {
+    @apply border-primary-400;
+    box-shadow: 0 4px 12px rgba(15, 98, 254, 0.15);
+  }
+
+  .metric-value {
+    @apply text-4xl font-bold bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, theme("colors.primary.400"), theme("colors.accent.300"));
+  }
+
+  .metric-label {
+    @apply text-sm text-text-secondary mt-2 font-medium;
+  }
+
+  /* Tech tag */
+  .tech-tag {
+    @apply inline-flex items-center px-3 py-1.5 bg-bg-secondary text-text-secondary rounded-md text-sm font-medium border border-transparent transition-all duration-200;
+  }
+
+  .tech-tag:hover {
+    @apply bg-link-subtle text-link border-link -translate-y-px;
+  }
+
+  /* Buttons (legacy plain-CSS variants, kept for any non-<Button> usage) */
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg transition-all duration-200 border-2 border-transparent text-base cursor-pointer;
+  }
+
+  .btn-primary {
+    @apply bg-primary-500 text-white border-primary-500 hover:bg-primary-600 hover:border-primary-600 hover:-translate-y-0.5 hover:shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent text-link border-primary-500 hover:bg-link-subtle hover:border-primary-400 hover:-translate-y-0.5;
+  }
+
+  .btn-outline {
+    @apply bg-transparent text-text-secondary border-border-color hover:bg-bg-secondary hover:border-neutral-500;
+  }
+
+  .loading-spinner {
+    @apply inline-block w-5 h-5 rounded-full border-2 border-primary-500/20;
+    border-top-color: theme("colors.primary.400");
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .timeline-item {
+    @apply relative pl-8;
+  }
+
+  .timeline-item::before {
+    content: "";
+    @apply absolute left-0 top-2 w-3 h-3 rounded-full;
+    background-color: theme("colors.primary.500");
+    border: 3px solid theme("colors.bg-primary");
+    box-shadow: 0 0 0 2px theme("colors.primary.500");
+  }
+
+  .timeline-item::after {
+    content: "";
+    @apply absolute left-[5px] top-6 -bottom-4 w-0.5 bg-border-color;
+  }
+
+  .timeline-item:last-child::after {
+    display: none;
+  }
+
+  /* Markdown rendering for blog/learning-log posts (PostDetail component).
+     Hand-rolled instead of @tailwindcss/typography, using the same
+     theme-aware tokens as the rest of the app. */
+  .prose-carbon {
+    @apply text-text-secondary leading-relaxed;
+  }
+
+  .prose-carbon > * + * {
+    @apply mt-5;
+  }
+
+  .prose-carbon h1,
+  .prose-carbon h2,
+  .prose-carbon h3,
+  .prose-carbon h4 {
+    @apply text-text-primary font-bold mt-10 mb-2 first:mt-0;
+  }
+
+  .prose-carbon h1 {
+    @apply text-3xl;
+  }
+  .prose-carbon h2 {
+    @apply text-2xl;
+  }
+  .prose-carbon h3 {
+    @apply text-xl;
+  }
+  .prose-carbon h4 {
+    @apply text-lg;
+  }
+
+  .prose-carbon p {
+    @apply text-base;
+  }
+
+  .prose-carbon a {
+    @apply text-link hover:text-link-hover underline underline-offset-2;
+  }
+
+  .prose-carbon strong {
+    @apply text-text-primary font-semibold;
+  }
+
+  .prose-carbon ul {
+    @apply list-disc pl-6 space-y-1;
+  }
+
+  .prose-carbon ol {
+    @apply list-decimal pl-6 space-y-1;
+  }
+
+  .prose-carbon blockquote {
+    @apply border-l-4 border-primary-500 pl-4 italic text-text-secondary;
+  }
+
+  .prose-carbon code {
+    @apply font-mono text-sm bg-bg-secondary text-link px-1.5 py-0.5 rounded;
+  }
+
+  .prose-carbon pre {
+    @apply font-mono text-sm bg-bg-secondary border border-border-color rounded-lg p-4 overflow-x-auto;
+  }
+
+  .prose-carbon pre code {
+    @apply bg-transparent p-0;
+  }
+
+  .prose-carbon hr {
+    @apply border-border-color my-8;
+  }
+
+  .prose-carbon table {
+    @apply w-full text-sm border-collapse;
+  }
+
+  .prose-carbon th,
+  .prose-carbon td {
+    @apply border border-border-color px-3 py-2 text-left;
+  }
+
+  .prose-carbon th {
+    @apply bg-bg-secondary text-text-primary;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-title {
+    font-size: 1.875rem;
+  }
+
+  .metric-value {
+    font-size: 2rem;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
