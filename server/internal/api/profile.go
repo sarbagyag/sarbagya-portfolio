@@ -16,12 +16,12 @@ func (s *Server) handleGetProfile(w http.ResponseWriter, r *http.Request) {
 		SELECT id, name, tagline, bio, email, phone, location, linkedin_url,
 		       github_url, twitter_url, youtube_url, instagram_url, scholar_url,
 		       orcid_url, website_url, avatar_url, resume_url, languages,
-		       academic_skills, hero_roles, hero_motto, hero_badge, updated_at
+		       academic_skills, hero_roles, hero_motto, hero_badge, logo_initials, updated_at
 		FROM profile WHERE id = 1`,
 	).Scan(&p.ID, &p.Name, &p.Tagline, &p.Bio, &p.Email, &p.Phone, &p.Location,
 		&p.LinkedinURL, &p.GithubURL, &p.TwitterURL, &p.YoutubeURL, &p.InstagramURL,
 		&p.ScholarURL, &p.OrcidURL, &p.WebsiteURL, &p.AvatarURL, &p.ResumeURL,
-		&languagesRaw, &p.AcademicSkills, &p.HeroRoles, &p.HeroMotto, &p.HeroBadge, &p.UpdatedAt)
+		&languagesRaw, &p.AcademicSkills, &p.HeroRoles, &p.HeroMotto, &p.HeroBadge, &p.LogoInitials, &p.UpdatedAt)
 	if err != nil {
 		writeError(w, http.StatusNotFound, "profile not set up yet")
 		return
@@ -53,6 +53,7 @@ type updateProfileRequest struct {
 	HeroRoles      []string          `json:"heroRoles"`
 	HeroMotto      *string           `json:"heroMotto"`
 	HeroBadge      *string           `json:"heroBadge"`
+	LogoInitials   string            `json:"logoInitials"`
 }
 
 func (s *Server) handleUpdateProfile(w http.ResponseWriter, r *http.Request) {
@@ -61,8 +62,8 @@ func (s *Server) handleUpdateProfile(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusBadRequest, "invalid request body")
 		return
 	}
-	if req.Name == "" || req.Tagline == "" || req.Bio == "" || req.Email == "" {
-		writeError(w, http.StatusBadRequest, "name, tagline, bio, and email are required")
+	if req.Name == "" || req.Tagline == "" || req.Bio == "" || req.Email == "" || req.LogoInitials == "" {
+		writeError(w, http.StatusBadRequest, "name, tagline, bio, email, and logo initials are required")
 		return
 	}
 
@@ -87,8 +88,8 @@ func (s *Server) handleUpdateProfile(w http.ResponseWriter, r *http.Request) {
 		INSERT INTO profile (id, name, tagline, bio, email, phone, location,
 			linkedin_url, github_url, twitter_url, youtube_url, instagram_url,
 			scholar_url, orcid_url, website_url, avatar_url, resume_url,
-			languages, academic_skills, hero_roles, hero_motto, hero_badge, updated_at)
-		VALUES (1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, now())
+			languages, academic_skills, hero_roles, hero_motto, hero_badge, logo_initials, updated_at)
+		VALUES (1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, now())
 		ON CONFLICT (id) DO UPDATE SET
 			name = EXCLUDED.name, tagline = EXCLUDED.tagline, bio = EXCLUDED.bio,
 			email = EXCLUDED.email, phone = EXCLUDED.phone, location = EXCLUDED.location,
@@ -99,12 +100,12 @@ func (s *Server) handleUpdateProfile(w http.ResponseWriter, r *http.Request) {
 			avatar_url = EXCLUDED.avatar_url, resume_url = EXCLUDED.resume_url,
 			languages = EXCLUDED.languages, academic_skills = EXCLUDED.academic_skills,
 			hero_roles = EXCLUDED.hero_roles, hero_motto = EXCLUDED.hero_motto,
-			hero_badge = EXCLUDED.hero_badge, updated_at = now()`,
+			hero_badge = EXCLUDED.hero_badge, logo_initials = EXCLUDED.logo_initials, updated_at = now()`,
 		req.Name, req.Tagline, req.Bio, req.Email, req.Phone, req.Location,
 		req.LinkedinURL, req.GithubURL, req.TwitterURL, req.YoutubeURL, req.InstagramURL,
 		req.ScholarURL, req.OrcidURL, req.WebsiteURL, req.AvatarURL, req.ResumeURL,
 		languagesJSON, orEmptySlice(req.AcademicSkills), orEmptySlice(req.HeroRoles),
-		req.HeroMotto, req.HeroBadge)
+		req.HeroMotto, req.HeroBadge, req.LogoInitials)
 	if err != nil {
 		writeError(w, http.StatusInternalServerError, "failed to save profile")
 		return

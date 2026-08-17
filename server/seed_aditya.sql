@@ -8,7 +8,7 @@
 -- NOT live under internal/db/migrations/, so it is never embedded into the
 -- binary (see //go:embed migrations/*.sql in internal/db/db.go) and never
 -- auto-runs on container boot. Run it once, by hand, after the aditya
--- stack has come up and the built-in migrations (00001-00004) have already
+-- stack has come up and the built-in migrations (00001-00005) have already
 -- applied and seeded sarbagya's placeholder content.
 --
 -- NOT touched by this script:
@@ -50,7 +50,7 @@ INSERT INTO public.profile (
     linkedin_url, github_url, twitter_url, youtube_url, instagram_url,
     scholar_url, orcid_url, website_url, avatar_url, resume_url,
     languages, academic_skills, updated_at,
-    hero_roles, hero_motto, hero_badge
+    hero_roles, hero_motto, hero_badge, logo_initials
 ) VALUES (
     1,
     'Aditya Timalsina',
@@ -69,7 +69,8 @@ INSERT INTO public.profile (
     now(),
     '{Research,"Machine Learning","Systems & Networks","Software Engineering"}',
     'Researching machine learning and next-generation network systems.',
-    'B.E. Electronics & Communication • IOE, Pulchowk Campus • 84.10%'
+    'B.E. Electronics & Communication • IOE, Pulchowk Campus • 84.10%',
+    'AT'
 );
 
 -- ---- education ----

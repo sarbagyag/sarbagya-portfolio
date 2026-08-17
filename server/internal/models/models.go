@@ -30,6 +30,7 @@ type Profile struct {
 	HeroRoles      []string   `json:"heroRoles"`
 	HeroMotto      *string    `json:"heroMotto"`
 	HeroBadge      *string    `json:"heroBadge"`
+	LogoInitials   string     `json:"logoInitials"`
 	UpdatedAt      time.Time  `json:"updatedAt"`
 }
 

@@ -30,6 +30,7 @@ export interface Profile {
   heroRoles: string[];
   heroMotto: string | null;
   heroBadge: string | null;
+  logoInitials: string;
   updatedAt: string; // ISO timestamp
 }
 

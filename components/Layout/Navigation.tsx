@@ -26,7 +26,7 @@ const navItems: NavItem[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-const Navigation: React.FC = () => {
+const Navigation: React.FC<{ logoInitials?: string }> = ({ logoInitials }) => {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -86,7 +86,7 @@ const Navigation: React.FC = () => {
               className="shrink-0 inline-flex items-baseline font-oswald text-2xl md:text-3xl font-extrabold text-link hover:text-link-hover transition-colors"
               aria-label="Home"
             >
-              sgs
+              {logoInitials}
               {/* Square full stop instead of the font's round period —
                   matches the site's square-corners-everywhere direction. */}
               <span className="w-[5px] h-[5px] md:w-[6px] md:h-[6px] bg-current ml-[3px]" aria-hidden="true" />

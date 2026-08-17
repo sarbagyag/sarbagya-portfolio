@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono, Oswald } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import SiteShell from "@/components/Layout/SiteShell";
+import { getProfile } from "@/lib/api/queries";
 import "./globals.css";
 
 // IBM Plex Sans + Mono for everything site-wide, varying weight for
@@ -75,11 +76,13 @@ export const viewport: Viewport = {
   themeColor: "#161616",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const profile = await getProfile();
+
   return (
     <html
       lang="en"
@@ -88,7 +91,7 @@ export default function RootLayout({
     >
       <body className="bg-bg-primary text-text-primary font-sans antialiased transition-colors duration-carbon-moderate-01">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <SiteShell>{children}</SiteShell>
+          <SiteShell logoInitials={profile?.logoInitials}>{children}</SiteShell>
         </ThemeProvider>
       </body>
     </html>

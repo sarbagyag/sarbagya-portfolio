@@ -16,6 +16,14 @@ export default function ProfileForm({ profile }: { profile: Profile | null }) {
         <Field label="Email" name="email" type="email" defaultValue={profile?.email} required />
       </div>
 
+      <Field
+        label="Logo initials"
+        name="logoInitials"
+        defaultValue={profile?.logoInitials}
+        required
+        hint='The wordmark in the top-left corner of every page, e.g. "sgs" or "AT".'
+      />
+
       <Field label="Tagline" name="tagline" defaultValue={profile?.tagline} required hint='e.g. "Engineer | Innovator | Artist"' />
       <TextAreaField label="Bio" name="bio" defaultValue={profile?.bio ?? undefined} required rows={4} />
 

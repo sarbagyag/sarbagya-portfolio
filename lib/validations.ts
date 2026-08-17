@@ -57,6 +57,7 @@ export const profileSchema = z.object({
   heroRoles: arrayField,
   heroMotto: z.string().trim().optional(),
   heroBadge: z.string().trim().optional(),
+  logoInitials: z.string().trim().min(1, "Required").max(8, "Keep it short - it's a logo mark"),
 });
 export type ProfileInput = z.infer<typeof profileSchema>;
 
