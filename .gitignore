@@ -33,3 +33,5 @@ server/*.exe
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/db/
+/minio-data/

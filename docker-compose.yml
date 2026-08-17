@@ -24,7 +24,7 @@ services:
 
   minio:
     image: minio/minio:latest
-    container_name: portfolio_minio
+    container_name: portfolio-minio
     restart: unless-stopped
     command: server /data --console-address ":9001"
     environment:
@@ -69,11 +69,22 @@ services:
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+<<<<<<< HEAD
       # Hyphenated network alias (declared on minio's `proxy` entry above),
       # not the bare "minio" service alias (ambiguous on that shared
       # network once a second stack also names its service "minio") and
       # not the container_name portfolio_minio (underscore — the minio-go
       # SDK rejects that as an invalid hostname).
+=======
+      # container_name, not the bare "minio" service alias — that alias is
+      # ambiguous on the shared external `proxy` network once a second
+      # stack (e.g. docker-compose.aditya.yml) also names its minio
+      # service "minio" and joins the same network; the container name is
+      # unique host-wide and always resolves to this exact container.
+      # Hyphenated, not underscored: MinIO's server-side Host-header
+      # validation rejects underscores as an "invalid hostname" even
+      # though Docker's own DNS resolves them fine — cost us a boot loop.
+>>>>>>> 564b14f (update docker compose files)
       MINIO_ENDPOINT: portfolio-minio:9000
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}

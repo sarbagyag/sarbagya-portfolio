@@ -30,7 +30,7 @@ services:
 
   minio:
     image: minio/minio:latest
-    container_name: aditya_portfolio_minio
+    container_name: aditya-portfolio-minio
     restart: unless-stopped
     command: server /data --console-address ":9001"
     environment:
@@ -71,11 +71,19 @@ services:
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+<<<<<<< HEAD
       # Hyphenated network alias (declared on minio's `proxy` entry above)
       # — not the bare "minio" service alias (collides with the original
       # stack's own "minio" service on the shared `proxy` network) and not
       # the container_name aditya_portfolio_minio (underscore — the
       # minio-go SDK rejects that as an invalid hostname).
+=======
+      # container_name, not the bare "minio" service alias — see the same
+      # comment in docker-compose.yml. That alias collides with this
+      # stack's own "minio" service name once both join the shared
+      # external `proxy` network. Hyphenated, not underscored — see the
+      # same comment in docker-compose.yml.
+>>>>>>> 564b14f (update docker compose files)
       MINIO_ENDPOINT: aditya-portfolio-minio:9000
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
