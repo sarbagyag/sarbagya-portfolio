@@ -57,9 +57,16 @@ func New(endpoint, accessKey, secretKey, bucket, publicBase string, useSSL bool)
 		if err := mc.MakeBucket(ctx, bucket, minio.MakeBucketOptions{}); err != nil {
 			return nil, fmt.Errorf("create bucket: %w", err)
 		}
-		if err := mc.SetBucketPolicy(ctx, bucket, publicReadPolicy(bucket)); err != nil {
-			return nil, fmt.Errorf("set bucket policy: %w", err)
-		}
+	}
+	// Asserted on every boot, not just when the bucket is first created —
+	// a bucket that already existed (e.g. created by an earlier boot that
+	// crashed between MakeBucket and this call, which is exactly what a
+	// restart-loop or a --force-recreate mid-init can produce) would
+	// otherwise silently stay private forever, since nothing else ever
+	// re-applies the policy. SetBucketPolicy is idempotent, so this is a
+	// no-op on every normal boot once it's already public.
+	if err := mc.SetBucketPolicy(ctx, bucket, publicReadPolicy(bucket)); err != nil {
+		return nil, fmt.Errorf("set bucket policy: %w", err)
 	}
 
 	return c, nil
