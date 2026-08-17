@@ -1,0 +1,89 @@
+# Second instance of the same backend, deployed for Aditya on
+# timal.mandalafoods.co, running alongside the original portfolio stack on
+# the same Traefik + Docker host. Same pattern as docker-compose.yml, with
+# every name (containers, volumes, network) made unique so both stacks can
+# coexist on one machine without colliding.
+#
+# Deploy from the SAME repo checkout as docker-compose.yml (it reuses
+# ./server), but with its own env file and compose project name so it's
+# tracked separately from the original stack:
+#
+#   docker compose -f docker-compose.aditya.yml -p aditya-portfolio \
+#     --env-file .env.aditya up -d --build
+#
+# Single domain, path-routed: https://timal.mandalafoods.co/api/*   -> api
+#                              https://timal.mandalafoods.co/media/* -> minio
+
+services:
+  db:
+    image: postgres:16
+    container_name: aditya_portfolio_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ./db-aditya:/var/lib/postgresql/data
+    networks:
+      - aditya_portfolio_internal
+
+  minio:
+    image: minio/minio:latest
+    container_name: aditya_portfolio_minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+    volumes:
+      - ./minio-data-aditya:/data
+    networks:
+      - proxy
+      - aditya_portfolio_internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.aditya-portfolio-media.rule=Host(`${PORTFOLIO_DOMAIN}`) && PathPrefix(`/media`)"
+      - "traefik.http.routers.aditya-portfolio-media.entrypoints=websecure"
+      - "traefik.http.routers.aditya-portfolio-media.tls.certresolver=le"
+      - "traefik.http.services.aditya-portfolio-media.loadbalancer.server.port=9000"
+      - "traefik.docker.network=proxy"
+    # MinIO's admin console (:9001) is deliberately not exposed via Traefik —
+    # reach it with `docker compose exec minio ...` or an SSH tunnel if needed.
+
+  api:
+    build: ./server
+    container_name: aditya_portfolio_api
+    restart: unless-stopped
+    depends_on:
+      - db
+      - minio
+    environment:
+      PORT: 8080
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?sslmode=disable
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      MINIO_BUCKET: ${MINIO_BUCKET}
+      MINIO_USE_SSL: "false"
+      MINIO_PUBLIC_URL: https://${PORTFOLIO_DOMAIN}
+    networks:
+      - proxy
+      - aditya_portfolio_internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.aditya-portfolio-api.rule=Host(`${PORTFOLIO_DOMAIN}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.aditya-portfolio-api.entrypoints=websecure"
+      - "traefik.http.routers.aditya-portfolio-api.tls.certresolver=le"
+      - "traefik.http.services.aditya-portfolio-api.loadbalancer.server.port=8080"
+      - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true
+  aditya_portfolio_internal:
+    driver: bridge
