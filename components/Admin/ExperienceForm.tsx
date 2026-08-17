@@ -160,7 +160,7 @@ export default function ExperienceForm({
 
         <div className="space-y-4">
           {subRoles.map((sr, index) => (
-            <div key={index} className="p-4 rounded-lg border border-border-color bg-bg-secondary space-y-3">
+            <div key={index} className="p-4 border border-border-color bg-bg-secondary space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-text-tertiary uppercase tracking-wide">
                   Sub-role {index + 1}
@@ -180,25 +180,25 @@ export default function ExperienceForm({
                   placeholder="Title"
                   value={sr.title}
                   onChange={(e) => updateSubRole(index, "title", e.target.value)}
-                  className="px-3 py-1.5 bg-bg-primary border border-border-color rounded-md text-sm text-text-primary"
+                  className="px-3 py-1.5 bg-bg-primary border border-border-color text-sm text-text-primary"
                 />
                 <input
                   placeholder="Company"
                   value={sr.company}
                   onChange={(e) => updateSubRole(index, "company", e.target.value)}
-                  className="px-3 py-1.5 bg-bg-primary border border-border-color rounded-md text-sm text-text-primary"
+                  className="px-3 py-1.5 bg-bg-primary border border-border-color text-sm text-text-primary"
                 />
                 <input
                   placeholder="Start (YYYY-MM)"
                   value={sr.startDate}
                   onChange={(e) => updateSubRole(index, "startDate", e.target.value)}
-                  className="px-3 py-1.5 bg-bg-primary border border-border-color rounded-md text-sm text-text-primary"
+                  className="px-3 py-1.5 bg-bg-primary border border-border-color text-sm text-text-primary"
                 />
                 <input
                   placeholder="End (blank = present)"
                   value={sr.endDate}
                   onChange={(e) => updateSubRole(index, "endDate", e.target.value)}
-                  className="px-3 py-1.5 bg-bg-primary border border-border-color rounded-md text-sm text-text-primary"
+                  className="px-3 py-1.5 bg-bg-primary border border-border-color text-sm text-text-primary"
                 />
               </div>
               <textarea
@@ -206,28 +206,28 @@ export default function ExperienceForm({
                 value={sr.description}
                 onChange={(e) => updateSubRole(index, "description", e.target.value)}
                 rows={2}
-                className="w-full px-3 py-1.5 bg-bg-primary border border-border-color rounded-md text-sm text-text-primary resize-y"
+                className="w-full px-3 py-1.5 bg-bg-primary border border-border-color text-sm text-text-primary resize-y"
               />
               <textarea
                 placeholder="Responsibilities (one per line)"
                 value={sr.responsibilities}
                 onChange={(e) => updateSubRole(index, "responsibilities", e.target.value)}
                 rows={2}
-                className="w-full px-3 py-1.5 bg-bg-primary border border-border-color rounded-md text-sm text-text-primary resize-y"
+                className="w-full px-3 py-1.5 bg-bg-primary border border-border-color text-sm text-text-primary resize-y"
               />
               <textarea
                 placeholder="Technologies (one per line)"
                 value={sr.technologies}
                 onChange={(e) => updateSubRole(index, "technologies", e.target.value)}
                 rows={2}
-                className="w-full px-3 py-1.5 bg-bg-primary border border-border-color rounded-md text-sm text-text-primary resize-y"
+                className="w-full px-3 py-1.5 bg-bg-primary border border-border-color text-sm text-text-primary resize-y"
               />
               <textarea
                 placeholder="Achievements (one per line)"
                 value={sr.achievements}
                 onChange={(e) => updateSubRole(index, "achievements", e.target.value)}
                 rows={2}
-                className="w-full px-3 py-1.5 bg-bg-primary border border-border-color rounded-md text-sm text-text-primary resize-y"
+                className="w-full px-3 py-1.5 bg-bg-primary border border-border-color text-sm text-text-primary resize-y"
               />
             </div>
           ))}

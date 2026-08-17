@@ -102,13 +102,13 @@ export default function ShowcaseForm({
                 placeholder="Name"
                 value={item.name}
                 onChange={(e) => updateItem(index, "name", e.target.value)}
-                className="flex-1 px-3 py-1.5 bg-bg-primary border border-border-color rounded-md text-sm text-text-primary"
+                className="flex-1 px-3 py-1.5 bg-bg-primary border border-border-color text-sm text-text-primary"
               />
               <input
                 placeholder="URL"
                 value={item.url}
                 onChange={(e) => updateItem(index, "url", e.target.value)}
-                className="flex-1 px-3 py-1.5 bg-bg-primary border border-border-color rounded-md text-sm text-text-primary"
+                className="flex-1 px-3 py-1.5 bg-bg-primary border border-border-color text-sm text-text-primary"
               />
               <button
                 type="button"

@@ -54,7 +54,7 @@ export default function AdminDashboardLayout({ children }: { children: React.Rea
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center gap-3 px-3 py-2 text-sm font-medium transition-colors ${
                   isActive(item.href)
                     ? "bg-link-subtle text-link"
                     : "text-text-secondary hover:bg-bg-secondary hover:text-text-primary"
@@ -70,7 +70,7 @@ export default function AdminDashboardLayout({ children }: { children: React.Rea
         <form action={signOut} className="p-3 border-t border-border-color">
           <button
             type="submit"
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-text-secondary hover:bg-bg-secondary hover:text-carbon-support-error transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-text-secondary hover:bg-bg-secondary hover:text-carbon-support-error transition-colors"
           >
             <LogOut size={16} />
             Sign out

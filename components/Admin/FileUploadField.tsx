@@ -64,7 +64,7 @@ export default function FileUploadField({
         <img
           src={value}
           alt=""
-          className="w-20 h-20 object-cover rounded-lg border border-border-color mb-2"
+          className="w-20 h-20 object-cover border border-border-color mb-2"
         />
       )}
 
@@ -76,21 +76,21 @@ export default function FileUploadField({
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="https://... or upload a file"
-          className="flex-1 min-w-0 px-3.5 py-2 bg-bg-primary border border-border-color rounded-lg text-text-primary text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+          className="flex-1 min-w-0 px-3.5 py-2 bg-bg-primary border border-border-color text-text-primary text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
         />
 
         {value && (
           <button
             type="button"
             onClick={() => setValue("")}
-            className="p-2 rounded-lg text-text-secondary hover:text-carbon-support-error transition-colors shrink-0"
+            className="p-2 text-text-secondary hover:text-carbon-support-error transition-colors shrink-0"
             aria-label="Clear"
           >
             <X size={16} />
           </button>
         )}
 
-        <label className="inline-flex items-center gap-1.5 px-3 py-2 bg-bg-secondary border border-border-color rounded-lg text-sm font-medium text-text-secondary hover:text-link hover:border-primary-400 transition-colors cursor-pointer shrink-0">
+        <label className="inline-flex items-center gap-1.5 px-3 py-2 bg-bg-secondary border border-border-color text-sm font-medium text-text-secondary hover:text-link hover:border-primary-500 transition-colors cursor-pointer shrink-0">
           {uploading ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
           {uploading ? "Uploading…" : "Upload"}
           <input

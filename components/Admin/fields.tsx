@@ -33,7 +33,7 @@ export function Field({ label, name, defaultValue, type = "text", required, plac
         required={required}
         placeholder={placeholder}
         readOnly={readOnly}
-        className={`w-full px-3.5 py-2 border border-border-color rounded-lg text-text-primary text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
+        className={`w-full px-3.5 py-2 border border-border-color text-text-primary text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
           readOnly ? "bg-bg-secondary text-text-tertiary cursor-not-allowed" : "bg-bg-primary"
         }`}
       />
@@ -59,7 +59,7 @@ export function TextAreaField({ label, name, defaultValue, required, placeholder
         required={required}
         placeholder={placeholder}
         rows={rows}
-        className="w-full px-3.5 py-2 bg-bg-primary border border-border-color rounded-lg text-text-primary text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-y"
+        className="w-full px-3.5 py-2 bg-bg-primary border border-border-color text-text-primary text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-y"
       />
       {hint && <p className="text-xs text-text-tertiary mt-1">{hint}</p>}
     </div>
@@ -104,7 +104,7 @@ export function SelectField({ label, name, defaultValue, options, required, plac
         name={name}
         defaultValue={defaultValue ?? ""}
         required={required}
-        className="w-full px-3.5 py-2 bg-bg-primary border border-border-color rounded-lg text-text-primary text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+        className="w-full px-3.5 py-2 bg-bg-primary border border-border-color text-text-primary text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
       >
         {placeholder && <option value="">{placeholder}</option>}
         {options.map((opt) => (
@@ -133,7 +133,7 @@ export function CheckboxField({
         name={name}
         type="checkbox"
         defaultChecked={defaultChecked}
-        className="w-4 h-4 rounded border-border-color accent-primary-600"
+        className="w-4 h-4 border-border-color accent-primary-600"
       />
       {label}
     </label>

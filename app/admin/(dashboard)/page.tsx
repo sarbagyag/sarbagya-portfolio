@@ -31,7 +31,7 @@ export default async function AdminDashboardPage() {
             <Link
               key={stat.href}
               href={stat.href}
-              className="p-5 rounded-xl border border-border-color bg-bg-card hover:border-primary-400 transition-colors"
+              className="p-5 border border-border-color bg-bg-card hover:border-primary-500 transition-colors"
             >
               <Icon size={18} className="text-link mb-3" />
               <p className="text-2xl font-bold text-text-primary">{stat.value}</p>

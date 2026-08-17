@@ -26,7 +26,7 @@ export default async function AdminEducationPage() {
         {items.map((item) => (
           <div
             key={item.id}
-            className="flex items-center justify-between p-4 rounded-lg border border-border-color bg-bg-card"
+            className="flex items-center justify-between p-4 border border-border-color bg-bg-card"
           >
             <div className="min-w-0">
               <p className="font-semibold text-text-primary truncate">{item.degree}</p>
@@ -35,7 +35,7 @@ export default async function AdminEducationPage() {
             <div className="flex items-center gap-1 shrink-0 ml-4">
               <Link
                 href={`/admin/education/${item.id}`}
-                className="p-2 rounded-lg text-text-secondary hover:text-link hover:bg-link-subtle transition-colors"
+                className="p-2 text-text-secondary hover:text-link hover:bg-link-subtle transition-colors"
                 aria-label="Edit"
               >
                 <Pencil size={16} />

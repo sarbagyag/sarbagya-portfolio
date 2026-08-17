@@ -16,7 +16,7 @@ export default async function AdminMessagesPage() {
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`p-4 rounded-lg border ${
+            className={`p-4 border ${
               msg.read ? "border-border-color bg-bg-card" : "border-primary-400 bg-link-subtle"
             }`}
           >
@@ -48,7 +48,7 @@ export default async function AdminMessagesPage() {
                   <form action={markMessageRead.bind(null, msg.id)}>
                     <button
                       type="submit"
-                      className="p-2 rounded-lg text-text-secondary hover:text-link hover:bg-link-subtle transition-colors"
+                      className="p-2 text-text-secondary hover:text-link hover:bg-link-subtle transition-colors"
                       aria-label="Mark as read"
                     >
                       <MailOpen size={16} />

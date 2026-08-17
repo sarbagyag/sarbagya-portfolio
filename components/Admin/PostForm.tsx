@@ -70,7 +70,7 @@ export default function PostForm({
             <button
               type="button"
               onClick={() => setTab("write")}
-              className={`px-2.5 py-1 rounded-md transition-colors ${
+              className={`px-2.5 py-1 transition-colors ${
                 tab === "write" ? "bg-link-subtle text-link" : "text-text-secondary hover:text-text-primary"
               }`}
             >
@@ -79,7 +79,7 @@ export default function PostForm({
             <button
               type="button"
               onClick={() => setTab("preview")}
-              className={`px-2.5 py-1 rounded-md transition-colors ${
+              className={`px-2.5 py-1 transition-colors ${
                 tab === "preview" ? "bg-link-subtle text-link" : "text-text-secondary hover:text-text-primary"
               }`}
             >
@@ -96,14 +96,14 @@ export default function PostForm({
             onChange={(e) => setContent(e.target.value)}
             required
             rows={18}
-            className="w-full px-3.5 py-2.5 bg-bg-primary border border-border-color rounded-lg text-text-primary text-sm font-mono focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-y"
+            className="w-full px-3.5 py-2.5 bg-bg-primary border border-border-color text-text-primary text-sm font-mono focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-y"
             placeholder="Markdown supported (headings, lists, code blocks, links...)"
           />
         ) : (
           <>
             {/* Hidden so the value still submits while the preview tab is showing */}
             <input type="hidden" name="contentMarkdown" value={content} />
-            <div className="min-h-[24rem] px-3.5 py-2.5 bg-bg-primary border border-border-color rounded-lg prose-carbon">
+            <div className="min-h-[24rem] px-3.5 py-2.5 bg-bg-primary border border-border-color prose-carbon">
               {content ? (
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
               ) : (

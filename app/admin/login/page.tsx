@@ -11,13 +11,13 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-bg-primary px-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
-          <div className="p-3 rounded-full bg-link-subtle text-link mb-4">
+          <div className="p-3 bg-link-subtle text-link mb-4">
             <Lock size={24} />
           </div>
           <h1 className="text-xl font-bold text-text-primary">Admin Login</h1>
         </div>
 
-        <form action={formAction} className="bg-bg-card border border-border-color rounded-xl p-6 space-y-4">
+        <form action={formAction} className="bg-bg-card border border-border-color p-6 space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-semibold text-text-primary mb-2">
               Email
@@ -28,7 +28,7 @@ export default function AdminLoginPage() {
               type="email"
               required
               autoComplete="email"
-              className="w-full px-4 py-2.5 bg-bg-primary border border-border-color rounded-lg text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-2.5 bg-bg-primary border border-border-color text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
             />
           </div>
 
@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
               type="password"
               required
               autoComplete="current-password"
-              className="w-full px-4 py-2.5 bg-bg-primary border border-border-color rounded-lg text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-2.5 bg-bg-primary border border-border-color text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
             />
           </div>
 
