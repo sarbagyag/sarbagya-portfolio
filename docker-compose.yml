@@ -33,8 +33,18 @@ services:
     volumes:
       - ./minio-data:/data
     networks:
-      - proxy
-      - portfolio_internal
+      proxy:
+        # Hyphenated, not the container_name (portfolio_minio) — the
+        # minio-go SDK validates its endpoint against strict RFC-1123
+        # hostname rules and rejects underscores outright ("invalid
+        # hostname"), even though Docker's own DNS resolves underscored
+        # container names just fine. Also not the bare default "minio"
+        # alias Compose would otherwise register here — that's ambiguous
+        # on this shared external network once a second stack (e.g.
+        # docker-compose.aditya.yml) also names its service "minio".
+        aliases:
+          - portfolio-minio
+      portfolio_internal: {}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.portfolio-media.rule=Host(`${PORTFOLIO_DOMAIN}`) && PathPrefix(`/media`)"
@@ -59,12 +69,12 @@ services:
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
-      # container_name, not the bare "minio" service alias — that alias is
-      # ambiguous on the shared external `proxy` network once a second
-      # stack (e.g. docker-compose.aditya.yml) also names its minio
-      # service "minio" and joins the same network; the container name is
-      # unique host-wide and always resolves to this exact container.
-      MINIO_ENDPOINT: portfolio_minio:9000
+      # Hyphenated network alias (declared on minio's `proxy` entry above),
+      # not the bare "minio" service alias (ambiguous on that shared
+      # network once a second stack also names its service "minio") and
+      # not the container_name portfolio_minio (underscore — the minio-go
+      # SDK rejects that as an invalid hostname).
+      MINIO_ENDPOINT: portfolio-minio:9000
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
       MINIO_BUCKET: ${MINIO_BUCKET}
