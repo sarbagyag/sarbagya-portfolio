@@ -5,9 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Field, TextAreaField, ArrayField, SelectField, SubmitButton } from "@/components/Admin/fields";
 import FileUploadField from "@/components/Admin/FileUploadField";
-import type { posts as postsTable } from "@/db/schema";
-
-type Post = typeof postsTable.$inferSelect;
+import type { Post } from "@/lib/api/types";
 type ActionState = { error?: string } | undefined;
 
 export default function PostForm({

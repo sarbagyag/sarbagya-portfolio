@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Briefcase, FolderGit2, FileEdit, Mail } from "lucide-react";
-import { getExperience, getProjects, getAllPosts, getUnreadMessageCount } from "@/db/queries";
+import { getExperience, getProjects, getAllPosts, getUnreadMessageCount } from "@/lib/api/queries";
 
 export const dynamic = "force-dynamic";
 

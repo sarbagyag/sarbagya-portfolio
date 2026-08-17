@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PostDetail from "@/components/Sections/PostDetail";
-import { getPostBySlug } from "@/db/queries";
+import { getPostBySlug } from "@/lib/api/queries";
 
 export const dynamic = "force-dynamic";
 

@@ -5,9 +5,7 @@ import { Mail, Github, Linkedin, MapPin, Send, FileText } from "lucide-react";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 import { submitContactMessage } from "../../app/contact/actions";
-import type { profile as profileTable } from "@/db/schema";
-
-type Profile = typeof profileTable.$inferSelect;
+import type { Profile } from "@/lib/api/types";
 
 const Contact: React.FC<{ profile: Profile }> = ({ profile }) => {
   const [formData, setFormData] = useState({

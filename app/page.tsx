@@ -1,6 +1,6 @@
 import Hero from "@/components/Sections/Hero";
 import SiteOverview from "@/components/Sections/SiteOverview";
-import { getProfile } from "@/db/queries";
+import { getProfile } from "@/lib/api/queries";
 
 export const dynamic = "force-dynamic";
 

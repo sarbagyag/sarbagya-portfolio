@@ -3,10 +3,7 @@
 import React from "react";
 import { BookOpen, Languages } from "lucide-react";
 import Card from "../UI/Card";
-import type { education as educationTable, skills as skillsTable } from "@/db/schema";
-
-type Education = typeof educationTable.$inferSelect;
-type Skill = typeof skillsTable.$inferSelect;
+import type { Education, Skill } from "@/lib/api/types";
 type Language = { name: string; level: string };
 
 interface AboutProps {

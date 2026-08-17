@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ProjectDetail from "@/components/Sections/ProjectDetail";
-import { getProjectById } from "@/db/queries";
+import { getProjectById } from "@/lib/api/queries";
 
 export const dynamic = "force-dynamic";
 

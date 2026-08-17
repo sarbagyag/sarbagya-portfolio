@@ -4,9 +4,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
 import Card from "@/components/UI/Card";
-import type { posts as postsTable } from "@/db/schema";
-
-type Post = typeof postsTable.$inferSelect;
+import type { Post } from "@/lib/api/types";
 
 interface PostListProps {
   posts: Post[];
@@ -46,8 +44,8 @@ export default function PostList({ posts, basePath, title, subtitle, emptyMessag
                     <div className="flex items-center gap-2 text-xs text-text-tertiary mb-3">
                       <Calendar size={14} />
                       {post.publishedAt && (
-                        <time dateTime={post.publishedAt.toISOString()}>
-                          {post.publishedAt.toLocaleDateString("en-US", {
+                        <time dateTime={post.publishedAt}>
+                          {new Date(post.publishedAt).toLocaleDateString("en-US", {
                             year: "numeric",
                             month: "long",
                             day: "numeric",

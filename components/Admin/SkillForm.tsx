@@ -2,9 +2,7 @@
 
 import { useActionState } from "react";
 import { Field, ArrayField, SelectField, SubmitButton } from "@/components/Admin/fields";
-import type { skills as skillsTable } from "@/db/schema";
-
-type Skill = typeof skillsTable.$inferSelect;
+import type { Skill } from "@/lib/api/types";
 type ActionState = { error?: string } | undefined;
 
 export default function SkillForm({

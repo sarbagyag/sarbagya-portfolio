@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Projects from "@/components/Sections/Projects";
-import { getProjects } from "@/db/queries";
+import { getProjects } from "@/lib/api/queries";
 
 export const metadata: Metadata = { title: "Projects" };
 export const dynamic = "force-dynamic";

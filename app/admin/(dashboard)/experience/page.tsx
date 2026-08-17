@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Plus, Pencil } from "lucide-react";
 import DeleteButton from "@/components/Admin/DeleteButton";
-import { getExperience } from "@/db/queries";
+import { getExperience } from "@/lib/api/queries";
 import { deleteExperience } from "./actions";
 
 export const dynamic = "force-dynamic";

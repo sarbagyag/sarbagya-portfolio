@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PostList from "@/components/Sections/PostList";
-import { getPublishedPostsByType } from "@/db/queries";
+import { getPublishedPostsByType } from "@/lib/api/queries";
 
 export const metadata: Metadata = { title: "Blog" };
 export const dynamic = "force-dynamic";

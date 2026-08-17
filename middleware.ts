@@ -1,53 +1,33 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { ADMIN_TOKEN_COOKIE } from "@/lib/api/constants";
 
-type CookieToSet = { name: string; value: string; options: CookieOptions };
-
-// Protects /admin/* — redirects to /admin/login when there's no session,
-// and bounces an already-logged-in visitor away from /admin/login.
-// This is the only auth gate: single seeded admin user, no public signup.
-export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({ request });
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet: CookieToSet[]) {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
-          response = NextResponse.next({ request });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
-          );
-        },
-      },
-    }
-  );
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+// Protects /admin/* — redirects to /admin/login when there's no session
+// cookie, and bounces an already-logged-in visitor away from /admin/login.
+// This is a UX gate only, not the security boundary: the cookie's presence
+// is all that's checked here (no JWT signature verification at the edge —
+// that would need the JWT secret available to the Vercel deployment too).
+// The Go API re-validates the token's signature on every /api/admin/*
+// call regardless, so a forged/expired cookie just gets a 401 there,
+// which lib/api/server.ts's adminFetch turns into a redirect right back
+// to /admin/login. Single seeded admin user, no public signup.
+export function middleware(request: NextRequest) {
+  const hasToken = Boolean(request.cookies.get(ADMIN_TOKEN_COOKIE)?.value);
   const { pathname } = request.nextUrl;
   const isLoginPage = pathname === "/admin/login";
 
-  if (pathname.startsWith("/admin") && !isLoginPage && !user) {
+  if (pathname.startsWith("/admin") && !isLoginPage && !hasToken) {
     const url = request.nextUrl.clone();
     url.pathname = "/admin/login";
     return NextResponse.redirect(url);
   }
 
-  if (isLoginPage && user) {
+  if (isLoginPage && hasToken) {
     const url = request.nextUrl.clone();
     url.pathname = "/admin";
     return NextResponse.redirect(url);
   }
 
-  return response;
+  return NextResponse.next();
 }
 
 export const config = {

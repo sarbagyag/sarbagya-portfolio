@@ -12,9 +12,7 @@ import {
   Instagram,
 } from "lucide-react";
 import Button from "../UI/Button";
-import type { profile as profileTable } from "@/db/schema";
-
-type Profile = typeof profileTable.$inferSelect;
+import type { Profile } from "@/lib/api/types";
 
 const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
   const containerVariants = {

@@ -4,9 +4,7 @@ import { useActionState } from "react";
 import { Field, TextAreaField, ArrayField, SubmitButton } from "@/components/Admin/fields";
 import FileUploadField from "@/components/Admin/FileUploadField";
 import { updateProfile } from "@/app/admin/(dashboard)/profile/actions";
-import type { profile as profileTable } from "@/db/schema";
-
-type Profile = typeof profileTable.$inferSelect;
+import type { Profile } from "@/lib/api/types";
 
 export default function ProfileForm({ profile }: { profile: Profile | null }) {
   const [state, formAction] = useActionState(updateProfile, undefined);

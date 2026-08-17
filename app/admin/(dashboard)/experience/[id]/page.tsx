@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import ExperienceForm from "@/components/Admin/ExperienceForm";
-import { getExperienceById } from "@/db/queries";
+import { getExperienceById } from "@/lib/api/queries";
 import { updateExperience } from "../actions";
 
 export const dynamic = "force-dynamic";

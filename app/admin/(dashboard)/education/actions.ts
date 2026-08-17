@@ -2,8 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { eq } from "drizzle-orm";
-import { db, education } from "@/db";
+import { adminFetch, ApiError } from "@/lib/api/server";
+import { getEducationById } from "@/lib/api/queries";
 import { educationSchema } from "@/lib/validations";
 
 function revalidateEducationPages() {
@@ -18,19 +18,28 @@ export async function createEducation(_prevState: { error?: string } | undefined
     return { error: parsed.error.issues[0]?.message ?? "Invalid input." };
   }
 
-  const existing = await db.select().from(education).where(eq(education.id, parsed.data.id)).limit(1);
-  if (existing[0]) {
+  // The Go API upserts by id — do the "already exists" check here to keep
+  // create from silently overwriting an existing entry.
+  const existing = await getEducationById(parsed.data.id);
+  if (existing) {
     return { error: `An education entry with id "${parsed.data.id}" already exists.` };
   }
 
-  await db.insert(education).values({
-    ...parsed.data,
-    endDate: parsed.data.endDate || null,
-    gpa: parsed.data.gpa || null,
-    location: parsed.data.location || null,
-    description: parsed.data.description || null,
-    thesis: parsed.data.thesis || null,
-  });
+  try {
+    await adminFetch("/api/admin/education", {
+      method: "POST",
+      body: JSON.stringify({
+        ...parsed.data,
+        endDate: parsed.data.endDate || null,
+        gpa: parsed.data.gpa || null,
+        location: parsed.data.location || null,
+        description: parsed.data.description || null,
+        thesis: parsed.data.thesis || null,
+      }),
+    });
+  } catch (err) {
+    return { error: err instanceof ApiError ? err.message : "Failed to create education entry." };
+  }
 
   revalidateEducationPages();
   redirect("/admin/education");
@@ -43,23 +52,27 @@ export async function updateEducation(id: string, _prevState: { error?: string }
     return { error: parsed.error.issues[0]?.message ?? "Invalid input." };
   }
 
-  await db
-    .update(education)
-    .set({
-      ...parsed.data,
-      endDate: parsed.data.endDate || null,
-      gpa: parsed.data.gpa || null,
-      location: parsed.data.location || null,
-      description: parsed.data.description || null,
-      thesis: parsed.data.thesis || null,
-    })
-    .where(eq(education.id, id));
+  try {
+    await adminFetch(`/api/admin/education/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        ...parsed.data,
+        endDate: parsed.data.endDate || null,
+        gpa: parsed.data.gpa || null,
+        location: parsed.data.location || null,
+        description: parsed.data.description || null,
+        thesis: parsed.data.thesis || null,
+      }),
+    });
+  } catch (err) {
+    return { error: err instanceof ApiError ? err.message : "Failed to update education entry." };
+  }
 
   revalidateEducationPages();
   redirect("/admin/education");
 }
 
 export async function deleteEducation(id: string) {
-  await db.delete(education).where(eq(education.id, id));
+  await adminFetch(`/api/admin/education/${id}`, { method: "DELETE" });
   revalidateEducationPages();
 }

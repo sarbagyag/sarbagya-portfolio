@@ -1,10 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
-import { db, profile } from "@/db";
+import { adminFetch, ApiError } from "@/lib/api/server";
 import { profileSchema } from "@/lib/validations";
-import { deleteStorageFileIfChanged } from "@/lib/supabase/storage";
 
 export async function updateProfile(_prevState: { error?: string; success?: boolean } | undefined, formData: FormData) {
   const raw = Object.fromEntries(formData.entries());
@@ -14,18 +12,16 @@ export async function updateProfile(_prevState: { error?: string; success?: bool
     return { error: parsed.error.issues[0]?.message ?? "Invalid input." };
   }
 
-  const existing = await db.select().from(profile).where(eq(profile.id, 1)).limit(1);
-  // Avatar/resume replaced or cleared — clean up the old file in Storage.
-  await deleteStorageFileIfChanged(existing[0]?.avatarUrl, parsed.data.avatarUrl || null);
-  await deleteStorageFileIfChanged(existing[0]?.resumeUrl, parsed.data.resumeUrl || null);
-
-  await db
-    .insert(profile)
-    .values({ id: 1, ...parsed.data, updatedAt: new Date() })
-    .onConflictDoUpdate({
-      target: profile.id,
-      set: { ...parsed.data, updatedAt: new Date() },
+  try {
+    // The Go API deletes the old avatar/resume file in MinIO itself when a
+    // replaced or cleared URL comes through — no client-side cleanup needed.
+    await adminFetch("/api/admin/profile", {
+      method: "PUT",
+      body: JSON.stringify(parsed.data),
     });
+  } catch (err) {
+    return { error: err instanceof ApiError ? err.message : "Failed to save profile." };
+  }
 
   // Profile data appears on the homepage hero, about, and contact pages.
   revalidatePath("/");

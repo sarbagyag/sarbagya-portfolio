@@ -2,9 +2,7 @@
 
 import { useActionState } from "react";
 import { Field, TextAreaField, ArrayField, SubmitButton } from "@/components/Admin/fields";
-import type { education as educationTable } from "@/db/schema";
-
-type Education = typeof educationTable.$inferSelect;
+import type { Education } from "@/lib/api/types";
 type ActionState = { error?: string } | undefined;
 
 export default function EducationForm({

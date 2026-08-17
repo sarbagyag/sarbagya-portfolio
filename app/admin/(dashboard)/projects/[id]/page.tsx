@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import ProjectForm from "@/components/Admin/ProjectForm";
-import { getProjectById } from "@/db/queries";
+import { getProjectById } from "@/lib/api/queries";
 import { updateProject } from "../actions";
 
 export const dynamic = "force-dynamic";

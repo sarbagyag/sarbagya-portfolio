@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import { ArrowLeft, Github, ExternalLink, FileText, TrendingUp, Calendar } from "lucide-react";
-import type { projects as projectsTable } from "@/db/schema";
-
-type Project = typeof projectsTable.$inferSelect;
+import type { Project } from "@/lib/api/types";
 
 export default function ProjectDetail({ project }: { project: Project }) {
   return (

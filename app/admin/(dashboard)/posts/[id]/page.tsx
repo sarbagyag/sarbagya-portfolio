@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import PostForm from "@/components/Admin/PostForm";
-import { getPostById } from "@/db/queries";
+import { getPostById } from "@/lib/api/queries";
 import { updatePost } from "../actions";
 
 export const dynamic = "force-dynamic";

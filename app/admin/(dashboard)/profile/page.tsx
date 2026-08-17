@@ -1,5 +1,5 @@
 import ProfileForm from "@/components/Admin/ProfileForm";
-import { getProfile } from "@/db/queries";
+import { getProfile } from "@/lib/api/queries";
 
 export const dynamic = "force-dynamic";
 

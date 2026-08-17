@@ -5,9 +5,7 @@ import Link from "next/link";
 import { Github, ExternalLink, TrendingUp, ArrowUpRight } from "lucide-react";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
-import type { projects as projectsTable } from "@/db/schema";
-
-type Project = typeof projectsTable.$inferSelect;
+import type { Project } from "@/lib/api/types";
 
 const Projects: React.FC<{ projects: Project[] }> = ({ projects }) => {
   const [filter, setFilter] = useState<"all" | "featured">("featured");

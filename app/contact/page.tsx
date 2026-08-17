@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Contact from "@/components/Sections/Contact";
-import { getProfile } from "@/db/queries";
+import { getProfile } from "@/lib/api/queries";
 
 export const metadata: Metadata = { title: "Contact" };
 export const dynamic = "force-dynamic";

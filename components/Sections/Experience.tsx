@@ -3,11 +3,7 @@
 import React from "react";
 import { Calendar, MapPin, ExternalLink, Award } from "lucide-react";
 import Card from "../UI/Card";
-import type { experience as experienceTable, experienceSubRoles as experienceSubRolesTable } from "@/db/schema";
-
-type ExperienceEntry = typeof experienceTable.$inferSelect & {
-  subRoles: (typeof experienceSubRolesTable.$inferSelect)[];
-};
+import type { Experience as ExperienceEntry } from "@/lib/api/types";
 
 const getExperienceDuration = (exp: { startDate: string; endDate: string | null }): string => {
   const start = new Date(exp.startDate);

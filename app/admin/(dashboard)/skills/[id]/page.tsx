@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import SkillForm from "@/components/Admin/SkillForm";
-import { getSkillById } from "@/db/queries";
+import { getSkillById } from "@/lib/api/queries";
 import { updateSkill } from "../actions";
 
 export const dynamic = "force-dynamic";

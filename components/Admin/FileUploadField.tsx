@@ -14,8 +14,9 @@ interface FileUploadFieldProps {
 }
 
 // Text field holding a URL (still hand-editable) plus a real upload button
-// that pushes the chosen file to Supabase Storage and fills the field with
-// the resulting public URL. The URL is what actually submits with the form.
+// that pushes the chosen file to the Go API (which stores it in MinIO) and
+// fills the field with the resulting public URL. The URL is what actually
+// submits with the form.
 export default function FileUploadField({
   label,
   name,

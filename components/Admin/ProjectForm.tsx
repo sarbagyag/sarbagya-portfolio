@@ -3,9 +3,7 @@
 import { useActionState } from "react";
 import { Field, TextAreaField, ArrayField, SelectField, CheckboxField, SubmitButton } from "@/components/Admin/fields";
 import FileUploadField from "@/components/Admin/FileUploadField";
-import type { projects as projectsTable } from "@/db/schema";
-
-type Project = typeof projectsTable.$inferSelect;
+import type { Project } from "@/lib/api/types";
 type ActionState = { error?: string } | undefined;
 
 export default function ProjectForm({

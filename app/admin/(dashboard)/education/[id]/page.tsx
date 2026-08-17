@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import EducationForm from "@/components/Admin/EducationForm";
-import { getEducationById } from "@/db/queries";
+import { getEducationById } from "@/lib/api/queries";
 import { updateEducation } from "../actions";
 
 export const dynamic = "force-dynamic";

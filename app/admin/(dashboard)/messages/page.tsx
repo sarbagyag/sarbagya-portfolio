@@ -1,6 +1,6 @@
 import { Mail, MailOpen } from "lucide-react";
 import DeleteButton from "@/components/Admin/DeleteButton";
-import { getContactMessages } from "@/db/queries";
+import { getContactMessages } from "@/lib/api/queries";
 import { markMessageRead, deleteMessage } from "./actions";
 
 export const dynamic = "force-dynamic";

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Plus, Pencil, Star } from "lucide-react";
 import DeleteButton from "@/components/Admin/DeleteButton";
-import { getProjects } from "@/db/queries";
+import { getProjects } from "@/lib/api/queries";
 import { deleteProject } from "./actions";
 
 export const dynamic = "force-dynamic";
