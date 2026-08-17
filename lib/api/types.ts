@@ -27,6 +27,9 @@ export interface Profile {
   resumeUrl: string | null;
   languages: Language[];
   academicSkills: string[];
+  heroRoles: string[];
+  heroMotto: string | null;
+  heroBadge: string | null;
   updatedAt: string; // ISO timestamp
 }
 

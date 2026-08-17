@@ -19,6 +19,27 @@ export default function ProfileForm({ profile }: { profile: Profile | null }) {
       <Field label="Tagline" name="tagline" defaultValue={profile?.tagline} required hint='e.g. "Engineer | Innovator | Artist"' />
       <TextAreaField label="Bio" name="bio" defaultValue={profile?.bio ?? undefined} required rows={4} />
 
+      {/* These three feed the homepage Hero section specifically — the
+          role line, the italic motto under it, and the education badge. */}
+      <ArrayField
+        label="Hero roles"
+        name="heroRoles"
+        defaultValue={profile?.heroRoles}
+        hint='One per line. Shown on the homepage as "Full Stack • AI/ML • ..."'
+      />
+      <Field
+        label="Hero motto"
+        name="heroMotto"
+        defaultValue={profile?.heroMotto ?? undefined}
+        hint="Short italic line under the roles, e.g. a personal motto."
+      />
+      <Field
+        label="Hero badge"
+        name="heroBadge"
+        defaultValue={profile?.heroBadge ?? undefined}
+        hint='The highlighted pill on the homepage, e.g. "B.E. ... • Class of 2025".'
+      />
+
       <div className="grid grid-cols-2 gap-4">
         <Field label="Phone" name="phone" defaultValue={profile?.phone ?? undefined} />
         <Field label="Location" name="location" defaultValue={profile?.location ?? undefined} />

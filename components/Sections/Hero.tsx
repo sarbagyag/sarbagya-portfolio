@@ -82,28 +82,29 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
           <p className="text-xl sm:text-2xl md:text-3xl text-link font-semibold mb-2">
             {profile.tagline}
           </p>
-          <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-3xl mx-auto">
-            Full Stack • AI/ML • Embedded Systems • Edge AI • Music Producer
-          </p>
-          <p className="text-sm sm:text-base md:text-lg text-text-tertiary mt-2 italic">
-            Building things that work and sounds that connect.
-          </p>
+          {profile.heroRoles.length > 0 && (
+            <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-3xl mx-auto">
+              {profile.heroRoles.join(" • ")}
+            </p>
+          )}
+          {profile.heroMotto && (
+            <p className="text-sm sm:text-base md:text-lg text-text-tertiary mt-2 italic">
+              {profile.heroMotto}
+            </p>
+          )}
         </motion.div>
 
         {/* Education Highlight */}
-        <motion.div
-          variants={itemVariants}
-          className="mb-8 sm:mb-12 inline-block"
-        >
-          <div className="px-4 sm:px-6 py-3 bg-bg-card rounded-xl border border-border-color shadow-sm">
-            <p className="text-sm sm:text-base text-text-secondary">
-              <span className="font-semibold text-text-primary">
-                B.E. Electronics, Communication & Information
-              </span>
-              {" • "}IOE, Pulchowk Campus {" • "} Class of 2025
-            </p>
-          </div>
-        </motion.div>
+        {profile.heroBadge && (
+          <motion.div
+            variants={itemVariants}
+            className="mb-8 sm:mb-12 inline-block"
+          >
+            <div className="px-4 sm:px-6 py-3 bg-bg-card rounded-xl border border-border-color shadow-sm">
+              <p className="text-sm sm:text-base text-text-secondary">{profile.heroBadge}</p>
+            </div>
+          </motion.div>
+        )}
 
         {/* CTA Buttons */}
         <motion.div

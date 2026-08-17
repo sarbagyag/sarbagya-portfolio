@@ -27,6 +27,9 @@ type Profile struct {
 	ResumeURL      *string    `json:"resumeUrl"`
 	Languages      []Language `json:"languages"`
 	AcademicSkills []string   `json:"academicSkills"`
+	HeroRoles      []string   `json:"heroRoles"`
+	HeroMotto      *string    `json:"heroMotto"`
+	HeroBadge      *string    `json:"heroBadge"`
 	UpdatedAt      time.Time  `json:"updatedAt"`
 }
 

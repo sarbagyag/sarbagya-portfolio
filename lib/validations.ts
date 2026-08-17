@@ -54,6 +54,9 @@ export const profileSchema = z.object({
   resumeUrl: optionalUrl,
   academicSkills: arrayField,
   languages: languagesField,
+  heroRoles: arrayField,
+  heroMotto: z.string().trim().optional(),
+  heroBadge: z.string().trim().optional(),
 });
 export type ProfileInput = z.infer<typeof profileSchema>;
 
