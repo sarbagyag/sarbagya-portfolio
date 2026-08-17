@@ -42,7 +42,12 @@ func (s *Server) handleListExperience(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	for i := range list {
-		list[i].SubRoles = subRoles[list[i].ID]
+		// A missing map key returns a nil slice, which encodes as JSON
+		// `null` — leave the []ExperienceSubRole{} default from above alone
+		// unless there's actually a non-nil match to overwrite it with.
+		if v, ok := subRoles[list[i].ID]; ok {
+			list[i].SubRoles = v
+		}
 	}
 
 	writeJSON(w, http.StatusOK, list)

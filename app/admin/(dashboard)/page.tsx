@@ -1,13 +1,14 @@
 import Link from "next/link";
-import { Briefcase, FolderGit2, FileEdit, Mail } from "lucide-react";
-import { getExperience, getProjects, getAllPosts, getUnreadMessageCount } from "@/lib/api/queries";
+import { Briefcase, FolderGit2, Rocket, FileEdit, Mail } from "lucide-react";
+import { getExperience, getProjects, getShowcaseCategories, getAllPosts, getUnreadMessageCount } from "@/lib/api/queries";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboardPage() {
-  const [experience, projects, posts, unread] = await Promise.all([
+  const [experience, projects, showcase, posts, unread] = await Promise.all([
     getExperience(),
     getProjects(),
+    getShowcaseCategories(),
     getAllPosts(),
     getUnreadMessageCount(),
   ]);
@@ -15,6 +16,7 @@ export default async function AdminDashboardPage() {
   const stats = [
     { label: "Experience entries", value: experience.length, href: "/admin/experience", icon: Briefcase },
     { label: "Projects", value: projects.length, href: "/admin/projects", icon: FolderGit2 },
+    { label: "Showcase categories", value: showcase.length, href: "/admin/showcase", icon: Rocket },
     { label: "Posts", value: posts.length, href: "/admin/posts", icon: FileEdit },
     { label: "Unread messages", value: unread, href: "/admin/messages", icon: Mail },
   ];

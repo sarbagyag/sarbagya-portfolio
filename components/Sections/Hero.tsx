@@ -40,7 +40,7 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative bg-gradient-to-b from-bg-dark via-link-subtle to-bg-dark px-4 sm:px-6 lg:px-8 overflow-hidden"
+      className="min-h-dvh flex items-center justify-center relative bg-gradient-to-b from-bg-dark via-link-subtle to-bg-dark px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
       <motion.div
         className="max-w-5xl mx-auto text-center pt-32 sm:pt-36 pb-16 relative z-10"

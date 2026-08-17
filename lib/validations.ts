@@ -152,6 +152,31 @@ export const skillSchema = z.object({
 });
 export type SkillInput = z.infer<typeof skillSchema>;
 
+// ---------- showcase ----------
+export const showcaseItemSchema = z.object({
+  name: z.string().trim().min(1, "Required"),
+  url: z.string().trim().min(1, "Required"),
+});
+export type ShowcaseItemInput = z.infer<typeof showcaseItemSchema>;
+
+export const showcaseCategorySchema = z.object({
+  id: z
+    .string()
+    .trim()
+    .min(1, "Required")
+    .regex(/^[a-z0-9-]+$/, "Lowercase letters, numbers, hyphens only"),
+  title: z.string().trim().min(1, "Required"),
+  description: z.string().trim().min(1, "Required"),
+  featuredName: z.string().trim().min(1, "Required"),
+  // Not validated as a strict https:// URL — some entries intentionally use
+  // "#" as a placeholder link (no live site yet).
+  featuredUrl: z.string().trim().min(1, "Required"),
+  featuredImageUrl: optionalUrl,
+  sortOrder: z.coerce.number().int().default(0),
+  items: z.array(showcaseItemSchema).default([]),
+});
+export type ShowcaseCategoryInput = z.infer<typeof showcaseCategorySchema>;
+
 // ---------- posts ----------
 export const postSchema = z.object({
   type: z.enum(["blog", "learning-log"]),

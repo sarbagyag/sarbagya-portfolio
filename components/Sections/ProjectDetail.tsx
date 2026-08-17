@@ -6,7 +6,7 @@ import type { Project } from "@/lib/api/types";
 
 export default function ProjectDetail({ project }: { project: Project }) {
   return (
-    <article className="section py-20 min-h-screen bg-bg-primary">
+    <article className="section py-20 min-h-dvh bg-bg-primary">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div>
           <Link

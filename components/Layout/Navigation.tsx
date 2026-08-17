@@ -32,8 +32,22 @@ const Navigation: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    // rAF-throttled and with hysteresis (different on/off thresholds) —
+    // an unthrottled 1:1 scroll->setState listener re-renders on nearly
+    // every scroll event (mobile fires far more of these than desktop
+    // during momentum scrolling), and a single threshold flickers the
+    // backdrop-blur background on/off as scrollY oscillates around it
+    // during iOS's rubber-band bounce at the top of the page.
+    let ticking = false;
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setIsScrolled((prev) => (prev ? window.scrollY > 4 : window.scrollY > 20));
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

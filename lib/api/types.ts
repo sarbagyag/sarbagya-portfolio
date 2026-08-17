@@ -127,6 +127,27 @@ export interface Post {
   updatedAt: string;
 }
 
+export interface ShowcaseItem {
+  id: string;
+  categoryId: string;
+  name: string;
+  url: string;
+  sortOrder: number;
+}
+
+export interface ShowcaseCategory {
+  id: string;
+  title: string;
+  description: string;
+  featuredName: string;
+  featuredUrl: string;
+  featuredImageUrl: string | null;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+  items: ShowcaseItem[];
+}
+
 export interface ContactMessage {
   id: string;
   name: string;

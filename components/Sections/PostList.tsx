@@ -19,7 +19,7 @@ interface PostListProps {
 // labeled differently per section.
 export default function PostList({ posts, basePath, title, subtitle, emptyMessage }: PostListProps) {
   return (
-    <section className="section py-20 min-h-screen bg-bg-primary">
+    <section className="section py-20 min-h-dvh bg-bg-primary">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h1 className="section-title text-center">{title}</h1>

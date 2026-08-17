@@ -58,6 +58,8 @@ func (s *Server) Router() http.Handler {
 
 		r.Get("/skills", s.handleListSkills)
 
+		r.Get("/showcase", s.handleListShowcase)
+
 		r.Get("/posts", s.handlePublicListPosts)
 		r.Get("/posts/{slug}", s.handleGetPostBySlug)
 
@@ -83,6 +85,10 @@ func (s *Server) Router() http.Handler {
 			r.Post("/skills", s.handleCreateSkill)
 			r.Put("/skills/{id}", s.handleUpdateSkill)
 			r.Delete("/skills/{id}", s.handleDeleteSkill)
+
+			r.Post("/showcase", s.handleCreateShowcase)
+			r.Put("/showcase/{id}", s.handleUpdateShowcase)
+			r.Delete("/showcase/{id}", s.handleDeleteShowcase)
 
 			r.Get("/posts", s.handleAdminListPosts)
 			r.Post("/posts", s.handleCreatePost)

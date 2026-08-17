@@ -3,157 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import { ExternalLink, ArrowRight } from "lucide-react";
+import type { ShowcaseCategory } from "@/lib/api/types";
 
-interface Project {
-  name: string;
-  url: string;
-}
-
-interface ShowcaseCategory {
-  title: string;
-  description: string;
-  featured: {
-    name: string;
-    url: string;
-    image: string;
-  };
-  otherProjects: Project[];
-}
-
-const Showcase: React.FC = () => {
-  const categories: ShowcaseCategory[] = [
-    {
-      title: "n8n Automation",
-      description: "RAG-powered workflow automation and AI agents",
-      featured: {
-        name: "Mandala Foods RAG Chat Engine",
-        url: "https://n8n.mandalafoods.co",
-        image: "/n8n-mandala-rag.png",
-      },
-      otherProjects: [],
-    },
-    {
-      title: "AI Chatbot",
-      description: "Internal AI assistant for operations and knowledge access",
-      featured: {
-        name: "Mandala Internal Support Chatbot",
-        url: "https://internal.mandalafoods.co",
-        image: "/mandala-chatbot.png",
-      },
-      otherProjects: [],
-    },
-    {
-      title: "Task Management",
-      description: "Kanban-style project and task tracking for operations",
-      featured: {
-        name: "Vikunja Task Tracking System",
-        url: "https://tasks.mandalafoods.co",
-        image: "/vikunja-mandala-foods.png",
-      },
-      otherProjects: [],
-    },
-    {
-      title: "Digital Profiles",
-      description: "Modern digital governance platforms for municipalities",
-      featured: {
-        name: "Pokhara Metropolitan City",
-        url: "https://pokhara.digprofile.com",
-        image: "/pokhara-digprofile.png",
-      },
-      otherProjects: [
-        {
-          name: "Buddhashanti Digital Profile",
-          url: "https://digital.buddhashantimun.gov.np",
-        },
-        {
-          name: "Kerabari Digital Profile",
-          url: "https://digital.kerabarimun.gov.np",
-        },
-        {
-          name: "Lungri Digital Profile",
-          url: "https://digital.lungrimun.gov.np",
-        },
-        {
-          name: "Pariwartan Digital Profile",
-          url: "https://digital.pariwartanmun.gov.np",
-        },
-        {
-          name: "Khajura Digital Profile",
-          url: "https://digital.khajuramun.gov.np",
-        },
-        {
-          name: "Gadhawa Digital Profile",
-          url: "https://gadhawa.digprofile.com",
-        },
-        {
-          name: "Duduwa Digital Profile",
-          url: "https://digital.duduwa.gov.np",
-        },
-      ],
-    },
-    {
-      title: "iCMS",
-      description: "Integrated Content Management Systems for government",
-      featured: {
-        name: "FANSEP-Ministry of Agriculture and Livestock Development (MoALD)",
-        url: "https://fansep.moald.gov.np/ne",
-        image: "/icms-main.png",
-      },
-      otherProjects: [
-        {
-          name: "SDDO Dang",
-          url: "https://sddodang.lumbini.gov.np",
-        },
-        {
-          name: "SDO Dolpa - Karnali",
-          url: "https://icms.sdodolpa.karnali.easypalika.com",
-        },
-        {
-          name: "MoLMAC - Gandaki Province (pending launch)",
-          url: "https://molmac.gandaki.gov.np",
-        },
-        {
-          name: "DFO Bardiya (pending launch)",
-          url: "https://dfobardiya.gov.np",
-        },
-        {
-          name: "Hospital Banke - Lumbini (pending launch)",
-          url: "https://hobanke.lumbini.gov.np",
-        },
-        {
-          name: "IAL - Karnali Province (pending launch)",
-          url: "https://ial.karnali.gov.np",
-        },
-        {
-          name: "PBIP - DWRI (pending launch)",
-          url: "https://pbip.dwri.gov.np",
-        },
-        {
-          name: "SDDO Rupandehi (pending launch)",
-          url: "https://sddorupandehi.lumbini.gov.np",
-        },
-      ],
-    },
-    {
-      title: "SMS",
-      description: "Survey Management Systems for data collection and analysis",
-      featured: {
-        name: "Buddhashanti Admin",
-        url: "#",
-        image: "/buddhashanti.png",
-      },
-      otherProjects: [
-        { name: "Kerabari Admin", url: "https://kerabari-admin.vercel.app" },
-        {
-          name: "Gadhawa Admin",
-          url: "https://gadhawa-admin-eq6q.vercel.app/",
-        },
-        { name: "Lungri Admin", url: "https://lungri-admin.vercel.app" },
-        { name: "Duduwa Admin", url: "https://duduwa-admin.vercel.app" },
-      ],
-    },
-  ];
-
+const Showcase: React.FC<{ categories: ShowcaseCategory[] }> = ({ categories }) => {
   return (
     <section
       id="showcase"
@@ -173,16 +25,18 @@ const Showcase: React.FC = () => {
         {/* Showcase Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((category) => (
-            <div key={category.title} className="group">
+            <div key={category.id} className="group">
               {/* Card */}
               <div className="bg-bg-card rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-border-color hover:border-primary-300 flex flex-col h-full">
                 {/* Featured Project Image */}
                 <div className="relative h-48 sm:h-56 bg-bg-secondary overflow-hidden">
-                  <img
-                    src={category.featured.image}
-                    alt={category.featured.name}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
+                  {category.featuredImageUrl && (
+                    <img
+                      src={category.featuredImageUrl}
+                      alt={category.featuredName}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  )}
                   {/* Overlay on Hover */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -199,13 +53,13 @@ const Showcase: React.FC = () => {
                   {/* Featured Project */}
                   <div className="mb-4">
                     <h3 className="text-xl font-bold text-text-primary mb-2 group-hover:text-link transition-colors">
-                      {category.featured.name}
+                      {category.featuredName}
                     </h3>
                     <p className="text-sm text-text-secondary mb-3">
                       {category.description}
                     </p>
                     <a
-                      href={category.featured.url}
+                      href={category.featuredUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-sm font-medium text-link hover:text-link-hover group/link"
@@ -219,7 +73,7 @@ const Showcase: React.FC = () => {
                   </div>
 
                   {/* Divider & Other Projects - only show if there are other projects */}
-                  {category.otherProjects.length > 0 && (
+                  {category.items.length > 0 && (
                     <>
                       <div className="border-t border-border-color my-4" />
                       <div className="flex-1">
@@ -227,8 +81,8 @@ const Showcase: React.FC = () => {
                           Other Projects
                         </p>
                         <ul className="space-y-2">
-                          {category.otherProjects.map((project, idx) => (
-                            <li key={idx}>
+                          {category.items.map((project) => (
+                            <li key={project.id}>
                               <a
                                 href={project.url}
                                 className="text-sm text-text-secondary hover:text-link flex items-center gap-2 group/item transition-colors"

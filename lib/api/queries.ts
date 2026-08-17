@@ -1,5 +1,5 @@
 import { ApiError, adminFetch, publicFetch } from "./server";
-import type { ContactMessage, Education, Experience, Post, Profile, Project, Skill } from "./types";
+import type { ContactMessage, Education, Experience, Post, Profile, Project, ShowcaseCategory, Skill } from "./types";
 
 // ---------- profile (singleton) ----------
 export async function getProfile(): Promise<Profile | null> {
@@ -61,6 +61,18 @@ export async function getSkills(): Promise<Skill[]> {
 export async function getSkillById(id: string): Promise<Skill | null> {
   const all = await getSkills();
   return all.find((s) => s.id === id) ?? null;
+}
+
+// ---------- showcase ----------
+// The Go API only exposes a list route (GET /api/showcase) — no
+// single-item lookup — so "by id" reads filter the list.
+export async function getShowcaseCategories(): Promise<ShowcaseCategory[]> {
+  return publicFetch<ShowcaseCategory[]>("/api/showcase");
+}
+
+export async function getShowcaseCategoryById(id: string): Promise<ShowcaseCategory | null> {
+  const all = await getShowcaseCategories();
+  return all.find((c) => c.id === id) ?? null;
 }
 
 // ---------- posts (blog + learning-log) ----------

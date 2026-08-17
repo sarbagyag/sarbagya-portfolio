@@ -127,6 +127,27 @@ type Post struct {
 	UpdatedAt       time.Time  `json:"updatedAt"`
 }
 
+type ShowcaseItem struct {
+	ID         string `json:"id"`
+	CategoryID string `json:"categoryId"`
+	Name       string `json:"name"`
+	URL        string `json:"url"`
+	SortOrder  int    `json:"sortOrder"`
+}
+
+type ShowcaseCategory struct {
+	ID               string         `json:"id"`
+	Title            string         `json:"title"`
+	Description      string         `json:"description"`
+	FeaturedName     string         `json:"featuredName"`
+	FeaturedURL      string         `json:"featuredUrl"`
+	FeaturedImageURL *string        `json:"featuredImageUrl"`
+	SortOrder        int            `json:"sortOrder"`
+	CreatedAt        time.Time      `json:"createdAt"`
+	UpdatedAt        time.Time      `json:"updatedAt"`
+	Items            []ShowcaseItem `json:"items"`
+}
+
 type ContactMessage struct {
 	ID        string    `json:"id"`
 	Name      string    `json:"name"`

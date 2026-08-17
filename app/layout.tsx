@@ -35,8 +35,8 @@ const siteUrl = "https://sarbagyaghoshrestha.com.np";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Sarbagya Gho Shrestha — Engineer | Innovator | Artist",
-    template: "%s — Sarbagya Gho Shrestha",
+    default: "Sarbagya Gho Shrestha - Engineer | Innovator | Artist",
+    template: "%s - Sarbagya Gho Shrestha",
   },
   description:
     "Sarbagya Gho Shrestha - Engineer | Innovator | Artist | IOE Pulchowk Campus",

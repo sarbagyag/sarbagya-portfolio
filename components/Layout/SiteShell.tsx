@@ -17,7 +17,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="bg-bg-dark text-text-primary min-h-screen font-mono overflow-x-hidden">
+    <div className="bg-bg-dark text-text-primary min-h-dvh font-mono overflow-x-hidden">
       <BinaryRain opacity={0.08} />
       <Navigation />
 
