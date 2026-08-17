@@ -39,21 +39,22 @@ const Button: React.FC<ButtonProps> = ({
     ${disabled || loading ? "pointer-events-none" : ""}
   `;
 
+  // Carbon button colors: rest at Blue 60 (primary-500), hover at Blue 70
+  // (primary-600) — the previous rest/hover pair (primary-600/700, i.e.
+  // Blue 70/80) was one step too dark at every state. Carbon buttons are
+  // also flat — no lift-on-hover, no drop shadow.
   const variantClasses = {
-    primary:
-      "bg-primary-600 text-white border-primary-600 hover:bg-primary-700 hover:border-primary-700 hover:-translate-y-0.5 hover:shadow-lg",
-    secondary:
-      "bg-bg-card text-link border-primary-600 hover:bg-link-subtle hover:border-primary-700 hover:-translate-y-0.5",
-    ghost:
-      "bg-transparent text-text-primary border-transparent hover:bg-bg-secondary hover:text-link",
-    outline:
-      "bg-transparent text-text-primary border-neutral-600 hover:border-primary-600 hover:text-link hover:bg-link-subtle",
+    primary: "bg-primary-500 text-white border-primary-500 hover:bg-primary-600 hover:border-primary-600",
+    secondary: "bg-bg-card text-link border-primary-500 hover:bg-link-subtle hover:border-primary-600",
+    ghost: "bg-transparent text-text-primary border-transparent hover:bg-bg-secondary hover:text-link",
+    outline: "bg-transparent text-text-primary border-neutral-600 hover:border-primary-500 hover:text-link hover:bg-link-subtle",
   };
 
+  // No border-radius — Carbon buttons are square-cornered.
   const sizeClasses = {
-    sm: "px-4 py-2 text-sm rounded-md",
-    md: "px-6 py-3 text-base rounded-lg",
-    lg: "px-8 py-4 text-lg rounded-lg",
+    sm: "px-4 py-2 text-sm",
+    md: "px-6 py-3 text-base",
+    lg: "px-8 py-4 text-lg",
   };
 
   const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;

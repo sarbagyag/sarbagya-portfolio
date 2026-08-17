@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Sans, IBM_Plex_Mono, Poppins } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Mono, Oswald } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import SiteShell from "@/components/Layout/SiteShell";
 import "./globals.css";
@@ -7,8 +7,8 @@ import "./globals.css";
 // IBM Plex Sans + Mono for everything site-wide, varying weight for
 // hierarchy rather than mixing in a separate display/serif font (previously
 // Cormorant Garamond for the Hero name, and an unused IBM Plex Serif load).
-// Poppins is the one deliberate exception — used only for the "sgs."
-// wordmark in the nav, matching the original favicon's typeface.
+// Oswald is the one deliberate exception — used only for the "sgs."
+// wordmark in the nav, a condensed geometric face for a bolder logo mark.
 const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -23,10 +23,10 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-const poppins = Poppins({
+const oswald = Oswald({
   subsets: ["latin"],
-  weight: ["700", "800"],
-  variable: "--font-poppins",
+  weight: ["600", "700"],
+  variable: "--font-oswald",
   display: "swap",
 });
 
@@ -84,7 +84,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${plexSans.variable} ${plexMono.variable} ${poppins.variable}`}
+      className={`${plexSans.variable} ${plexMono.variable} ${oswald.variable}`}
     >
       <body className="bg-bg-primary text-text-primary font-sans antialiased transition-colors duration-carbon-moderate-01">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>

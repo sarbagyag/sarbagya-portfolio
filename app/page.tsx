@@ -10,7 +10,7 @@ export default async function HomePage() {
   if (!profile) {
     // Should only happen before the seed script has run.
     return (
-      <div className="min-h-dvh flex items-center justify-center text-text-secondary">
+      <div className="min-h-svh flex items-center justify-center text-text-secondary">
         Profile not set up yet — run the seed script or fill it in from /admin/profile.
       </div>
     );

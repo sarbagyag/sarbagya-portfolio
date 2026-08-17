@@ -55,7 +55,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={isPending}
-            className="w-full py-2.5 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50"
+            className="w-full py-2.5 bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors disabled:opacity-50"
           >
             {isPending ? "Signing in…" : "Sign in"}
           </button>

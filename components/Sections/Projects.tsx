@@ -29,20 +29,20 @@ const Projects: React.FC<{ projects: Project[] }> = ({ projects }) => {
         <div className="flex justify-center gap-4 mb-12">
           <button
             onClick={() => setFilter("featured")}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+            className={`px-6 py-3 font-semibold transition-colors ${
               filter === "featured"
-                ? "bg-primary-600 text-white shadow-md"
-                : "bg-bg-card text-text-secondary border border-border-color hover:border-primary-600"
+                ? "bg-primary-500 text-white"
+                : "bg-bg-card text-text-secondary border border-border-color hover:border-primary-500"
             }`}
           >
             Featured ({featuredProjects.length})
           </button>
           <button
             onClick={() => setFilter("all")}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+            className={`px-6 py-3 font-semibold transition-colors ${
               filter === "all"
-                ? "bg-primary-600 text-white shadow-md"
-                : "bg-bg-card text-text-secondary border border-border-color hover:border-primary-600"
+                ? "bg-primary-500 text-white"
+                : "bg-bg-card text-text-secondary border border-border-color hover:border-primary-500"
             }`}
           >
             All Projects ({projects.length})

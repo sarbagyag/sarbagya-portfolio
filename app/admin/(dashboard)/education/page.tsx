@@ -15,7 +15,7 @@ export default async function AdminEducationPage() {
         <h1 className="text-2xl font-bold text-text-primary">Education</h1>
         <Link
           href="/admin/education/new"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white text-sm font-semibold rounded-lg hover:bg-primary-700 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-primary-500 text-white text-sm font-semibold hover:bg-primary-600 transition-colors"
         >
           <Plus size={16} />
           New entry

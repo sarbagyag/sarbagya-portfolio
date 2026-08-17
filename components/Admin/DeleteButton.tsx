@@ -17,7 +17,7 @@ export default function DeleteButton({ action, label = "Delete" }: { action: () 
     >
       <button
         type="submit"
-        className="p-2 rounded-lg text-text-secondary hover:text-carbon-support-error hover:bg-carbon-support-error/10 transition-colors"
+        className="p-2 text-text-secondary hover:text-carbon-support-error hover:bg-carbon-support-error/10 transition-colors"
         aria-label={label}
       >
         <Trash2 size={16} />

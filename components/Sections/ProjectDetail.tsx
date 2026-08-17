@@ -6,7 +6,7 @@ import type { Project } from "@/lib/api/types";
 
 export default function ProjectDetail({ project }: { project: Project }) {
   return (
-    <article className="section py-20 min-h-dvh bg-bg-primary">
+    <article className="section py-20 min-h-svh bg-bg-primary">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div>
           <Link
@@ -28,7 +28,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
             <img
               src={project.imageUrl}
               alt=""
-              className="w-full h-56 sm:h-80 object-cover rounded-xl border border-border-color mb-8"
+              className="w-full h-56 sm:h-80 object-cover border border-border-color mb-8"
             />
           )}
 
@@ -45,7 +45,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
           </p>
 
           {project.impact && (
-            <div className="mb-8 p-4 rounded-lg bg-link-subtle border border-primary-300/30">
+            <div className="mb-8 p-4 bg-link-subtle border border-primary-300/30">
               <p className="text-sm font-semibold text-link">{project.impact}</p>
             </div>
           )}

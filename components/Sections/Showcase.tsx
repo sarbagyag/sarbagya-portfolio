@@ -27,7 +27,7 @@ const Showcase: React.FC<{ categories: ShowcaseCategory[] }> = ({ categories }) 
           {categories.map((category) => (
             <div key={category.id} className="group">
               {/* Card */}
-              <div className="bg-bg-card rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-border-color hover:border-primary-300 flex flex-col h-full">
+              <div className="bg-bg-card transition-colors duration-300 overflow-hidden border border-border-color hover:border-primary-500 flex flex-col h-full">
                 {/* Featured Project Image */}
                 <div className="relative h-48 sm:h-56 bg-bg-secondary overflow-hidden">
                   {category.featuredImageUrl && (
@@ -128,7 +128,7 @@ const Showcase: React.FC<{ categories: ShowcaseCategory[] }> = ({ categories }) 
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors"
           >
             Let's Talk
             <ArrowRight size={18} />

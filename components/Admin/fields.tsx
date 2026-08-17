@@ -146,7 +146,7 @@ export function SubmitButton({ label, pendingLabel }: { label: string; pendingLa
     <button
       type="submit"
       disabled={pending}
-      className="px-5 py-2.5 bg-primary-600 text-white text-sm font-semibold rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50"
+      className="px-5 py-2.5 bg-primary-500 text-white text-sm font-semibold hover:bg-primary-600 transition-colors disabled:opacity-50"
     >
       {pending ? (pendingLabel ?? "Saving…") : label}
     </button>

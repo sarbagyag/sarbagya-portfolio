@@ -76,9 +76,9 @@ export default function SiteOverview() {
             <Link
               key={item.href}
               href={item.href}
-              className="group flex items-start gap-4 p-5 h-full rounded-xl border border-border-color bg-bg-card hover:border-primary-400 hover:-translate-y-0.5 transition-all duration-carbon-moderate-01 ease-carbon-productive"
+              className="group flex items-start gap-4 p-5 h-full border border-border-color bg-bg-card hover:border-primary-500 transition-colors duration-carbon-moderate-01 ease-carbon-productive"
             >
-              <span className="p-2.5 rounded-lg bg-link-subtle text-link shrink-0">{item.icon}</span>
+              <span className="p-2.5 bg-link-subtle text-link shrink-0">{item.icon}</span>
               <span className="min-w-0">
                 <span className="flex items-center gap-1.5 font-semibold text-text-primary group-hover:text-link transition-colors">
                   {item.label}

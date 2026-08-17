@@ -94,7 +94,7 @@ const Contact: React.FC<{ profile: Profile }> = ({ profile }) => {
                       href={profile.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 bg-bg-secondary rounded-lg hover:bg-link-subtle-hover hover:text-link transition-all"
+                      className="p-3 bg-bg-secondary hover:bg-link-subtle-hover hover:text-link transition-colors"
                       aria-label="GitHub"
                     >
                       <Github size={24} />
@@ -105,7 +105,7 @@ const Contact: React.FC<{ profile: Profile }> = ({ profile }) => {
                       href={profile.linkedinUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 bg-bg-secondary rounded-lg hover:bg-link-subtle-hover hover:text-link transition-all"
+                      className="p-3 bg-bg-secondary hover:bg-link-subtle-hover hover:text-link transition-colors"
                       aria-label="LinkedIn"
                     >
                       <Linkedin size={24} />
@@ -116,7 +116,7 @@ const Contact: React.FC<{ profile: Profile }> = ({ profile }) => {
                       href={profile.resumeUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 bg-bg-secondary rounded-lg hover:bg-link-subtle-hover hover:text-link transition-all"
+                      className="p-3 bg-bg-secondary hover:bg-link-subtle-hover hover:text-link transition-colors"
                       aria-label="Download CV"
                     >
                       <FileText size={24} />
@@ -145,7 +145,7 @@ const Contact: React.FC<{ profile: Profile }> = ({ profile }) => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-neutral-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border border-neutral-600 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                     placeholder="Your name"
                   />
                 </div>
@@ -164,7 +164,7 @@ const Contact: React.FC<{ profile: Profile }> = ({ profile }) => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-neutral-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border border-neutral-600 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                     placeholder="your.email@example.com"
                   />
                 </div>
@@ -183,7 +183,7 @@ const Contact: React.FC<{ profile: Profile }> = ({ profile }) => {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-neutral-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border border-neutral-600 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                     placeholder="What's this about?"
                   />
                 </div>
@@ -202,7 +202,7 @@ const Contact: React.FC<{ profile: Profile }> = ({ profile }) => {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 border border-neutral-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
+                    className="w-full px-4 py-3 border border-neutral-600 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
                     placeholder="Your message..."
                   />
                 </div>

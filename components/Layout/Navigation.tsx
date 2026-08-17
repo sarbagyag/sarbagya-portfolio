@@ -83,10 +83,13 @@ const Navigation: React.FC = () => {
             {/* Logo */}
             <Link
               href="/"
-              className="shrink-0 font-poppins text-2xl md:text-3xl font-extrabold text-link hover:text-link-hover transition-colors"
+              className="shrink-0 inline-flex items-baseline font-oswald text-2xl md:text-3xl font-extrabold text-link hover:text-link-hover transition-colors"
               aria-label="Home"
             >
-              sgs.
+              sgs
+              {/* Square full stop instead of the font's round period —
+                  matches the site's square-corners-everywhere direction. */}
+              <span className="w-[5px] h-[5px] md:w-[6px] md:h-[6px] bg-current ml-[3px]" aria-hidden="true" />
             </Link>
 
             {/* Desktop Navigation */}
@@ -95,7 +98,7 @@ const Navigation: React.FC = () => {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`relative px-3 py-2 text-sm font-medium tracking-wide transition-colors duration-200 rounded-lg whitespace-nowrap ${
+                  className={`relative px-3 py-2 text-sm font-medium tracking-wide transition-colors duration-200 whitespace-nowrap ${
                     isActive(item.href)
                       ? "text-link"
                       : "text-text-secondary hover:text-link hover:bg-link-subtle"
@@ -114,7 +117,7 @@ const Navigation: React.FC = () => {
               <a
                 href="/resume/sarbagya-updated-resume.pdf"
                 download="sarbagya-updated-resume.pdf"
-                className="ml-3 inline-flex items-center gap-2 px-4 py-2.5 bg-primary-600 text-white text-sm font-semibold rounded-lg hover:bg-primary-700 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg shrink-0"
+                className="ml-3 inline-flex items-center gap-2 px-4 py-2.5 bg-primary-500 text-white text-sm font-semibold hover:bg-primary-600 transition-colors duration-200 shrink-0"
               >
                 <FileText size={16} />
                 CV
@@ -126,7 +129,7 @@ const Navigation: React.FC = () => {
             <div className="xl:hidden flex items-center gap-1">
               <ThemeToggle />
               <motion.button
-                className="p-2 text-text-primary hover:text-link transition-colors rounded-lg hover:bg-link-subtle"
+                className="p-2 text-text-primary hover:text-link transition-colors hover:bg-link-subtle"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 whileTap={{ scale: 0.95 }}
                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
@@ -153,7 +156,7 @@ const Navigation: React.FC = () => {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`block w-full text-left px-4 py-3 text-base font-medium rounded-lg transition-colors ${
+                    className={`block w-full text-left px-4 py-3 text-base font-medium transition-colors ${
                       isActive(item.href)
                         ? "text-link bg-link-subtle"
                         : "text-text-secondary hover:text-link hover:bg-link-subtle"
@@ -165,7 +168,7 @@ const Navigation: React.FC = () => {
                 <a
                   href="/resume/sarbagya-updated-resume.pdf"
                   download="sarbagya-updated-resume.pdf"
-                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 mt-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 mt-4 bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors"
                 >
                   <FileText size={18} />
                   Download CV

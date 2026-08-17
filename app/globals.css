@@ -164,7 +164,7 @@
   /* Skip to Content Link */
   .skip-to-content {
     @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50;
-    @apply px-4 py-2 bg-primary-600 text-white rounded-md;
+    @apply px-4 py-2 bg-primary-500 text-white;
     @apply focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
   }
 }
@@ -239,7 +239,7 @@
 
   /* Badge Styles */
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply inline-flex items-center px-2.5 py-0.5 text-xs font-medium;
   }
 
   .badge-primary {
@@ -348,11 +348,11 @@
   }
 
   .card {
-    @apply bg-bg-card border border-border-color rounded-xl transition-all duration-300 ease-carbon-productive;
+    @apply bg-bg-card border border-border-color transition-colors duration-300 ease-carbon-productive;
   }
 
   .card:hover {
-    @apply -translate-y-1 shadow-card-hover border-primary-400;
+    @apply border-primary-500;
   }
 
   .research-card {
@@ -372,7 +372,7 @@
   /* Status badges — all theme-aware via the carbon.support-* / link tokens,
      so they hold up in both light and dark instead of assuming one theme. */
   .status-badge {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide;
+    @apply inline-flex items-center px-3 py-1 text-xs font-semibold uppercase tracking-wide;
   }
 
   .status-badge.completed,
@@ -396,12 +396,11 @@
 
   /* Metric display */
   .metric-card {
-    @apply text-center p-6 bg-bg-card rounded-xl border border-border-color transition-all duration-300;
+    @apply text-center p-6 bg-bg-card border border-border-color transition-colors duration-300;
   }
 
   .metric-card:hover {
-    @apply border-primary-400;
-    box-shadow: 0 4px 12px rgba(15, 98, 254, 0.15);
+    @apply border-primary-500;
   }
 
   .metric-value {
@@ -415,24 +414,24 @@
 
   /* Tech tag */
   .tech-tag {
-    @apply inline-flex items-center px-3 py-1.5 bg-bg-secondary text-text-secondary rounded-md text-sm font-medium border border-transparent transition-all duration-200;
+    @apply inline-flex items-center px-3 py-1.5 bg-bg-secondary text-text-secondary text-sm font-medium border border-transparent transition-colors duration-200;
   }
 
   .tech-tag:hover {
-    @apply bg-link-subtle text-link border-link -translate-y-px;
+    @apply bg-link-subtle text-link border-link;
   }
 
   /* Buttons (legacy plain-CSS variants, kept for any non-<Button> usage) */
   .btn {
-    @apply inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg transition-all duration-200 border-2 border-transparent text-base cursor-pointer;
+    @apply inline-flex items-center justify-center px-6 py-3 font-semibold transition-colors duration-200 border-2 border-transparent text-base cursor-pointer;
   }
 
   .btn-primary {
-    @apply bg-primary-500 text-white border-primary-500 hover:bg-primary-600 hover:border-primary-600 hover:-translate-y-0.5 hover:shadow-lg;
+    @apply bg-primary-500 text-white border-primary-500 hover:bg-primary-600 hover:border-primary-600;
   }
 
   .btn-secondary {
-    @apply bg-transparent text-link border-primary-500 hover:bg-link-subtle hover:border-primary-400 hover:-translate-y-0.5;
+    @apply bg-transparent text-link border-primary-500 hover:bg-link-subtle hover:border-primary-600;
   }
 
   .btn-outline {
@@ -528,11 +527,11 @@
   }
 
   .prose-carbon code {
-    @apply font-mono text-sm bg-bg-secondary text-link px-1.5 py-0.5 rounded;
+    @apply font-mono text-sm bg-bg-secondary text-link px-1.5 py-0.5;
   }
 
   .prose-carbon pre {
-    @apply font-mono text-sm bg-bg-secondary border border-border-color rounded-lg p-4 overflow-x-auto;
+    @apply font-mono text-sm bg-bg-secondary border border-border-color p-4 overflow-x-auto;
   }
 
   .prose-carbon pre code {

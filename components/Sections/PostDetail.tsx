@@ -14,7 +14,7 @@ interface PostDetailProps {
 
 export default function PostDetail({ post, basePath, backLabel }: PostDetailProps) {
   return (
-    <article className="section py-20 min-h-dvh bg-bg-primary">
+    <article className="section py-20 min-h-svh bg-bg-primary">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div>
           <Link
@@ -44,7 +44,7 @@ export default function PostDetail({ post, basePath, backLabel }: PostDetailProp
             <img
               src={post.coverImageUrl}
               alt=""
-              className="w-full h-56 sm:h-80 object-cover rounded-xl border border-border-color mb-8"
+              className="w-full h-56 sm:h-80 object-cover border border-border-color mb-8"
             />
           )}
 

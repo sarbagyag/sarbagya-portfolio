@@ -17,7 +17,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="bg-bg-dark text-text-primary min-h-dvh font-mono overflow-x-hidden">
+    <div className="bg-bg-dark text-text-primary min-h-svh font-mono overflow-x-hidden">
       <BinaryRain opacity={0.08} />
       <Navigation />
 
@@ -27,6 +27,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <p className="text-text-secondary text-sm">© 2026 Sarbagya Gho Shrestha.</p>
+            <p className="text-text-tertiary text-xs mt-1">Design inspired by the IBM Carbon Design System.</p>
           </div>
         </div>
       </footer>

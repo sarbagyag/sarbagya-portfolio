@@ -18,23 +18,23 @@ const Card: React.FC<CardProps> = ({
   hover = true,
   onClick,
 }) => {
+  // Carbon cards are flat: a border, no drop shadow, no rounding, no
+  // lift-on-hover — just a border-color change.
   const baseClasses = `
-    relative rounded-xl overflow-hidden
-    transition-all duration-300
+    relative overflow-hidden
+    transition-colors duration-300
     ${onClick ? "cursor-pointer" : ""}
   `;
 
   const variantClasses = {
-    default: "bg-bg-card border border-border-color shadow-card",
+    default: "bg-bg-card border border-border-color",
     bordered: "bg-bg-card border-2 border-border-color",
-    elevated: "bg-bg-card border border-border-color shadow-lg",
+    elevated: "bg-bg-card border border-carbon-border-strong-01",
     research:
-      "bg-bg-card border border-border-color shadow-card border-l-4 border-l-primary-500 bg-gradient-to-r from-link-subtle via-bg-card to-bg-card",
+      "bg-bg-card border border-border-color border-l-4 border-l-primary-500 bg-gradient-to-r from-link-subtle via-bg-card to-bg-card",
   };
 
-  const hoverClasses = hover
-    ? "hover:-translate-y-1 hover:shadow-card-hover hover:border-primary-400"
-    : "";
+  const hoverClasses = hover ? "hover:border-primary-500" : "";
 
   const classes = `${baseClasses} ${variantClasses[variant]} ${hoverClasses} ${className}`;
 

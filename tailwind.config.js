@@ -108,7 +108,7 @@ module.exports = {
         sans: ["var(--font-plex-sans)", "IBM Plex Sans", "system-ui", "sans-serif"],
         mono: ["var(--font-plex-mono)", "IBM Plex Mono", "Menlo", "monospace"],
         // Logo-only exception — see app/layout.tsx.
-        poppins: ["var(--font-poppins)", "Poppins", "sans-serif"],
+        oswald: ["var(--font-oswald)", "Oswald", "sans-serif"],
       },
       // Carbon type scale (approximate rem sizes / line-heights / tracking)
       fontSize: {
