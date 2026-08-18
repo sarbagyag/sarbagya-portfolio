@@ -32,7 +32,7 @@ function formatTime(seconds: number): string {
 // button deliberately reuses the exact button treatment the "Download CV"
 // button uses above it (border-link, hover:bg-link-subtle) so it reads as
 // part of the same Hero, not an inserted widget.
-export default function FavoriteTrack({ audioUrl, coverUrl, title, artist, label, className = "" }: FavoriteTrackProps) {
+export default function FavoriteTrack({ audioUrl, coverUrl, title, artist, label, className = "mt-6" }: FavoriteTrackProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -79,7 +79,7 @@ export default function FavoriteTrack({ audioUrl, coverUrl, title, artist, label
     // No max-w-md cap (unlike heroMotto/etc. above it) — this spans the
     // full width of the text column, deliberately wider than the rest of
     // the column's content, rather than reading as a narrow inserted box.
-    <div className={`mt-6 w-full flex flex-col ${className}`}>
+    <div className={`w-full flex flex-col ${className}`}>
       {label && <p className="text-xs sm:text-sm text-text-tertiary mb-2 shrink-0">{label}</p>}
 
       <div className="flex-1 flex items-center gap-3 p-3 border border-border-color">

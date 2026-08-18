@@ -52,26 +52,26 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
             now exactly matches the photo's bottom, since the column above
             is a fixed height rather than a min-height. */}
         <div
-          className={`order-2 md:order-1 flex flex-col px-6 sm:px-10 lg:px-16 py-12 md:py-20 ${
+          className={`order-2 md:order-1 flex flex-col px-6 sm:px-10 lg:px-20 py-12 md:py-20 ${
             profile.favoriteTrackAudioUrl ? "" : "justify-center"
           }`}
         >
           {profile.tagline && (
-            <p className="text-sm sm:text-base font-semibold text-link mb-2">{profile.tagline}</p>
+            <p className="text-sm sm:text-base font-semibold text-link mb-3">{profile.tagline}</p>
           )}
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-text-primary mb-3 leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-text-primary mb-4 leading-tight">
             {profile.name}
           </h1>
 
           {profile.heroRoles.length > 0 && (
-            <p className="text-base sm:text-lg text-text-secondary mb-4 max-w-md">
+            <p className="text-base sm:text-lg text-text-secondary mb-5 max-w-md">
               {profile.heroRoles.join(" • ")}
             </p>
           )}
 
           {profile.heroMotto && (
-            <p className="text-base sm:text-lg text-text-secondary max-w-md leading-relaxed mb-8">
+            <p className="text-base sm:text-lg text-text-secondary max-w-md leading-relaxed mb-10">
               {profile.heroMotto}
             </p>
           )}
@@ -110,12 +110,12 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
           </div>
 
           {profile.heroBadge && (
-            <p className="mt-6 text-xs sm:text-sm text-text-tertiary">{profile.heroBadge}</p>
+            <p className="mt-8 text-xs sm:text-sm text-text-tertiary">{profile.heroBadge}</p>
           )}
 
           {profile.favoriteTrackAudioUrl && (
             <FavoriteTrack
-              className="flex-1"
+              className="flex-1 mt-8"
               audioUrl={profile.favoriteTrackAudioUrl}
               coverUrl={profile.favoriteTrackCoverUrl}
               title={profile.favoriteTrackTitle}
@@ -128,8 +128,16 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
         {/* Photo — bleeds to the block's own edges, no radius/border/shadow.
             Starts right below the fixed nav (section's pt-20) rather than
             running under it, where a transparent nav made the logo/links
-            hard to read against the image. */}
-        <div className="order-1 md:order-2 relative h-72 sm:h-96 md:h-auto">
+            hard to read against the image.
+            md:h-[85%] md:self-start (rather than the grid's default
+            stretch-to-fill-row): now that the row itself is pinned to
+            exactly one screen tall, stretching the photo to match that
+            full height read as an overly elongated crop. Capping it at
+            85% and top-aligning keeps it flush against the nav like
+            before, just shorter — the section's own background (matching
+            the panel behind it) shows through in the gap below rather
+            than the photo stretching to fill it. */}
+        <div className="order-1 md:order-2 relative h-72 sm:h-96 md:h-[85%] md:self-start">
           <img
             src={profile.avatarUrl || "/sarbagya-hero.jpg"}
             alt={profile.name}
