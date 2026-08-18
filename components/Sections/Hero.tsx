@@ -28,23 +28,32 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
   ].filter((link): link is typeof link & { href: string } => Boolean(link.href));
 
   return (
-    <section id="home" className="bg-bg-secondary pt-20">
+    // overflow-hidden + the motion.div's exact md:h-[calc(100svh-5rem)]
+    // below (5rem = the fixed nav's own h-20, which floats over this
+    // section rather than sitting in normal flow above it, so "one full
+    // screen" is nav-height + this section, not nav-height + this + more)
+    // together guarantee the hero is the entire initial screen on
+    // desktop — nothing from the next section (SiteOverview) peeks in
+    // before scrolling. Not applied below md: the stacked mobile layout
+    // never had a height constraint here either (min-h-[70svh] was
+    // already md-only), and forcing one screen's worth of height onto a
+    // vertically-stacked photo+text layout would cramp it far more than
+    // it does the two-column desktop layout.
+    <section id="home" className="bg-bg-secondary pt-20 overflow-hidden">
       <motion.div
-        className="max-w-7xl mx-auto grid md:grid-cols-2 md:min-h-[70svh]"
+        className="max-w-7xl mx-auto grid md:grid-cols-2 md:h-[calc(100svh_-_5rem)]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
       >
-        {/* Text — bottom-aligned (instead of centered) whenever a favorite
-            track is set, so the player's bottom edge lands flush with the
-            photo's bottom edge (the grid stretches both columns to equal
-            height already) rather than leaving a mismatched gap below it
-            while the photo keeps going. Without a track, centered as
-            before — this shift is specifically to close that gap, not a
-            general layout change. */}
+        {/* Text. Without a favorite track, centered as before. With one,
+            top content stays put and the player itself grows (flex-1) to
+            consume whatever's left down to the column's bottom — which
+            now exactly matches the photo's bottom, since the column above
+            is a fixed height rather than a min-height. */}
         <div
-          className={`order-2 md:order-1 flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-12 md:py-20 ${
-            profile.favoriteTrackAudioUrl ? "md:justify-end" : "md:justify-center"
+          className={`order-2 md:order-1 flex flex-col px-6 sm:px-10 lg:px-16 py-12 md:py-20 ${
+            profile.favoriteTrackAudioUrl ? "" : "justify-center"
           }`}
         >
           {profile.tagline && (
@@ -106,6 +115,7 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
 
           {profile.favoriteTrackAudioUrl && (
             <FavoriteTrack
+              className="flex-1"
               audioUrl={profile.favoriteTrackAudioUrl}
               coverUrl={profile.favoriteTrackCoverUrl}
               title={profile.favoriteTrackTitle}

@@ -9,6 +9,12 @@ interface FavoriteTrackProps {
   title: string | null;
   artist: string | null;
   label: string | null;
+  // Passed as "flex-1" by Hero so this whole component (not just the
+  // controls row) grows to fill the remaining height in its flex column —
+  // the actual card below stretches with it (see its own flex-1) and
+  // vertically centers its (still compact) controls within the extra
+  // height, rather than the controls themselves getting stretched/blown up.
+  className?: string;
 }
 
 function formatTime(seconds: number): string {
@@ -26,7 +32,7 @@ function formatTime(seconds: number): string {
 // button deliberately reuses the exact button treatment the "Download CV"
 // button uses above it (border-link, hover:bg-link-subtle) so it reads as
 // part of the same Hero, not an inserted widget.
-export default function FavoriteTrack({ audioUrl, coverUrl, title, artist, label }: FavoriteTrackProps) {
+export default function FavoriteTrack({ audioUrl, coverUrl, title, artist, label, className = "" }: FavoriteTrackProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -73,10 +79,10 @@ export default function FavoriteTrack({ audioUrl, coverUrl, title, artist, label
     // No max-w-md cap (unlike heroMotto/etc. above it) — this spans the
     // full width of the text column, deliberately wider than the rest of
     // the column's content, rather than reading as a narrow inserted box.
-    <div className="mt-6 w-full">
-      {label && <p className="text-xs sm:text-sm text-text-tertiary mb-2">{label}</p>}
+    <div className={`mt-6 w-full flex flex-col ${className}`}>
+      {label && <p className="text-xs sm:text-sm text-text-tertiary mb-2 shrink-0">{label}</p>}
 
-      <div className="flex items-center gap-3 p-3 border border-border-color">
+      <div className="flex-1 flex items-center gap-3 p-3 border border-border-color">
         {coverUrl && <img src={coverUrl} alt="" className="w-12 h-12 object-cover grayscale shrink-0" />}
 
         <button
