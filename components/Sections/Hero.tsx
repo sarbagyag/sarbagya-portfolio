@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FileText, Mail, Github, Linkedin, Youtube, Instagram } from "lucide-react";
 import type { Profile } from "@/lib/api/types";
+import FavoriteTrack from "@/components/FavoriteTrack";
 
 // Carbon-style block hero: a solid layer-01 panel (bg-secondary/bg-card —
 // already mapped to --cds-layer-01, so this reads correctly in both themes
@@ -15,7 +16,9 @@ import type { Profile } from "@/lib/api/types";
 //
 // Every /admin/profile hero field gets used here (tagline, heroRoles,
 // heroMotto, heroBadge) — just as typographic hierarchy rather than
-// boxes/pills, so nothing you can edit sits unused.
+// boxes/pills, so nothing you can edit sits unused. favoriteTrackUrl is the
+// one exception: it renders as an actual embedded widget (FavoriteTrack),
+// not typography, since it needs to be playable.
 const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
   const socialLinks = [
     { href: profile.githubUrl, label: "GitHub", icon: Github },
@@ -89,6 +92,10 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
 
           {profile.heroBadge && (
             <p className="mt-6 text-xs sm:text-sm text-text-tertiary">{profile.heroBadge}</p>
+          )}
+
+          {profile.favoriteTrackUrl && (
+            <FavoriteTrack url={profile.favoriteTrackUrl} label={profile.favoriteTrackLabel} />
           )}
         </div>
 

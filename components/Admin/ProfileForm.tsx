@@ -49,6 +49,24 @@ export default function ProfileForm({ profile }: { profile: Profile | null }) {
       />
 
       <div className="grid grid-cols-2 gap-4">
+        <Field
+          label="Favorite track (Spotify URL)"
+          name="favoriteTrackUrl"
+          type="url"
+          defaultValue={profile?.favoriteTrackUrl ?? undefined}
+          placeholder="https://open.spotify.com/track/..."
+          hint="Shows a small playable Spotify embed on the homepage. Copy the link via Spotify's Share > Copy Song Link. Leave blank to hide it."
+        />
+        <Field
+          label="Favorite track label"
+          name="favoriteTrackLabel"
+          defaultValue={profile?.favoriteTrackLabel ?? undefined}
+          placeholder="Favorite track"
+          hint='Small caption above the player, e.g. "On repeat" or "Currently vibing to".'
+        />
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
         <Field label="Phone" name="phone" defaultValue={profile?.phone ?? undefined} />
         <Field label="Location" name="location" defaultValue={profile?.location ?? undefined} />
       </div>

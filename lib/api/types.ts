@@ -31,6 +31,8 @@ export interface Profile {
   heroMotto: string | null;
   heroBadge: string | null;
   logoInitials: string;
+  favoriteTrackUrl: string | null;
+  favoriteTrackLabel: string | null;
   updatedAt: string; // ISO timestamp
 }
 
