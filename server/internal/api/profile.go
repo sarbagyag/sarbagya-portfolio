@@ -17,13 +17,15 @@ func (s *Server) handleGetProfile(w http.ResponseWriter, r *http.Request) {
 		       github_url, twitter_url, youtube_url, instagram_url, scholar_url,
 		       orcid_url, website_url, avatar_url, resume_url, languages,
 		       academic_skills, hero_roles, hero_motto, hero_badge, logo_initials,
-		       favorite_track_url, favorite_track_label, updated_at
+		       favorite_track_audio_url, favorite_track_cover_url, favorite_track_title,
+		       favorite_track_artist, favorite_track_source_url, favorite_track_label, updated_at
 		FROM profile WHERE id = 1`,
 	).Scan(&p.ID, &p.Name, &p.Tagline, &p.Bio, &p.Email, &p.Phone, &p.Location,
 		&p.LinkedinURL, &p.GithubURL, &p.TwitterURL, &p.YoutubeURL, &p.InstagramURL,
 		&p.ScholarURL, &p.OrcidURL, &p.WebsiteURL, &p.AvatarURL, &p.ResumeURL,
 		&languagesRaw, &p.AcademicSkills, &p.HeroRoles, &p.HeroMotto, &p.HeroBadge, &p.LogoInitials,
-		&p.FavoriteTrackURL, &p.FavoriteTrackLabel, &p.UpdatedAt)
+		&p.FavoriteTrackAudioURL, &p.FavoriteTrackCoverURL, &p.FavoriteTrackTitle,
+		&p.FavoriteTrackArtist, &p.FavoriteTrackSourceURL, &p.FavoriteTrackLabel, &p.UpdatedAt)
 	if err != nil {
 		writeError(w, http.StatusNotFound, "profile not set up yet")
 		return
@@ -34,30 +36,34 @@ func (s *Server) handleGetProfile(w http.ResponseWriter, r *http.Request) {
 }
 
 type updateProfileRequest struct {
-	Name               string            `json:"name"`
-	Tagline            string            `json:"tagline"`
-	Bio                string            `json:"bio"`
-	Email              string            `json:"email"`
-	Phone              *string           `json:"phone"`
-	Location           *string           `json:"location"`
-	LinkedinURL        *string           `json:"linkedinUrl"`
-	GithubURL          *string           `json:"githubUrl"`
-	TwitterURL         *string           `json:"twitterUrl"`
-	YoutubeURL         *string           `json:"youtubeUrl"`
-	InstagramURL       *string           `json:"instagramUrl"`
-	ScholarURL         *string           `json:"scholarUrl"`
-	OrcidURL           *string           `json:"orcidUrl"`
-	WebsiteURL         *string           `json:"websiteUrl"`
-	AvatarURL          *string           `json:"avatarUrl"`
-	ResumeURL          *string           `json:"resumeUrl"`
-	Languages          []models.Language `json:"languages"`
-	AcademicSkills     []string          `json:"academicSkills"`
-	HeroRoles          []string          `json:"heroRoles"`
-	HeroMotto          *string           `json:"heroMotto"`
-	HeroBadge          *string           `json:"heroBadge"`
-	LogoInitials       string            `json:"logoInitials"`
-	FavoriteTrackURL   *string           `json:"favoriteTrackUrl"`
-	FavoriteTrackLabel *string           `json:"favoriteTrackLabel"`
+	Name                   string            `json:"name"`
+	Tagline                string            `json:"tagline"`
+	Bio                    string            `json:"bio"`
+	Email                  string            `json:"email"`
+	Phone                  *string           `json:"phone"`
+	Location               *string           `json:"location"`
+	LinkedinURL            *string           `json:"linkedinUrl"`
+	GithubURL              *string           `json:"githubUrl"`
+	TwitterURL             *string           `json:"twitterUrl"`
+	YoutubeURL             *string           `json:"youtubeUrl"`
+	InstagramURL           *string           `json:"instagramUrl"`
+	ScholarURL             *string           `json:"scholarUrl"`
+	OrcidURL               *string           `json:"orcidUrl"`
+	WebsiteURL             *string           `json:"websiteUrl"`
+	AvatarURL              *string           `json:"avatarUrl"`
+	ResumeURL              *string           `json:"resumeUrl"`
+	Languages              []models.Language `json:"languages"`
+	AcademicSkills         []string          `json:"academicSkills"`
+	HeroRoles              []string          `json:"heroRoles"`
+	HeroMotto              *string           `json:"heroMotto"`
+	HeroBadge              *string           `json:"heroBadge"`
+	LogoInitials           string            `json:"logoInitials"`
+	FavoriteTrackAudioURL  *string           `json:"favoriteTrackAudioUrl"`
+	FavoriteTrackCoverURL  *string           `json:"favoriteTrackCoverUrl"`
+	FavoriteTrackTitle     *string           `json:"favoriteTrackTitle"`
+	FavoriteTrackArtist    *string           `json:"favoriteTrackArtist"`
+	FavoriteTrackSourceURL *string           `json:"favoriteTrackSourceUrl"`
+	FavoriteTrackLabel     *string           `json:"favoriteTrackLabel"`
 }
 
 func (s *Server) handleUpdateProfile(w http.ResponseWriter, r *http.Request) {
@@ -73,14 +79,23 @@ func (s *Server) handleUpdateProfile(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 
-	// Clean up storage for image fields that changed, same as before.
-	var oldAvatar, oldResume *string
-	_ = s.db.QueryRow(ctx, `SELECT avatar_url, resume_url FROM profile WHERE id = 1`).Scan(&oldAvatar, &oldResume)
+	// Clean up storage for image/file fields that changed, same as before.
+	var oldAvatar, oldResume, oldTrackAudio, oldTrackCover *string
+	_ = s.db.QueryRow(ctx, `
+		SELECT avatar_url, resume_url, favorite_track_audio_url, favorite_track_cover_url
+		FROM profile WHERE id = 1`,
+	).Scan(&oldAvatar, &oldResume, &oldTrackAudio, &oldTrackCover)
 	if oldAvatar != nil {
 		go s.storage.DeleteIfChanged(context.Background(), *oldAvatar, deref(req.AvatarURL))
 	}
 	if oldResume != nil {
 		go s.storage.DeleteIfChanged(context.Background(), *oldResume, deref(req.ResumeURL))
+	}
+	if oldTrackAudio != nil {
+		go s.storage.DeleteIfChanged(context.Background(), *oldTrackAudio, deref(req.FavoriteTrackAudioURL))
+	}
+	if oldTrackCover != nil {
+		go s.storage.DeleteIfChanged(context.Background(), *oldTrackCover, deref(req.FavoriteTrackCoverURL))
 	}
 
 	languagesJSON, _ := json.Marshal(req.Languages)
@@ -93,8 +108,10 @@ func (s *Server) handleUpdateProfile(w http.ResponseWriter, r *http.Request) {
 			linkedin_url, github_url, twitter_url, youtube_url, instagram_url,
 			scholar_url, orcid_url, website_url, avatar_url, resume_url,
 			languages, academic_skills, hero_roles, hero_motto, hero_badge, logo_initials,
-			favorite_track_url, favorite_track_label, updated_at)
-		VALUES (1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, now())
+			favorite_track_audio_url, favorite_track_cover_url, favorite_track_title,
+			favorite_track_artist, favorite_track_source_url, favorite_track_label, updated_at)
+		VALUES (1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
+			$20, $21, $22, $23, $24, $25, $26, $27, $28, now())
 		ON CONFLICT (id) DO UPDATE SET
 			name = EXCLUDED.name, tagline = EXCLUDED.tagline, bio = EXCLUDED.bio,
 			email = EXCLUDED.email, phone = EXCLUDED.phone, location = EXCLUDED.location,
@@ -106,14 +123,19 @@ func (s *Server) handleUpdateProfile(w http.ResponseWriter, r *http.Request) {
 			languages = EXCLUDED.languages, academic_skills = EXCLUDED.academic_skills,
 			hero_roles = EXCLUDED.hero_roles, hero_motto = EXCLUDED.hero_motto,
 			hero_badge = EXCLUDED.hero_badge, logo_initials = EXCLUDED.logo_initials,
-			favorite_track_url = EXCLUDED.favorite_track_url,
+			favorite_track_audio_url = EXCLUDED.favorite_track_audio_url,
+			favorite_track_cover_url = EXCLUDED.favorite_track_cover_url,
+			favorite_track_title = EXCLUDED.favorite_track_title,
+			favorite_track_artist = EXCLUDED.favorite_track_artist,
+			favorite_track_source_url = EXCLUDED.favorite_track_source_url,
 			favorite_track_label = EXCLUDED.favorite_track_label, updated_at = now()`,
 		req.Name, req.Tagline, req.Bio, req.Email, req.Phone, req.Location,
 		req.LinkedinURL, req.GithubURL, req.TwitterURL, req.YoutubeURL, req.InstagramURL,
 		req.ScholarURL, req.OrcidURL, req.WebsiteURL, req.AvatarURL, req.ResumeURL,
 		languagesJSON, orEmptySlice(req.AcademicSkills), orEmptySlice(req.HeroRoles),
 		req.HeroMotto, req.HeroBadge, req.LogoInitials,
-		req.FavoriteTrackURL, req.FavoriteTrackLabel)
+		req.FavoriteTrackAudioURL, req.FavoriteTrackCoverURL, req.FavoriteTrackTitle,
+		req.FavoriteTrackArtist, req.FavoriteTrackSourceURL, req.FavoriteTrackLabel)
 	if err != nil {
 		writeError(w, http.StatusInternalServerError, "failed to save profile")
 		return

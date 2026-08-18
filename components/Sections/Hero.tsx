@@ -16,8 +16,8 @@ import FavoriteTrack from "@/components/FavoriteTrack";
 //
 // Every /admin/profile hero field gets used here (tagline, heroRoles,
 // heroMotto, heroBadge) — just as typographic hierarchy rather than
-// boxes/pills, so nothing you can edit sits unused. favoriteTrackUrl is the
-// one exception: it renders as an actual embedded widget (FavoriteTrack),
+// boxes/pills, so nothing you can edit sits unused. favoriteTrackAudioUrl
+// is the one exception: it renders as an actual player (FavoriteTrack),
 // not typography, since it needs to be playable.
 const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
   const socialLinks = [
@@ -35,8 +35,18 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
       >
-        {/* Text */}
-        <div className="order-2 md:order-1 flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-12 md:py-20">
+        {/* Text — bottom-aligned (instead of centered) whenever a favorite
+            track is set, so the player's bottom edge lands flush with the
+            photo's bottom edge (the grid stretches both columns to equal
+            height already) rather than leaving a mismatched gap below it
+            while the photo keeps going. Without a track, centered as
+            before — this shift is specifically to close that gap, not a
+            general layout change. */}
+        <div
+          className={`order-2 md:order-1 flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-12 md:py-20 ${
+            profile.favoriteTrackAudioUrl ? "md:justify-end" : "md:justify-center"
+          }`}
+        >
           {profile.tagline && (
             <p className="text-sm sm:text-base font-semibold text-link mb-2">{profile.tagline}</p>
           )}
@@ -94,8 +104,14 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
             <p className="mt-6 text-xs sm:text-sm text-text-tertiary">{profile.heroBadge}</p>
           )}
 
-          {profile.favoriteTrackUrl && (
-            <FavoriteTrack url={profile.favoriteTrackUrl} label={profile.favoriteTrackLabel} />
+          {profile.favoriteTrackAudioUrl && (
+            <FavoriteTrack
+              audioUrl={profile.favoriteTrackAudioUrl}
+              coverUrl={profile.favoriteTrackCoverUrl}
+              title={profile.favoriteTrackTitle}
+              artist={profile.favoriteTrackArtist}
+              label={profile.favoriteTrackLabel}
+            />
           )}
         </div>
 

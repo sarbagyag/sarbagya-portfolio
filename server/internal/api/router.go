@@ -30,7 +30,6 @@ func (s *Server) Router() http.Handler {
 	r.Use(chimw.RealIP)
 	r.Use(chimw.Logger)
 	r.Use(chimw.Recoverer)
-	r.Use(chimw.Timeout(30 * time.Second))
 
 	r.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   s.cfg.CORSAllowedOrigins,
@@ -45,62 +44,78 @@ func (s *Server) Router() http.Handler {
 	})
 
 	r.Route("/api", func(r chi.Router) {
-		r.Post("/auth/login", s.handleLogin)
+		// Every route below gets the standard 30s ceiling. The one
+		// exception — favorite-track processing, which shells out to
+		// yt-dlp/ffmpeg and can legitimately run well past that — is
+		// registered after this group, with its own longer timeout, so it
+		// isn't bound by this group's 30s (an inner middleware can't
+		// extend a deadline an outer one already imposed).
+		r.Group(func(r chi.Router) {
+			r.Use(chimw.Timeout(30 * time.Second))
 
-		r.Get("/profile", s.handleGetProfile)
+			r.Post("/auth/login", s.handleLogin)
 
-		r.Get("/experience", s.handleListExperience)
+			r.Get("/profile", s.handleGetProfile)
 
-		r.Get("/projects", s.handleListProjects)
-		r.Get("/projects/{id}", s.handleGetProject)
+			r.Get("/experience", s.handleListExperience)
 
-		r.Get("/education", s.handleListEducation)
+			r.Get("/projects", s.handleListProjects)
+			r.Get("/projects/{id}", s.handleGetProject)
 
-		r.Get("/skills", s.handleListSkills)
+			r.Get("/education", s.handleListEducation)
 
-		r.Get("/showcase", s.handleListShowcase)
+			r.Get("/skills", s.handleListSkills)
 
-		r.Get("/posts", s.handlePublicListPosts)
-		r.Get("/posts/{slug}", s.handleGetPostBySlug)
+			r.Get("/showcase", s.handleListShowcase)
 
-		r.Post("/contact", s.handleSubmitContact)
+			r.Get("/posts", s.handlePublicListPosts)
+			r.Get("/posts/{slug}", s.handleGetPostBySlug)
 
-		r.Route("/admin", func(r chi.Router) {
-			r.Use(auth.RequireAdmin(s.cfg.JWTSecret))
+			r.Post("/contact", s.handleSubmitContact)
 
-			r.Put("/profile", s.handleUpdateProfile)
+			r.Route("/admin", func(r chi.Router) {
+				r.Use(auth.RequireAdmin(s.cfg.JWTSecret))
 
-			r.Post("/experience", s.handleCreateExperience)
-			r.Put("/experience/{id}", s.handleUpdateExperience)
-			r.Delete("/experience/{id}", s.handleDeleteExperience)
+				r.Put("/profile", s.handleUpdateProfile)
 
-			r.Post("/projects", s.handleCreateProject)
-			r.Put("/projects/{id}", s.handleUpdateProject)
-			r.Delete("/projects/{id}", s.handleDeleteProject)
+				r.Post("/experience", s.handleCreateExperience)
+				r.Put("/experience/{id}", s.handleUpdateExperience)
+				r.Delete("/experience/{id}", s.handleDeleteExperience)
 
-			r.Post("/education", s.handleCreateEducation)
-			r.Put("/education/{id}", s.handleUpdateEducation)
-			r.Delete("/education/{id}", s.handleDeleteEducation)
+				r.Post("/projects", s.handleCreateProject)
+				r.Put("/projects/{id}", s.handleUpdateProject)
+				r.Delete("/projects/{id}", s.handleDeleteProject)
 
-			r.Post("/skills", s.handleCreateSkill)
-			r.Put("/skills/{id}", s.handleUpdateSkill)
-			r.Delete("/skills/{id}", s.handleDeleteSkill)
+				r.Post("/education", s.handleCreateEducation)
+				r.Put("/education/{id}", s.handleUpdateEducation)
+				r.Delete("/education/{id}", s.handleDeleteEducation)
 
-			r.Post("/showcase", s.handleCreateShowcase)
-			r.Put("/showcase/{id}", s.handleUpdateShowcase)
-			r.Delete("/showcase/{id}", s.handleDeleteShowcase)
+				r.Post("/skills", s.handleCreateSkill)
+				r.Put("/skills/{id}", s.handleUpdateSkill)
+				r.Delete("/skills/{id}", s.handleDeleteSkill)
 
-			r.Get("/posts", s.handleAdminListPosts)
-			r.Post("/posts", s.handleCreatePost)
-			r.Put("/posts/{id}", s.handleUpdatePost)
-			r.Delete("/posts/{id}", s.handleDeletePost)
+				r.Post("/showcase", s.handleCreateShowcase)
+				r.Put("/showcase/{id}", s.handleUpdateShowcase)
+				r.Delete("/showcase/{id}", s.handleDeleteShowcase)
 
-			r.Get("/messages", s.handleListMessages)
-			r.Patch("/messages/{id}/read", s.handleMarkMessageRead)
-			r.Delete("/messages/{id}", s.handleDeleteMessage)
+				r.Get("/posts", s.handleAdminListPosts)
+				r.Post("/posts", s.handleCreatePost)
+				r.Put("/posts/{id}", s.handleUpdatePost)
+				r.Delete("/posts/{id}", s.handleDeletePost)
 
-			r.Post("/upload", s.handleUpload)
+				r.Get("/messages", s.handleListMessages)
+				r.Patch("/messages/{id}/read", s.handleMarkMessageRead)
+				r.Delete("/messages/{id}", s.handleDeleteMessage)
+
+				r.Post("/upload", s.handleUpload)
+			})
 		})
+
+		// Downloads full audio via yt-dlp and trims it with ffmpeg —
+		// deliberately outside the r.Group above, with its own admin auth
+		// and a longer timeout instead of the 30s everything else uses.
+		r.With(auth.RequireAdmin(s.cfg.JWTSecret), chimw.Timeout(150*time.Second)).
+			Post("/admin/favorite-track", s.handleProcessFavoriteTrack)
 	})
 
 	return r

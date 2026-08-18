@@ -9,8 +9,14 @@ RUN go mod download
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /out/api ./cmd/api
 
-FROM scratch
-COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+FROM alpine:3.20
+# ffmpeg + yt-dlp back the favorite-track pipeline (internal/media):
+# yt-dlp downloads+extracts a YouTube video's audio, ffmpeg trims it to the
+# requested window. This is why the runtime image can no longer be
+# `scratch` (which had no shell/binaries at all, just the static Go
+# binary) — everything else about the image stays as minimal as this
+# affords.
+RUN apk add --no-cache ca-certificates ffmpeg yt-dlp
 COPY --from=build /out/api /api
 
 EXPOSE 8080

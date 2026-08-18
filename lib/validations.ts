@@ -16,17 +16,6 @@ const optionalUrl = z
   .transform((v) => (v ? v : undefined))
   .refine((v) => !v || /^https?:\/\//.test(v), "Must be a full URL (https://...)");
 
-// Only track/episode links resolve to a playable Spotify embed (album/playlist
-// links don't) — see lib/spotify.ts, which the Hero widget uses to parse this.
-const optionalSpotifyTrackUrl = z
-  .string()
-  .trim()
-  .optional()
-  .transform((v) => (v ? v : undefined))
-  .refine(
-    (v) => !v || /^https:\/\/open\.spotify\.com\/(track|episode)\/[a-zA-Z0-9]+/.test(v),
-    "Must be a Spotify track or episode link (open.spotify.com/track/...)"
-  );
 
 const arrayField = z
   .string()
@@ -70,7 +59,14 @@ export const profileSchema = z.object({
   heroMotto: z.string().trim().optional(),
   heroBadge: z.string().trim().optional(),
   logoInitials: z.string().trim().min(1, "Required").max(8, "Keep it short - it's a logo mark"),
-  favoriteTrackUrl: optionalSpotifyTrackUrl,
+  // audioUrl/coverUrl/sourceUrl come from FavoriteTrackField's "process"
+  // step (hidden inputs, same shape as avatarUrl/resumeUrl from
+  // FileUploadField) — title/artist/label are typed directly by the admin.
+  favoriteTrackAudioUrl: optionalUrl,
+  favoriteTrackCoverUrl: optionalUrl,
+  favoriteTrackSourceUrl: optionalUrl,
+  favoriteTrackTitle: z.string().trim().optional(),
+  favoriteTrackArtist: z.string().trim().optional(),
   favoriteTrackLabel: z.string().trim().optional(),
 });
 export type ProfileInput = z.infer<typeof profileSchema>;

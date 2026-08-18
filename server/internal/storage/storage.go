@@ -83,9 +83,22 @@ func (c *Client) Upload(ctx context.Context, file multipart.File, header *multip
 		return "", fmt.Errorf("file exceeds 5MB limit")
 	}
 
-	key := fmt.Sprintf("%s%s", uuid.NewString(), path.Ext(header.Filename))
+	return c.put(ctx, file, header.Size, contentType, path.Ext(header.Filename))
+}
 
-	_, err := c.minio.PutObject(ctx, c.bucket, key, file, header.Size, minio.PutObjectOptions{
+// UploadBytes is the same as Upload but for content we generated ourselves
+// (the favorite-track pipeline's ffmpeg output, its thumbnail) rather than
+// a multipart request from a browser — so there's no multipart.FileHeader
+// to read a content type/size off, and no AllowedContentTypes/size gate
+// since the caller already controls exactly what's being written.
+func (c *Client) UploadBytes(ctx context.Context, r io.Reader, size int64, contentType, ext string) (string, error) {
+	return c.put(ctx, r, size, contentType, ext)
+}
+
+func (c *Client) put(ctx context.Context, r io.Reader, size int64, contentType, ext string) (string, error) {
+	key := fmt.Sprintf("%s%s", uuid.NewString(), ext)
+
+	_, err := c.minio.PutObject(ctx, c.bucket, key, r, size, minio.PutObjectOptions{
 		ContentType: contentType,
 	})
 	if err != nil {

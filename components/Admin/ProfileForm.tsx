@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { Field, TextAreaField, ArrayField, SubmitButton } from "@/components/Admin/fields";
 import FileUploadField from "@/components/Admin/FileUploadField";
+import FavoriteTrackField from "@/components/Admin/FavoriteTrackField";
 import { updateProfile } from "@/app/admin/(dashboard)/profile/actions";
 import type { Profile } from "@/lib/api/types";
 
@@ -48,22 +49,23 @@ export default function ProfileForm({ profile }: { profile: Profile | null }) {
         hint='The highlighted pill on the homepage, e.g. "B.E. ... • Class of 2025".'
       />
 
-      <div className="grid grid-cols-2 gap-4">
-        <Field
-          label="Favorite track (Spotify URL)"
-          name="favoriteTrackUrl"
-          type="url"
-          defaultValue={profile?.favoriteTrackUrl ?? undefined}
-          placeholder="https://open.spotify.com/track/..."
-          hint="Shows a small playable Spotify embed on the homepage. Copy the link via Spotify's Share > Copy Song Link. Leave blank to hide it."
+      <div className="space-y-4 p-4 border border-border-color">
+        <FavoriteTrackField
+          defaultAudioUrl={profile?.favoriteTrackAudioUrl}
+          defaultCoverUrl={profile?.favoriteTrackCoverUrl}
+          defaultSourceUrl={profile?.favoriteTrackSourceUrl}
         />
-        <Field
-          label="Favorite track label"
-          name="favoriteTrackLabel"
-          defaultValue={profile?.favoriteTrackLabel ?? undefined}
-          placeholder="Favorite track"
-          hint='Small caption above the player, e.g. "On repeat" or "Currently vibing to".'
-        />
+        <div className="grid grid-cols-3 gap-4">
+          <Field label="Track title" name="favoriteTrackTitle" defaultValue={profile?.favoriteTrackTitle ?? undefined} />
+          <Field label="Artist" name="favoriteTrackArtist" defaultValue={profile?.favoriteTrackArtist ?? undefined} />
+          <Field
+            label="Caption"
+            name="favoriteTrackLabel"
+            defaultValue={profile?.favoriteTrackLabel ?? undefined}
+            placeholder="Favorite track"
+            hint='e.g. "On repeat"'
+          />
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">

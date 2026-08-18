@@ -31,7 +31,11 @@ export interface Profile {
   heroMotto: string | null;
   heroBadge: string | null;
   logoInitials: string;
-  favoriteTrackUrl: string | null;
+  favoriteTrackAudioUrl: string | null;
+  favoriteTrackCoverUrl: string | null;
+  favoriteTrackTitle: string | null;
+  favoriteTrackArtist: string | null;
+  favoriteTrackSourceUrl: string | null;
   favoriteTrackLabel: string | null;
   updatedAt: string; // ISO timestamp
 }
