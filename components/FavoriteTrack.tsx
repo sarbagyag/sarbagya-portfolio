@@ -93,7 +93,7 @@ export default function FavoriteTrack({
           <img
             src={coverUrl}
             alt=""
-            className="w-12 h-15 object-cover grayscale shrink-0"
+            className="w-16 h-16 object-cover grayscale shrink-0"
           />
         )}
 
