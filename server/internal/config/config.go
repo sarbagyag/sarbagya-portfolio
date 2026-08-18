@@ -23,6 +23,14 @@ type Config struct {
 	MinioBucket    string
 	MinioUseSSL    bool
 	MinioPublicURL string // public base URL files are served from (e.g. https://cdn.yourdomain.com or https://yourdomain.com/media)
+
+	// YtDlpCookiesPath: optional path to a Netscape-format cookies.txt for
+	// yt-dlp. YouTube's bot detection routinely blocks datacenter/VPS IPs
+	// outright ("Sign in to confirm you're not a bot") — a cookies file
+	// from a real logged-in session is yt-dlp's own recommended fix. Left
+	// empty, favorite-track processing just runs without cookies (fine on
+	// residential IPs, likely to fail on a VPS). See internal/media.
+	YtDlpCookiesPath string
 }
 
 func Load() (*Config, error) {
@@ -38,6 +46,8 @@ func Load() (*Config, error) {
 		MinioBucket:    getEnv("MINIO_BUCKET", "media"),
 		MinioUseSSL:    getEnv("MINIO_USE_SSL", "false") == "true",
 		MinioPublicURL: os.Getenv("MINIO_PUBLIC_URL"),
+
+		YtDlpCookiesPath: os.Getenv("YT_DLP_COOKIES_PATH"),
 	}
 
 	if origins := os.Getenv("CORS_ALLOWED_ORIGINS"); origins != "" {

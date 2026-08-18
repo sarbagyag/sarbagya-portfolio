@@ -84,6 +84,14 @@ services:
       MINIO_BUCKET: ${MINIO_BUCKET}
       MINIO_USE_SSL: "false"
       MINIO_PUBLIC_URL: https://${PORTFOLIO_DOMAIN}
+      # See .env.example's "yt-dlp cookies" section. Must exist before
+      # `docker compose up` (a missing host file bind-mounts as an empty
+      # directory, breaking yt-dlp) — `touch yt-dlp-cookies.aditya.txt` if
+      # not set up yet; an empty file just means favorite-track processing
+      # runs without cookies.
+      YT_DLP_COOKIES_PATH: /cookies.txt
+    volumes:
+      - ./yt-dlp-cookies.aditya.txt:/cookies.txt:ro
     networks:
       - proxy
       - aditya_portfolio_internal

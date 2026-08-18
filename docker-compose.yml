@@ -78,6 +78,16 @@ services:
       MINIO_BUCKET: ${MINIO_BUCKET}
       MINIO_USE_SSL: "false"
       MINIO_PUBLIC_URL: https://${PORTFOLIO_DOMAIN}
+      # See .env.example's "yt-dlp cookies" section for how to generate
+      # this file. It must exist before `docker compose up` — Docker
+      # bind-mounts a missing host file as an empty *directory* instead,
+      # which breaks yt-dlp outright — so `touch yt-dlp-cookies.txt` first
+      # if you don't have a real one yet (an empty file just means
+      # favorite-track processing runs without cookies, and will likely
+      # hit YouTube's bot check).
+      YT_DLP_COOKIES_PATH: /cookies.txt
+    volumes:
+      - ./yt-dlp-cookies.txt:/cookies.txt:ro
     networks:
       - proxy
       - portfolio_internal

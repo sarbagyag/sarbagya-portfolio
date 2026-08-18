@@ -51,7 +51,7 @@ func (s *Server) handleProcessFavoriteTrack(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	clipPath, thumbPath, cleanup, err := media.ExtractClip(r.Context(), req.YoutubeURL, req.StartSec, req.EndSec)
+	clipPath, thumbPath, cleanup, err := media.ExtractClip(r.Context(), req.YoutubeURL, req.StartSec, req.EndSec, s.cfg.YtDlpCookiesPath)
 	if err != nil {
 		writeError(w, http.StatusBadGateway, err.Error())
 		return

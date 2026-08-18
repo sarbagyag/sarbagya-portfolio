@@ -25,12 +25,23 @@ const MaxClipSeconds = 60
 // thumbnail could be fetched — that alone isn't fatal) inside a temp
 // directory, plus a cleanup func the caller must defer-call once it's done
 // reading them (normally: uploaded to storage).
-func ExtractClip(ctx context.Context, youtubeURL string, startSec, endSec int) (clipPath, thumbPath string, cleanup func(), err error) {
+//
+// cookiesPath, if non-empty, points at a Netscape-format cookies.txt passed
+// to yt-dlp via --cookies. YouTube's bot detection routinely blocks
+// datacenter/VPS IPs outright ("Sign in to confirm you're not a bot")
+// without one — see config.Config.YtDlpCookiesPath. Pass "" to run without
+// cookies (fine on a residential IP, e.g. local dev).
+func ExtractClip(ctx context.Context, youtubeURL string, startSec, endSec int, cookiesPath string) (clipPath, thumbPath string, cleanup func(), err error) {
 	if endSec <= startSec {
 		return "", "", nil, fmt.Errorf("end must be after start")
 	}
 	if endSec-startSec > MaxClipSeconds {
 		return "", "", nil, fmt.Errorf("clip can't be longer than %d seconds", MaxClipSeconds)
+	}
+
+	var cookiesArgs []string
+	if cookiesPath != "" {
+		cookiesArgs = []string{"--cookies", cookiesPath}
 	}
 
 	tmpDir, err := os.MkdirTemp("", "favorite-track-*")
@@ -46,12 +57,12 @@ func ExtractClip(ctx context.Context, youtubeURL string, startSec, endSec int) (
 	// can't watch yt-dlp's exact post-processing naming from here —
 	// falling back to a glob below if the plain name isn't there.
 	dlOut := filepath.Join(tmpDir, "raw.%(ext)s")
-	dl := exec.CommandContext(ctx, "yt-dlp",
+	dlArgs := append([]string{
 		"-x", "--audio-format", "mp3", "--audio-quality", "5",
 		"--no-playlist",
 		"-o", dlOut,
-		youtubeURL,
-	)
+	}, append(cookiesArgs, youtubeURL)...)
+	dl := exec.CommandContext(ctx, "yt-dlp", dlArgs...)
 	if out, dlErr := dl.CombinedOutput(); dlErr != nil {
 		cleanup()
 		return "", "", nil, fmt.Errorf("yt-dlp download failed: %s", tail(out))
@@ -70,12 +81,12 @@ func ExtractClip(ctx context.Context, youtubeURL string, startSec, endSec int) (
 	// Best-effort — a missing thumbnail shouldn't fail the whole request,
 	// the track audio above is already good.
 	thumbOut := filepath.Join(tmpDir, "thumb.%(ext)s")
-	th := exec.CommandContext(ctx, "yt-dlp",
+	thumbArgs := append([]string{
 		"--skip-download", "--write-thumbnail", "--convert-thumbnails", "jpg",
 		"--no-playlist",
 		"-o", thumbOut,
-		youtubeURL,
-	)
+	}, append(cookiesArgs, youtubeURL)...)
+	th := exec.CommandContext(ctx, "yt-dlp", thumbArgs...)
 	_ = th.Run()
 	if matches, _ := filepath.Glob(filepath.Join(tmpDir, "thumb.*")); len(matches) > 0 {
 		thumbPath = matches[0]
