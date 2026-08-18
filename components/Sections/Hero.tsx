@@ -71,7 +71,7 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
           )}
 
           {profile.heroMotto && (
-            <p className="text-base sm:text-lg text-text-secondary max-w-md leading-relaxed mb-10">
+            <p className="italic text-base sm:text-lg text-text-secondary max-w-md leading-relaxed mb-10">
               {profile.heroMotto}
             </p>
           )}
