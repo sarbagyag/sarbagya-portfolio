@@ -5,13 +5,11 @@ import { ApiError, adminFetch } from "@/lib/api/server";
 const MAX_CLIP_SECONDS = 60;
 const YOUTUBE_URL_PATTERN = /^https?:\/\/(www\.)?(youtube\.com\/(watch\?v=|shorts\/)|youtu\.be\/)/;
 
-// The Go API does the actual work (yt-dlp download, ffmpeg trim, MinIO
-// upload) and can legitimately take a while — this bumps the Server
-// Action's own execution ceiling to match its 150s route timeout (see
-// server/internal/api/router.go), since platforms like Vercel default
-// Server Actions to a much shorter one (10s on Hobby) that would otherwise
-// kill this action while the Go side is still working.
-export const maxDuration = 150;
+// This action's execution ceiling on Vercel is set via `maxDuration` on
+// app/admin/(dashboard)/profile/page.tsx (the page that renders the form
+// invoking it), not here — a "use server" file is only allowed to export
+// async functions, so route-segment config like maxDuration has to live on
+// the page/layout instead.
 
 export async function processFavoriteTrack(input: {
   youtubeUrl: string;

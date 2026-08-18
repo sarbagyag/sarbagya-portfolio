@@ -103,8 +103,8 @@ export default function FavoriteTrackField({
       </div>
 
       <p className="text-xs text-text-tertiary mt-1">
-        Clip length is capped at 60s. Processing downloads the full track server-side first, so it can take up to a
-        couple minutes.
+        Clip length is capped at 60s. Processing downloads the full track server-side first, so it can take up to
+        about a minute — if it times out, try a shorter/lower-quality source video.
       </p>
       {error && <p className="text-xs text-carbon-support-error mt-1">{error}</p>}
 
