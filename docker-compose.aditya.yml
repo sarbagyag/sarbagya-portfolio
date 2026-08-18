@@ -91,7 +91,9 @@ services:
       # runs without cookies.
       YT_DLP_COOKIES_PATH: /cookies.txt
     volumes:
-      - ./yt-dlp-cookies.aditya.txt:/cookies.txt:ro
+      # Read-write, not :ro — yt-dlp writes refreshed cookies back to this
+      # file after each run, not just reads it. See docker-compose.yml.
+      - ./yt-dlp-cookies.aditya.txt:/cookies.txt
     networks:
       - proxy
       - aditya_portfolio_internal

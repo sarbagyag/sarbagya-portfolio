@@ -87,7 +87,11 @@ services:
       # hit YouTube's bot check).
       YT_DLP_COOKIES_PATH: /cookies.txt
     volumes:
-      - ./yt-dlp-cookies.txt:/cookies.txt:ro
+      # Read-write, not :ro — yt-dlp writes refreshed cookies/expiry back
+      # to this file after each run to keep the session current, not just
+      # reads it. Read-only makes every request fail outright (OSError:
+      # Read-only file system).
+      - ./yt-dlp-cookies.txt:/cookies.txt
     networks:
       - proxy
       - portfolio_internal
