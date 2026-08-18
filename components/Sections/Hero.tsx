@@ -115,7 +115,7 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
 
           {profile.favoriteTrackAudioUrl && (
             <FavoriteTrack
-              className="flex-1 mt-8"
+              className="mt-8"
               audioUrl={profile.favoriteTrackAudioUrl}
               coverUrl={profile.favoriteTrackCoverUrl}
               title={profile.favoriteTrackTitle}

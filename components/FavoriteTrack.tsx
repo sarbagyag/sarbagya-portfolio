@@ -9,11 +9,6 @@ interface FavoriteTrackProps {
   title: string | null;
   artist: string | null;
   label: string | null;
-  // Passed as "flex-1" by Hero so this whole component (not just the
-  // controls row) grows to fill the remaining height in its flex column —
-  // the actual card below stretches with it (see its own flex-1) and
-  // vertically centers its (still compact) controls within the extra
-  // height, rather than the controls themselves getting stretched/blown up.
   className?: string;
 }
 
@@ -82,16 +77,16 @@ export default function FavoriteTrack({ audioUrl, coverUrl, title, artist, label
     <div className={`w-full flex flex-col ${className}`}>
       {label && <p className="text-xs sm:text-sm text-text-tertiary mb-2 shrink-0">{label}</p>}
 
-      <div className="flex-1 flex items-center gap-3 p-3 border border-border-color">
-        {coverUrl && <img src={coverUrl} alt="" className="w-12 h-12 object-cover grayscale shrink-0" />}
+      <div className="flex items-center gap-2.5 p-2.5 border border-border-color">
+        {coverUrl && <img src={coverUrl} alt="" className="w-9 h-9 object-cover grayscale shrink-0" />}
 
         <button
           type="button"
           onClick={togglePlay}
           aria-label={playing ? "Pause" : "Play"}
-          className="shrink-0 w-8 h-8 flex items-center justify-center border border-link text-link hover:bg-link-subtle transition-colors"
+          className="shrink-0 w-7 h-7 flex items-center justify-center border border-link text-link hover:bg-link-subtle transition-colors"
         >
-          {playing ? <Pause size={14} /> : <Play size={14} className="ml-0.5" />}
+          {playing ? <Pause size={12} /> : <Play size={12} className="ml-0.5" />}
         </button>
 
         <div className="flex-1 min-w-0">
