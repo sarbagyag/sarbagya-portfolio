@@ -54,31 +54,6 @@ const About: React.FC<AboutProps> = ({ education, skills, languages }) => {
           </div>
         </div>
 
-        {/* Languages */}
-        <div>
-          <h3 className="text-xl font-bold text-text-primary mb-6 flex items-center gap-3">
-            <Languages className="text-link" />
-            Languages
-          </h3>
-          <Card className="p-6">
-            <div className="space-y-3">
-              {languages.map((lang) => (
-                <div
-                  key={lang.name}
-                  className="flex justify-between items-center"
-                >
-                  <span className="font-medium text-text-primary">
-                    {lang.name}
-                  </span>
-                  <span className="text-sm text-text-secondary">
-                    {lang.level}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </Card>
-        </div>
-
         {/* Skills */}
         <div className="mb-16">
           <h3 className="text-2xl font-bold text-text-primary mb-6">
@@ -124,6 +99,31 @@ const About: React.FC<AboutProps> = ({ education, skills, languages }) => {
               ))}
             </div>
           </div> */}
+
+          {/* Languages */}
+          <div>
+            <h3 className="text-xl font-bold text-text-primary mb-6 flex items-center gap-3">
+              <Languages className="text-link" />
+              Languages
+            </h3>
+            <Card className="p-6">
+              <div className="space-y-3">
+                {languages.map((lang) => (
+                  <div
+                    key={lang.name}
+                    className="flex justify-between items-center"
+                  >
+                    <span className="font-medium text-text-primary">
+                      {lang.name}
+                    </span>
+                    <span className="text-sm text-text-secondary">
+                      {lang.level}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </div>
         </div>
       </div>
     </section>
