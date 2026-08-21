@@ -1,12 +1,33 @@
-# Deploy alongside your existing Traefik + Vikunja stack. Same pattern as
-# /opt/vikunja: an internal network for db<->api<->minio traffic, joined to
-# the external `proxy` network only on the services Traefik needs to reach.
+# Home-server deployment: no Traefik, no path-routed domain. This box is
+# reached over Tailscale Serve/Funnel instead — see the `tailscale serve`
+# section below and MINIO_PUBLIC_URL in .env.
 #
-# Single domain, path-routed: https://portfolio.mandalafoods.co/api/*  -> api
-#                              https://portfolio.mandalafoods.co/media/* -> minio
-# No path-stripping needed either way — the Go router already expects an
-# /api prefix, and the MinIO bucket is literally named "media", so
-# /media/<key> lines up with MinIO's own /<bucket>/<key> URL shape exactly.
+# Public shape (once `tailscale funnel` is set up as described below):
+#   https://<your-tailnet-hostname>/       -> api   (all paths)
+#   https://<your-tailnet-hostname>/media  -> minio (one path mapping)
+#
+# All three services publish only to 127.0.0.1 — nothing here is reachable
+# on the LAN directly. Tailscale Serve is what proxies from 127.0.0.1 to
+# the tailnet, and Funnel is what additionally exposes that to the public
+# internet (needed since the Next.js frontend on Vercel isn't itself on
+# your tailnet). One-time setup on the host, after `docker compose up -d`:
+#
+#   sudo tailscale set --operator=$USER   # avoids needing sudo below
+#   tailscale serve --bg --set-path=/media http://127.0.0.1:9000
+#   tailscale funnel --bg 8080
+#
+# `--set-path=/media`, not the actual MINIO_BUCKET name: Tailscale Serve
+# STRIPS the mount path before forwarding (unlike a Traefik PathPrefix,
+# which wouldn't) — a request for {MINIO_PUBLIC_URL}/{bucket}/{key} needs
+# "/media" to survive as an extra segment ahead of the real bucket/key, so
+# that after Tailscale strips it, MinIO still sees "/{bucket}/{key}". This
+# is also why MINIO_PUBLIC_URL in .env must end in "/media" and not just be
+# the bare hostname — see that var's comment in .env.example.
+#
+# IMPORTANT: every `tailscale serve`/`tailscale funnel` call re-derives the
+# full path config and silently drops Funnel back to tailnet-only if you
+# only re-run `serve` — always re-run `tailscale funnel --bg 8080`
+# afterward to confirm `tailscale funnel status` still shows "Funnel on".
 
 services:
   db:
@@ -24,16 +45,10 @@ services:
 
   minio:
     image: minio/minio:latest
-    # Hyphenated, not underscored (portfolio_minio) — this name is also
-    # what `api` connects to below (MINIO_ENDPOINT), and the minio-go SDK
-    # validates its endpoint against strict RFC-1123 hostname rules,
-    # rejecting underscores outright ("invalid hostname"), even though
-    # Docker's own DNS resolves underscored container names just fine.
-    # container_name (unlike the bare service name "minio") is also
-    # guaranteed unique host-wide, which matters since both this stack's
-    # and docker-compose.aditya.yml's minio services join the same shared
-    # external `proxy` network — the default "minio" alias Compose would
-    # otherwise register there collides between the two stacks.
+    # Hyphenated, not underscored — the minio-go SDK validates its
+    # endpoint against strict RFC-1123 hostname rules and rejects
+    # underscores outright ("invalid hostname"), even though Docker's own
+    # DNS resolves underscored container names just fine.
     container_name: portfolio-minio
     restart: unless-stopped
     command: server /data --console-address ":9001"
@@ -42,18 +57,14 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
     volumes:
       - ./minio-data:/data
+    ports:
+      # 127.0.0.1 only — this is what `tailscale serve --set-path=/media
+      # http://127.0.0.1:9000` proxies to. Not for direct LAN access; the
+      # admin console (:9001) isn't published at all — reach it with
+      # `docker compose exec minio ...` or an SSH tunnel if you need it.
+      - "127.0.0.1:9000:9000"
     networks:
-      - proxy
       - portfolio_internal
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.portfolio-media.rule=Host(`${PORTFOLIO_DOMAIN}`) && PathPrefix(`/media`)"
-      - "traefik.http.routers.portfolio-media.entrypoints=websecure"
-      - "traefik.http.routers.portfolio-media.tls.certresolver=le"
-      - "traefik.http.services.portfolio-media.loadbalancer.server.port=9000"
-      - "traefik.docker.network=proxy"
-    # MinIO's admin console (:9001) is deliberately not exposed via Traefik —
-    # reach it with `docker compose exec minio ...` or an SSH tunnel if needed.
 
   api:
     build: ./server
@@ -69,15 +80,16 @@ services:
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
-      # minio's container_name above, not the bare "minio" service alias
-      # (ambiguous on the shared `proxy` network once a second stack also
-      # names its service "minio") — see the comment on that service.
       MINIO_ENDPOINT: portfolio-minio:9000
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
       MINIO_BUCKET: ${MINIO_BUCKET}
       MINIO_USE_SSL: "false"
-      MINIO_PUBLIC_URL: https://${PORTFOLIO_DOMAIN}
+      # Full public URL, tailscale-hostname + "/media" — see the note up
+      # top on why the path can't just be the bucket name. Set directly in
+      # .env, not derived from a domain var (there's no Traefik host rule
+      # to derive it from here).
+      MINIO_PUBLIC_URL: ${MINIO_PUBLIC_URL}
       # See .env.example's "yt-dlp cookies" section for how to generate
       # this file. It must exist before `docker compose up` — Docker
       # bind-mounts a missing host file as an empty *directory* instead,
@@ -92,19 +104,14 @@ services:
       # reads it. Read-only makes every request fail outright (OSError:
       # Read-only file system).
       - ./yt-dlp-cookies.txt:/cookies.txt
+    ports:
+      # 127.0.0.1 only — `tailscale funnel --bg 8080` is what makes this
+      # reachable from the tailnet/internet; it isn't meant to answer
+      # directly on the LAN.
+      - "127.0.0.1:8080:8080"
     networks:
-      - proxy
       - portfolio_internal
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.portfolio-api.rule=Host(`${PORTFOLIO_DOMAIN}`) && PathPrefix(`/api`)"
-      - "traefik.http.routers.portfolio-api.entrypoints=websecure"
-      - "traefik.http.routers.portfolio-api.tls.certresolver=le"
-      - "traefik.http.services.portfolio-api.loadbalancer.server.port=8080"
-      - "traefik.docker.network=proxy"
 
 networks:
-  proxy:
-    external: true
   portfolio_internal:
     driver: bridge

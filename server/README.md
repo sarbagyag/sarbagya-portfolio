@@ -37,18 +37,28 @@ go run ./cmd/api
 Migrations and the admin-user seed both run automatically on boot — no
 separate `db:migrate` / `db:seed` step to remember.
 
-## Deploying on your own server
+## Deploying on your own server (home server / Tailscale)
 
-Assumes a Traefik instance already running on the box with an external
-`proxy` Docker network (the same pattern your Vikunja deployment uses) —
-this stack doesn't run its own reverse proxy or provision its own TLS; it
-just joins `proxy` and adds Traefik labels, same as Vikunja's does.
+No reverse proxy or TLS termination of its own — `docker-compose.yml`
+publishes `api` (8080) and `minio` (9000) to `127.0.0.1` only, and
+[Tailscale Serve/Funnel](https://tailscale.com/kb/1223/funnel) is what
+makes that reachable, first within your tailnet and then (via Funnel)
+publicly — which is what the Vercel-hosted frontend needs, since it isn't
+on your tailnet itself.
 
-1. Point a DNS A record for `PORTFOLIO_DOMAIN` (e.g. `portfolio.mandalafoods.co`) at the server.
-2. Put this repo (or at least `server/`, `docker-compose.yml`, `.env.example`) somewhere like `/opt/portfolio` on the server.
-3. `cp .env.example .env`, fill in real secrets (`openssl rand -base64 48` for `JWT_SECRET`).
-4. `docker compose up -d --build`. Traefik picks up the labels and provisions a cert for `PORTFOLIO_DOMAIN` automatically on first request, same as it already does for Vikunja.
-5. Point the Next.js frontend's `NEXT_PUBLIC_API_URL` (on Vercel) at `https://<PORTFOLIO_DOMAIN>` — the API lives under `/api/*` on that same domain, uploaded files under `/media/*`.
+1. Put this repo (or at least `server/`, `docker-compose.yml`, `.env.example`) on the box.
+2. `cp .env.example .env`, fill in real secrets (`openssl rand -base64 48` for `JWT_SECRET`). Leave `MINIO_PUBLIC_URL` for step 4.
+3. `docker compose up -d --build`.
+4. One-time Tailscale setup — see the comment at the top of `docker-compose.yml` for why `--set-path=/media` (not the bucket name) matters:
+   ```
+   sudo tailscale set --operator=$USER
+   tailscale serve --bg --set-path=/media http://127.0.0.1:9000
+   tailscale funnel --bg 8080
+   ```
+   Then set `MINIO_PUBLIC_URL=https://<your-tailnet-hostname>/media` in `.env` and `docker compose up -d api` to pick it up.
+
+   **Careful:** every `tailscale serve`/`tailscale funnel` call re-derives the whole path config and silently drops Funnel back to tailnet-only if you only re-run `serve` afterward — always re-run `tailscale funnel --bg 8080` too and check `tailscale funnel status` still says "Funnel on" before assuming you're done.
+5. Point the Next.js frontend's `NEXT_PUBLIC_API_URL` (on Vercel) at `https://<your-tailnet-hostname>` — the API lives under `/api/*` there, uploaded files under `/media/*`.
 6. Log in at the admin UI with `ADMIN_EMAIL`/`ADMIN_PASSWORD` — after that, you can blank those two out of `.env` if you want (seeding is a one-time, first-boot-only no-op after an admin exists).
 
 ## Auth model
