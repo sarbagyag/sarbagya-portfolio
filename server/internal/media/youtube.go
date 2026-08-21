@@ -19,12 +19,12 @@ import (
 // preview, not a full-song mirror.
 const MaxClipSeconds = 60
 
-// ExtractClip downloads audio for youtubeURL via yt-dlp, grabs its
-// thumbnail, and cuts [startSec, endSec) out of the audio with ffmpeg.
-// Returns paths to the resulting clip + thumbnail (thumbPath is "" if no
-// thumbnail could be fetched — that alone isn't fatal) inside a temp
-// directory, plus a cleanup func the caller must defer-call once it's done
-// reading them (normally: uploaded to storage).
+// ExtractClip downloads just the [startSec, endSec) window of audio for
+// youtubeURL via yt-dlp and grabs its thumbnail. Returns paths to the
+// resulting clip + thumbnail (thumbPath is "" if no thumbnail could be
+// fetched — that alone isn't fatal) inside a temp directory, plus a cleanup
+// func the caller must defer-call once it's done reading them (normally:
+// uploaded to storage).
 //
 // cookiesPath, if non-empty, points at a Netscape-format cookies.txt passed
 // to yt-dlp via --cookies. YouTube's bot detection routinely blocks
@@ -50,16 +50,28 @@ func ExtractClip(ctx context.Context, youtubeURL string, startSec, endSec int, c
 	}
 	cleanup = func() { os.RemoveAll(tmpDir) }
 
-	// yt-dlp does the download AND the extract-to-mp3 step itself (it
-	// shells out to ffmpeg internally for that) — we only need our own
-	// ffmpeg pass afterward to trim the window. Output is templated
-	// (raw.%(ext)s) rather than asserted as raw.mp3 outright, since we
-	// can't watch yt-dlp's exact post-processing naming from here —
-	// falling back to a glob below if the plain name isn't there.
+	// yt-dlp does the download, the [startSec, endSec) trim, AND the
+	// extract-to-mp3 step all itself (--download-sections fetches only
+	// that window instead of the full track, --force-keyframes-at-cuts
+	// makes the cut land exactly on our boundaries rather than the
+	// nearest keyframe, and -x shells out to ffmpeg internally for the
+	// mp3 extraction) — no separate ffmpeg trim pass needed afterward.
+	// This used to download the entire track before trimming, which for
+	// a long source video could blow well past the 60s Vercel gives the
+	// Next.js server action that calls this endpoint (the Go route itself
+	// allows 150s, but that only helps direct/non-Vercel callers — see
+	// router.go and app/admin/(dashboard)/profile/page.tsx): the request
+	// downloads and trims successfully server-side, but the caller has
+	// already timed out and never sees the resulting URL. Output is
+	// templated (raw.%(ext)s) rather than asserted as raw.mp3 outright,
+	// since we can't watch yt-dlp's exact post-processing naming from
+	// here — falling back to a glob below if the plain name isn't there.
 	dlOut := filepath.Join(tmpDir, "raw.%(ext)s")
+	section := fmt.Sprintf("*%d-%d", startSec, endSec)
 	dlArgs := append([]string{
 		"-x", "--audio-format", "mp3", "--audio-quality", "5",
 		"--no-playlist",
+		"--download-sections", section, "--force-keyframes-at-cuts",
 		"-o", dlOut,
 	}, append(cookiesArgs, youtubeURL)...)
 	dl := exec.CommandContext(ctx, "yt-dlp", dlArgs...)
@@ -68,14 +80,14 @@ func ExtractClip(ctx context.Context, youtubeURL string, startSec, endSec int, c
 		return "", "", nil, fmt.Errorf("yt-dlp download failed: %s", tail(out))
 	}
 
-	rawAudio := filepath.Join(tmpDir, "raw.mp3")
-	if _, statErr := os.Stat(rawAudio); statErr != nil {
+	clip := filepath.Join(tmpDir, "raw.mp3")
+	if _, statErr := os.Stat(clip); statErr != nil {
 		matches, _ := filepath.Glob(filepath.Join(tmpDir, "raw.*"))
 		if len(matches) == 0 {
 			cleanup()
 			return "", "", nil, fmt.Errorf("yt-dlp produced no audio output")
 		}
-		rawAudio = matches[0]
+		clip = matches[0]
 	}
 
 	// Best-effort — a missing thumbnail shouldn't fail the whole request,
@@ -90,19 +102,6 @@ func ExtractClip(ctx context.Context, youtubeURL string, startSec, endSec int, c
 	_ = th.Run()
 	if matches, _ := filepath.Glob(filepath.Join(tmpDir, "thumb.*")); len(matches) > 0 {
 		thumbPath = matches[0]
-	}
-
-	clip := filepath.Join(tmpDir, "clip.mp3")
-	trim := exec.CommandContext(ctx, "ffmpeg", "-y",
-		"-i", rawAudio,
-		"-ss", fmt.Sprintf("%d", startSec),
-		"-to", fmt.Sprintf("%d", endSec),
-		"-vn", "-acodec", "libmp3lame", "-b:a", "128k",
-		clip,
-	)
-	if out, trimErr := trim.CombinedOutput(); trimErr != nil {
-		cleanup()
-		return "", "", nil, fmt.Errorf("ffmpeg trim failed: %s", tail(out))
 	}
 
 	return clip, thumbPath, cleanup, nil
