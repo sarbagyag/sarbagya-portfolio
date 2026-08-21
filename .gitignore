@@ -1,0 +1,39 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# vercel
+.vercel
+
+# misc
+.DS_Store
+.env
+.env.aditya
+.env*.local
+# yt-dlp cookies file — a real YouTube session credential, see .env.example
+yt-dlp-cookies*.txt
+
+# go backend (server/)
+server/api
+server/portfolio-api
+server/*.exe
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/db/
+/minio-data/
