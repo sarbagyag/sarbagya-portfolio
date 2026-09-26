@@ -91,7 +91,7 @@ export default async function RootLayout({
     >
       <body className="bg-bg-primary text-text-primary font-sans antialiased transition-colors duration-carbon-moderate-01">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <SiteShell logoInitials={profile?.logoInitials}>{children}</SiteShell>
+          <SiteShell logoInitials={profile?.logoInitials} resumeUrl={profile?.resumeUrl}>{children}</SiteShell>
         </ThemeProvider>
       </body>
     </html>

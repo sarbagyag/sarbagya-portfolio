@@ -9,7 +9,7 @@ export interface Project {
   paperUrl?: string;
   imageUrl?: string;
   featured: boolean;
-  category: "ml" | "systems" | "networks";
+  category: "ml" | "systems" | "networks" | "ai" | "embedded" | "languages" | "hardware" | "web";
   startDate: string;
   endDate?: string;
   status?: "completed" | "ongoing" | "published";

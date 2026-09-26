@@ -9,11 +9,19 @@ import BinaryRain from "@/components/Effects/BinaryRain";
 // content. The /admin panel has its own layout/chrome (app/admin/**) and
 // deliberately skips all of this — no Matrix-rain sidebar for a CMS.
 //
-// logoInitials is fetched once by the root layout (a Server Component) and
-// threaded down here rather than fetched again client-side — same
-// profile-lives-in-the-DB pattern as heroRoles/heroMotto/heroBadge, just
-// for the nav wordmark instead of the homepage Hero.
-export default function SiteShell({ children, logoInitials }: { children: React.ReactNode; logoInitials?: string }) {
+// logoInitials and resumeUrl are fetched once by the root layout (a Server
+// Component) and threaded down here rather than fetched again client-side —
+// same profile-lives-in-the-DB pattern as heroRoles/heroMotto/heroBadge,
+// just for the nav wordmark and CV button instead of the homepage Hero.
+export default function SiteShell({
+  children,
+  logoInitials,
+  resumeUrl,
+}: {
+  children: React.ReactNode;
+  logoInitials?: string;
+  resumeUrl?: string | null;
+}) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin");
 
@@ -24,7 +32,7 @@ export default function SiteShell({ children, logoInitials }: { children: React.
   return (
     <div className="bg-bg-dark text-text-primary min-h-svh font-mono overflow-x-hidden">
       <BinaryRain opacity={0.08} />
-      <Navigation logoInitials={logoInitials} />
+      <Navigation logoInitials={logoInitials} resumeUrl={resumeUrl} />
 
       <main className="relative z-10">{children}</main>
 

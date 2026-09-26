@@ -39,6 +39,11 @@ export default function ProjectForm({
             { value: "systems", label: "Systems" },
             { value: "ml", label: "ML" },
             { value: "networks", label: "Networks" },
+            { value: "ai", label: "AI" },
+            { value: "embedded", label: "Embedded" },
+            { value: "languages", label: "Languages" },
+            { value: "hardware", label: "Hardware" },
+            { value: "web", label: "Web" },
           ]}
         />
       </div>

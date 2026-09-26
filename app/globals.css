@@ -29,7 +29,18 @@
   --cds-border-strong-01: 141 141 141; /* #8d8d8d */
   --cds-text-primary: 22 22 22; /* #161616 */
   --cds-text-secondary: 82 82 82; /* #525252 */
-  --cds-text-placeholder: 168 168 168; /* #a8a8a8 */
+  /* Carbon's real "Text Placeholder" value is #a8a8a8 (Gray 40) — but that
+     token is spec'd for literal empty-input placeholder text only, ~2.3:1
+     on white, well under WCAG AA's 4.5:1. This codebase's text-tertiary
+     utility uses this variable for general de-emphasized body text
+     (captions, hints, timestamps) sitewide, not real placeholders, so it's
+     set to Carbon's actual "Text Helper" value (Gray 60) instead — the
+     token Carbon itself specs for exactly that de-emphasized-but-legible
+     case. ~5.5:1 on white, comfortably AA. (Dark mode's value below was
+     already Gray 60/its dark-theme equivalent, not true placeholder gray —
+     this brings light mode in line with what dark mode was already doing.)
+  */
+  --cds-text-placeholder: 111 111 111; /* #6f6f6f */
   --cds-text-on-color: 255 255 255; /* #ffffff */
   --cds-icon-primary: 22 22 22; /* #161616 */
   --cds-icon-secondary: 82 82 82; /* #525252 */
@@ -56,7 +67,10 @@
   --cds-border-strong-01: 111 111 111; /* #6f6f6f */
   --cds-text-primary: 244 244 244; /* #f4f4f4 */
   --cds-text-secondary: 198 198 198; /* #c6c6c6 */
-  --cds-text-placeholder: 111 111 111; /* #6f6f6f */
+  /* Carbon's dark-theme "Text Helper" value (Gray 40) — see the light
+     theme's comment above on why this uses Helper, not literal
+     Placeholder gray, for text-tertiary. */
+  --cds-text-placeholder: 141 141 141; /* #8d8d8d */
   --cds-text-on-color: 255 255 255; /* #ffffff */
   --cds-icon-primary: 244 244 244; /* #f4f4f4 */
   --cds-icon-secondary: 198 198 198; /* #c6c6c6 */

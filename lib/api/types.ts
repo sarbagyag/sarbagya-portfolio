@@ -84,7 +84,7 @@ export interface Project {
   paperUrl: string | null;
   imageUrl: string | null;
   featured: boolean;
-  category: "ml" | "systems" | "networks";
+  category: "ml" | "systems" | "networks" | "ai" | "embedded" | "languages" | "hardware" | "web";
   startDate: string;
   endDate: string | null;
   status: "completed" | "ongoing" | "published" | null;

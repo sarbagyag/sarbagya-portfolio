@@ -84,7 +84,7 @@ type Project struct {
 	PaperURL        *string   `json:"paperUrl"`
 	ImageURL        *string   `json:"imageUrl"`
 	Featured        bool      `json:"featured"`
-	Category        string    `json:"category"` // ml | systems | networks
+	Category        string    `json:"category"` // ml | systems | networks | ai | embedded | languages | hardware | web
 	StartDate       string    `json:"startDate"`
 	EndDate         *string   `json:"endDate"`
 	Status          *string   `json:"status"` // completed | ongoing | published

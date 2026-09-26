@@ -35,9 +35,7 @@ const About: React.FC<AboutProps> = ({ education, skills, languages }) => {
             {education.map((edu) => (
               <Card key={edu.id} className="p-6">
                 <div className="flex justify-between items-start mb-3">
-                  <h4 className="text-lg font-bold text-link">
-                    {edu.degree}
-                  </h4>
+                  <h4 className="text-lg font-bold text-link">{edu.degree}</h4>
                   <span className="text-lg font-bold text-accent-600">
                     {edu.gpa}
                   </span>

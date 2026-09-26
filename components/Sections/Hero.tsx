@@ -28,41 +28,50 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
   ].filter((link): link is typeof link & { href: string } => Boolean(link.href));
 
   return (
-    <section id="home" className="bg-bg-secondary pt-20">
+    // overflow-hidden + the motion.div's exact md:h-[calc(100svh-5rem)]
+    // below (5rem = the fixed nav's own h-20, which floats over this
+    // section rather than sitting in normal flow above it, so "one full
+    // screen" is nav-height + this section, not nav-height + this + more)
+    // together guarantee the hero is the entire initial screen on
+    // desktop — nothing from the next section (SiteOverview) peeks in
+    // before scrolling. Not applied below md: the stacked mobile layout
+    // never had a height constraint here either (min-h-[70svh] was
+    // already md-only), and forcing one screen's worth of height onto a
+    // vertically-stacked photo+text layout would cramp it far more than
+    // it does the two-column desktop layout.
+    <section id="home" className="bg-bg-secondary pt-20 overflow-hidden">
       <motion.div
-        className="max-w-7xl mx-auto grid md:grid-cols-2 md:min-h-[70svh]"
+        className="max-w-7xl mx-auto grid md:grid-cols-2 md:h-[calc(100svh_-_5rem)]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
       >
-        {/* Text — bottom-aligned (instead of centered) whenever a favorite
-            track is set, so the player's bottom edge lands flush with the
-            photo's bottom edge (the grid stretches both columns to equal
-            height already) rather than leaving a mismatched gap below it
-            while the photo keeps going. Without a track, centered as
-            before — this shift is specifically to close that gap, not a
-            general layout change. */}
+        {/* Text. Without a favorite track, centered as before. With one,
+            top content stays put and the player itself grows (flex-1) to
+            consume whatever's left down to the column's bottom — which
+            now exactly matches the photo's bottom, since the column above
+            is a fixed height rather than a min-height. */}
         <div
-          className={`order-2 md:order-1 flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-12 md:py-20 ${
-            profile.favoriteTrackAudioUrl ? "md:justify-end" : "md:justify-center"
+          className={`order-2 md:order-1 flex flex-col px-6 sm:px-10 lg:px-20 py-12 md:py-20 ${
+            profile.favoriteTrackAudioUrl ? "" : "justify-center"
           }`}
         >
           {profile.tagline && (
-            <p className="text-sm sm:text-base font-semibold text-link mb-2">{profile.tagline}</p>
+            <p className="text-sm sm:text-base font-semibold text-link mb-3">{profile.tagline}</p>
           )}
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-text-primary mb-3 leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-text-primary mb-4 leading-tight">
             {profile.name}
           </h1>
 
           {profile.heroRoles.length > 0 && (
-            <p className="text-base sm:text-lg text-text-secondary mb-4 max-w-md">
+            <p className="text-base sm:text-lg text-text-secondary mb-5 max-w-md">
               {profile.heroRoles.join(" • ")}
             </p>
           )}
 
           {profile.heroMotto && (
-            <p className="text-base sm:text-lg text-text-secondary max-w-md leading-relaxed mb-8">
+            <p className="italic text-sm sm:text-base text-text-tertiary max-w-md leading-relaxed mb-10">
               {profile.heroMotto}
             </p>
           )}
@@ -101,11 +110,12 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
           </div>
 
           {profile.heroBadge && (
-            <p className="mt-6 text-xs sm:text-sm text-text-tertiary">{profile.heroBadge}</p>
+            <p className="mt-8 text-xs sm:text-sm text-text-tertiary">{profile.heroBadge}</p>
           )}
 
           {profile.favoriteTrackAudioUrl && (
             <FavoriteTrack
+              className="mt-8"
               audioUrl={profile.favoriteTrackAudioUrl}
               coverUrl={profile.favoriteTrackCoverUrl}
               title={profile.favoriteTrackTitle}
@@ -118,8 +128,16 @@ const Hero: React.FC<{ profile: Profile }> = ({ profile }) => {
         {/* Photo — bleeds to the block's own edges, no radius/border/shadow.
             Starts right below the fixed nav (section's pt-20) rather than
             running under it, where a transparent nav made the logo/links
-            hard to read against the image. */}
-        <div className="order-1 md:order-2 relative h-72 sm:h-96 md:h-auto">
+            hard to read against the image.
+            md:h-[85%] md:self-start (rather than the grid's default
+            stretch-to-fill-row): now that the row itself is pinned to
+            exactly one screen tall, stretching the photo to match that
+            full height read as an overly elongated crop. Capping it at
+            85% and top-aligning keeps it flush against the nav like
+            before, just shorter — the section's own background (matching
+            the panel behind it) shows through in the gap below rather
+            than the photo stretching to fill it. */}
+        <div className="order-1 md:order-2 relative h-72 sm:h-96 md:h-[85%] md:self-start">
           <img
             src={profile.avatarUrl || "/sarbagya-hero.jpg"}
             alt={profile.name}
