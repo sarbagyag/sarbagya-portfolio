@@ -13,8 +13,8 @@ interface NavItem {
 }
 
 // Ordered as a narrative rather than build order: who I am, what I've done
-// professionally, what I've built, where it lives, what I write/learn, then
-// how to reach me. "Home" isn't listed separately — the logo already links
+// professionally, what I've built, where it lives, what I write, then how
+// to reach me. "Home" isn't listed separately — the logo already links
 // there, and repeating it as a nav item was redundant.
 const navItems: NavItem[] = [
   { label: "About", href: "/about" },
@@ -22,11 +22,11 @@ const navItems: NavItem[] = [
   { label: "Projects", href: "/projects" },
   { label: "Showcase", href: "/showcase" },
   { label: "Blog", href: "/blog" },
-  { label: "Learning", href: "/learning" },
   { label: "Contact", href: "/contact" },
 ];
 
-const Navigation: React.FC<{ logoInitials?: string }> = ({ logoInitials }) => {
+const Navigation: React.FC<{ logoInitials?: string; resumeUrl?: string | null }> = ({ logoInitials, resumeUrl }) => {
+  const cvHref = resumeUrl || "/resume/sarbagya-updated-resume.pdf";
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -115,8 +115,8 @@ const Navigation: React.FC<{ logoInitials?: string }> = ({ logoInitials }) => {
                 </Link>
               ))}
               <a
-                href="/resume/sarbagya-updated-resume.pdf"
-                download="sarbagya-updated-resume.pdf"
+                href={cvHref}
+                download
                 className="ml-3 inline-flex items-center gap-2 px-4 py-2.5 bg-primary-500 text-white text-sm font-semibold hover:bg-primary-600 transition-colors duration-200 shrink-0"
               >
                 <FileText size={16} />
@@ -166,8 +166,8 @@ const Navigation: React.FC<{ logoInitials?: string }> = ({ logoInitials }) => {
                   </Link>
                 ))}
                 <a
-                  href="/resume/sarbagya-updated-resume.pdf"
-                  download="sarbagya-updated-resume.pdf"
+                  href={cvHref}
+                  download
                   className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 mt-4 bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-colors"
                 >
                   <FileText size={18} />

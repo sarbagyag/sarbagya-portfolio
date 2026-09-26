@@ -122,7 +122,7 @@ export const projectSchema = z.object({
   paperUrl: optionalUrl,
   imageUrl: optionalUrl,
   featured: z.coerce.boolean().default(false),
-  category: z.enum(["ml", "systems", "networks"]),
+  category: z.enum(["ml", "systems", "networks", "ai", "embedded", "languages", "hardware", "web"]),
   startDate: z.string().trim().min(1, "Required"),
   endDate: z.string().trim().optional(),
   status: z.enum(["completed", "ongoing", "published"]).optional(),
