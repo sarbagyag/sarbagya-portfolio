@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { adminFetch, ApiError } from "@/lib/api/server";
-import { getProjectById } from "@/lib/api/queries";
+import { getProjectById, getProjects } from "@/lib/api/queries";
+import { nextSortOrder } from "@/lib/api/sort-order";
 import { projectSchema } from "@/lib/validations";
 
 function revalidateProjectPages() {
@@ -21,7 +22,7 @@ export async function createProject(_prevState: { error?: string } | undefined, 
 
   // The Go API upserts by id — do the "already exists" check here to keep
   // create from silently overwriting an existing entry.
-  const existing = await getProjectById(parsed.data.id);
+  const [existing, items] = await Promise.all([getProjectById(parsed.data.id), getProjects()]);
   if (existing) {
     return { error: `A project with id "${parsed.data.id}" already exists.` };
   }
@@ -35,6 +36,7 @@ export async function createProject(_prevState: { error?: string } | undefined, 
         status: parsed.data.status || null,
         longDescription: parsed.data.longDescription || null,
         impact: parsed.data.impact || null,
+        sortOrder: nextSortOrder(items),
       }),
     });
   } catch (err) {
@@ -52,7 +54,11 @@ export async function updateProject(id: string, _prevState: { error?: string } |
     return { error: parsed.error.issues[0]?.message ?? "Invalid input." };
   }
 
+  // sortOrder isn't editable from the form (it's set by dragging on the list
+  // page) — carry the existing value through so a save doesn't reset it.
   // Old image cleanup in MinIO happens server-side in the Go API itself.
+  const existing = await getProjectById(id);
+
   try {
     await adminFetch(`/api/admin/projects/${id}`, {
       method: "PUT",
@@ -62,6 +68,7 @@ export async function updateProject(id: string, _prevState: { error?: string } |
         status: parsed.data.status || null,
         longDescription: parsed.data.longDescription || null,
         impact: parsed.data.impact || null,
+        sortOrder: existing?.sortOrder ?? 0,
       }),
     });
   } catch (err) {
@@ -75,5 +82,13 @@ export async function updateProject(id: string, _prevState: { error?: string } |
 
 export async function deleteProject(id: string) {
   await adminFetch(`/api/admin/projects/${id}`, { method: "DELETE" });
+  revalidateProjectPages();
+}
+
+export async function reorderProjects(ids: string[]) {
+  await adminFetch("/api/admin/projects/reorder", {
+    method: "PATCH",
+    body: JSON.stringify({ ids }),
+  });
   revalidateProjectPages();
 }

@@ -51,10 +51,7 @@ export default function ShowcaseForm({
         placeholder="n8n-automation"
       />
 
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="Title" name="title" defaultValue={category?.title} required hint='e.g. "n8n Automation"' />
-        <Field label="Sort order" name="sortOrder" type="number" defaultValue={String(category?.sortOrder ?? 0)} hint="Lower numbers appear first" />
-      </div>
+      <Field label="Title" name="title" defaultValue={category?.title} required hint='e.g. "n8n Automation"' />
 
       <TextAreaField label="Description" name="description" defaultValue={category?.description} required rows={2} />
 

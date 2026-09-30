@@ -1,10 +1,12 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { ImagePlus, Loader2 } from "lucide-react";
 import { Field, TextAreaField, ArrayField, SelectField, SubmitButton } from "@/components/Admin/fields";
 import FileUploadField from "@/components/Admin/FileUploadField";
+import { uploadFile } from "@/app/admin/upload-actions";
 import type { Post } from "@/lib/api/types";
 type ActionState = { error?: string } | undefined;
 
@@ -22,6 +24,52 @@ export default function PostForm({
   const [state, formAction] = useActionState(action, undefined);
   const [content, setContent] = useState(post?.contentMarkdown ?? "");
   const [tab, setTab] = useState<"write" | "preview">("write");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const [insertingImage, setInsertingImage] = useState(false);
+  const [imageError, setImageError] = useState("");
+
+  // Uploads the picked file and inserts `![alt](url)` markdown at the
+  // textarea's cursor position (or appends to the end when the textarea
+  // isn't mounted, i.e. the Preview tab is active).
+  const handleInsertImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setInsertingImage(true);
+    setImageError("");
+
+    const formData = new FormData();
+    formData.set("file", file);
+    formData.set("folder", "posts");
+
+    const result = await uploadFile(formData);
+
+    if (result.url) {
+      const alt = file.name.replace(/\.[^./]+$/, "");
+      const markdown = `![${alt}](${result.url})`;
+      const textarea = textareaRef.current;
+
+      if (textarea) {
+        const start = textarea.selectionStart ?? content.length;
+        const end = textarea.selectionEnd ?? content.length;
+        const next = content.slice(0, start) + markdown + content.slice(end);
+        setContent(next);
+        requestAnimationFrame(() => {
+          textarea.focus();
+          const cursor = start + markdown.length;
+          textarea.setSelectionRange(cursor, cursor);
+        });
+      } else {
+        setContent((prev) => (prev ? `${prev}\n\n${markdown}\n` : `${markdown}\n`));
+      }
+    } else {
+      setImageError(result.error ?? "Upload failed.");
+    }
+
+    setInsertingImage(false);
+    if (imageInputRef.current) imageInputRef.current.value = "";
+  };
 
   return (
     <form action={formAction} className="space-y-6">
@@ -66,30 +114,47 @@ export default function PostForm({
           <label htmlFor="contentMarkdown" className="block text-sm font-semibold text-text-primary">
             Content <span className="text-carbon-support-error">*</span>
           </label>
-          <div className="flex gap-1 text-xs">
-            <button
-              type="button"
-              onClick={() => setTab("write")}
-              className={`px-2.5 py-1 transition-colors ${
-                tab === "write" ? "bg-link-subtle text-link" : "text-text-secondary hover:text-text-primary"
-              }`}
-            >
-              Write
-            </button>
-            <button
-              type="button"
-              onClick={() => setTab("preview")}
-              className={`px-2.5 py-1 transition-colors ${
-                tab === "preview" ? "bg-link-subtle text-link" : "text-text-secondary hover:text-text-primary"
-              }`}
-            >
-              Preview
-            </button>
+          <div className="flex items-center gap-2 text-xs">
+            <label className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-bg-secondary border border-border-color text-text-secondary hover:text-link hover:border-primary-500 transition-colors cursor-pointer">
+              {insertingImage ? <Loader2 size={12} className="animate-spin" /> : <ImagePlus size={12} />}
+              {insertingImage ? "Uploading…" : "Insert image"}
+              <input
+                ref={imageInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleInsertImage}
+                disabled={insertingImage}
+                className="hidden"
+              />
+            </label>
+            <div className="flex gap-1">
+              <button
+                type="button"
+                onClick={() => setTab("write")}
+                className={`px-2.5 py-1 transition-colors ${
+                  tab === "write" ? "bg-link-subtle text-link" : "text-text-secondary hover:text-text-primary"
+                }`}
+              >
+                Write
+              </button>
+              <button
+                type="button"
+                onClick={() => setTab("preview")}
+                className={`px-2.5 py-1 transition-colors ${
+                  tab === "preview" ? "bg-link-subtle text-link" : "text-text-secondary hover:text-text-primary"
+                }`}
+              >
+                Preview
+              </button>
+            </div>
           </div>
         </div>
 
+        {imageError && <p className="text-xs text-carbon-support-error mb-1.5">{imageError}</p>}
+
         {tab === "write" ? (
           <textarea
+            ref={textareaRef}
             id="contentMarkdown"
             name="contentMarkdown"
             value={content}
@@ -97,7 +162,7 @@ export default function PostForm({
             required
             rows={18}
             className="w-full px-3.5 py-2.5 bg-bg-primary border border-border-color text-text-primary text-sm font-mono focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-y"
-            placeholder="Markdown supported (headings, lists, code blocks, links...)"
+            placeholder="Markdown supported (headings, lists, code blocks, links, images...)"
           />
         ) : (
           <>

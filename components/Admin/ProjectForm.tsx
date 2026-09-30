@@ -87,12 +87,7 @@ export default function ProjectForm({
       <ArrayField label="Metrics" name="metrics" defaultValue={project?.metrics} />
       <ArrayField label="Technologies" name="technologies" defaultValue={project?.technologies} />
 
-      <div className="flex items-center justify-between">
-        <CheckboxField label="Featured" name="featured" defaultChecked={project?.featured} />
-        <div className="w-40">
-          <Field label="Sort order" name="sortOrder" type="number" defaultValue={String(project?.sortOrder ?? 0)} />
-        </div>
-      </div>
+      <CheckboxField label="Featured" name="featured" defaultChecked={project?.featured} />
 
       <div className="flex items-center gap-4 pt-2">
         <SubmitButton label={submitLabel} />

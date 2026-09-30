@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Plus, Pencil } from "lucide-react";
 import DeleteButton from "@/components/Admin/DeleteButton";
+import SortableList from "@/components/Admin/SortableList";
 import { getExperience } from "@/lib/api/queries";
-import { deleteExperience } from "./actions";
+import { deleteExperience, reorderExperience } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -22,32 +23,33 @@ export default async function AdminExperiencePage() {
         </Link>
       </div>
 
-      <div className="space-y-2">
-        {entries.map((entry) => (
-          <div
-            key={entry.id}
-            className="flex items-center justify-between p-4 border border-border-color bg-bg-card"
-          >
-            <div className="min-w-0">
-              <p className="font-semibold text-text-primary truncate">{entry.title}</p>
-              <p className="text-sm text-text-secondary truncate">
-                {entry.company} · {entry.startDate} – {entry.endDate ?? "Present"}
-              </p>
-            </div>
-            <div className="flex items-center gap-1 shrink-0 ml-4">
-              <Link
-                href={`/admin/experience/${entry.id}`}
-                className="p-2 text-text-secondary hover:text-link hover:bg-link-subtle transition-colors"
-                aria-label="Edit"
-              >
-                <Pencil size={16} />
-              </Link>
-              <DeleteButton action={deleteExperience.bind(null, entry.id)} label="Delete experience entry" />
-            </div>
-          </div>
-        ))}
-        {entries.length === 0 && <p className="text-sm text-text-tertiary">No experience entries yet.</p>}
-      </div>
+      <SortableList
+        items={entries.map((entry) => ({
+          id: entry.id,
+          content: (
+            <>
+              <div className="min-w-0">
+                <p className="font-semibold text-text-primary truncate">{entry.title}</p>
+                <p className="text-sm text-text-secondary truncate">
+                  {entry.company} · {entry.startDate} – {entry.endDate ?? "Present"}
+                </p>
+              </div>
+              <div className="flex items-center gap-1 shrink-0 ml-4">
+                <Link
+                  href={`/admin/experience/${entry.id}`}
+                  className="p-2 text-text-secondary hover:text-link hover:bg-link-subtle transition-colors"
+                  aria-label="Edit"
+                >
+                  <Pencil size={16} />
+                </Link>
+                <DeleteButton action={deleteExperience.bind(null, entry.id)} label="Delete experience entry" />
+              </div>
+            </>
+          ),
+        }))}
+        onReorder={reorderExperience}
+        emptyMessage="No experience entries yet."
+      />
     </div>
   );
 }

@@ -32,7 +32,6 @@ export default function SkillForm({
           { value: "expert", label: "Expert" },
         ]}
       />
-      <Field label="Sort order" name="sortOrder" type="number" defaultValue={String(skill?.sortOrder ?? 0)} />
 
       <div className="flex items-center gap-4 pt-2">
         <SubmitButton label={submitLabel} />

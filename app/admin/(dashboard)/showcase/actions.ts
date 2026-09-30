@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { adminFetch, ApiError } from "@/lib/api/server";
-import { getShowcaseCategoryById } from "@/lib/api/queries";
+import { getShowcaseCategories, getShowcaseCategoryById } from "@/lib/api/queries";
+import { nextSortOrder } from "@/lib/api/sort-order";
 import { showcaseCategorySchema, type ShowcaseItemInput } from "@/lib/validations";
 
 function parseFormData(formData: FormData) {
@@ -42,15 +43,15 @@ export async function createShowcaseCategory(_prevState: { error?: string } | un
 
   // The Go API upserts by id — do the "already exists" check here to keep
   // create from silently overwriting an existing entry.
-  const existing = await getShowcaseCategoryById(data.id);
-  if (existing) {
+  const categories = await getShowcaseCategories();
+  if (categories.some((c) => c.id === data.id)) {
     return { error: `A showcase category with id "${data.id}" already exists.` };
   }
 
   try {
     await adminFetch("/api/admin/showcase", {
       method: "POST",
-      body: JSON.stringify({ ...data, items: buildItemsPayload(items) }),
+      body: JSON.stringify({ ...data, sortOrder: nextSortOrder(categories), items: buildItemsPayload(items) }),
     });
   } catch (err) {
     return { error: err instanceof ApiError ? err.message : "Failed to create showcase category." };
@@ -68,10 +69,14 @@ export async function updateShowcaseCategory(id: string, _prevState: { error?: s
 
   const { items, ...data } = parsed.data;
 
+  // sortOrder isn't editable from the form (it's set by dragging on the list
+  // page) — carry the existing value through so a save doesn't reset it.
+  const existing = await getShowcaseCategoryById(id);
+
   try {
     await adminFetch(`/api/admin/showcase/${id}`, {
       method: "PUT",
-      body: JSON.stringify({ ...data, items: buildItemsPayload(items) }),
+      body: JSON.stringify({ ...data, sortOrder: existing?.sortOrder ?? 0, items: buildItemsPayload(items) }),
     });
   } catch (err) {
     return { error: err instanceof ApiError ? err.message : "Failed to update showcase category." };
@@ -83,5 +88,13 @@ export async function updateShowcaseCategory(id: string, _prevState: { error?: s
 
 export async function deleteShowcaseCategory(id: string) {
   await adminFetch(`/api/admin/showcase/${id}`, { method: "DELETE" });
+  revalidateShowcasePages();
+}
+
+export async function reorderShowcaseCategories(ids: string[]) {
+  await adminFetch("/api/admin/showcase/reorder", {
+    method: "PATCH",
+    body: JSON.stringify({ ids }),
+  });
   revalidateShowcasePages();
 }

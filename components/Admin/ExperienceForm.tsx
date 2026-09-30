@@ -39,7 +39,6 @@ interface ExperienceFormValues {
   technologies: string[];
   achievements: string[];
   companyUrl: string | null;
-  sortOrder: number;
   subRoles: {
     title: string;
     company: string;
@@ -142,7 +141,6 @@ export default function ExperienceForm({
       <ArrayField label="Responsibilities" name="responsibilities" defaultValue={experience?.responsibilities} />
       <ArrayField label="Technologies" name="technologies" defaultValue={experience?.technologies} />
       <ArrayField label="Achievements" name="achievements" defaultValue={experience?.achievements} />
-      <Field label="Sort order" name="sortOrder" type="number" defaultValue={String(experience?.sortOrder ?? 0)} hint="Lower numbers appear first" />
 
       {/* Sub-roles */}
       <div className="pt-4 border-t border-border-color">

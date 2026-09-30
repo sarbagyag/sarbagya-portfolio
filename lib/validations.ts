@@ -101,7 +101,6 @@ export const experienceSchema = z.object({
   technologies: arrayField,
   achievements: arrayField,
   companyUrl: optionalUrl,
-  sortOrder: z.coerce.number().int().default(0),
   subRoles: z.array(experienceSubRoleSchema).default([]),
 });
 export type ExperienceInput = z.infer<typeof experienceSchema>;
@@ -128,7 +127,6 @@ export const projectSchema = z.object({
   status: z.enum(["completed", "ongoing", "published"]).optional(),
   impact: z.string().trim().optional(),
   metrics: arrayField,
-  sortOrder: z.coerce.number().int().default(0),
 });
 export type ProjectInput = z.infer<typeof projectSchema>;
 
@@ -150,7 +148,6 @@ export const educationSchema = z.object({
   achievements: arrayField,
   relevantCoursework: arrayField,
   thesis: z.string().trim().optional(),
-  sortOrder: z.coerce.number().int().default(0),
 });
 export type EducationInput = z.infer<typeof educationSchema>;
 
@@ -159,7 +156,6 @@ export const skillSchema = z.object({
   category: z.string().trim().min(1, "Required"),
   skills: arrayField,
   proficiency: z.enum(["beginner", "intermediate", "advanced", "expert"]).optional(),
-  sortOrder: z.coerce.number().int().default(0),
 });
 export type SkillInput = z.infer<typeof skillSchema>;
 
@@ -183,7 +179,6 @@ export const showcaseCategorySchema = z.object({
   // "#" as a placeholder link (no live site yet).
   featuredUrl: z.string().trim().min(1, "Required"),
   featuredImageUrl: optionalUrl,
-  sortOrder: z.coerce.number().int().default(0),
   items: z.array(showcaseItemSchema).default([]),
 });
 export type ShowcaseCategoryInput = z.infer<typeof showcaseCategorySchema>;

@@ -45,7 +45,6 @@ export default function EducationForm({
       <ArrayField label="Achievements" name="achievements" defaultValue={education?.achievements} />
       <ArrayField label="Relevant coursework" name="relevantCoursework" defaultValue={education?.relevantCoursework} />
       <Field label="Thesis" name="thesis" defaultValue={education?.thesis ?? undefined} />
-      <Field label="Sort order" name="sortOrder" type="number" defaultValue={String(education?.sortOrder ?? 0)} />
 
       <div className="flex items-center gap-4 pt-2">
         <SubmitButton label={submitLabel} />

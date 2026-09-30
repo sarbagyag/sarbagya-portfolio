@@ -81,22 +81,27 @@ func (s *Server) Router() http.Handler {
 				r.Post("/experience", s.handleCreateExperience)
 				r.Put("/experience/{id}", s.handleUpdateExperience)
 				r.Delete("/experience/{id}", s.handleDeleteExperience)
+				r.Patch("/experience/reorder", s.handleReorderExperience)
 
 				r.Post("/projects", s.handleCreateProject)
 				r.Put("/projects/{id}", s.handleUpdateProject)
 				r.Delete("/projects/{id}", s.handleDeleteProject)
+				r.Patch("/projects/reorder", s.handleReorderProjects)
 
 				r.Post("/education", s.handleCreateEducation)
 				r.Put("/education/{id}", s.handleUpdateEducation)
 				r.Delete("/education/{id}", s.handleDeleteEducation)
+				r.Patch("/education/reorder", s.handleReorderEducation)
 
 				r.Post("/skills", s.handleCreateSkill)
 				r.Put("/skills/{id}", s.handleUpdateSkill)
 				r.Delete("/skills/{id}", s.handleDeleteSkill)
+				r.Patch("/skills/reorder", s.handleReorderSkills)
 
 				r.Post("/showcase", s.handleCreateShowcase)
 				r.Put("/showcase/{id}", s.handleUpdateShowcase)
 				r.Delete("/showcase/{id}", s.handleDeleteShowcase)
+				r.Patch("/showcase/reorder", s.handleReorderShowcase)
 
 				r.Get("/posts", s.handleAdminListPosts)
 				r.Post("/posts", s.handleCreatePost)

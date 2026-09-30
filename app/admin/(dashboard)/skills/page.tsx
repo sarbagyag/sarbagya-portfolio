@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Plus, Pencil } from "lucide-react";
 import DeleteButton from "@/components/Admin/DeleteButton";
+import SortableList from "@/components/Admin/SortableList";
 import { getSkills } from "@/lib/api/queries";
-import { deleteSkill } from "./actions";
+import { deleteSkill, reorderSkills } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -22,30 +23,31 @@ export default async function AdminSkillsPage() {
         </Link>
       </div>
 
-      <div className="space-y-2">
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="flex items-center justify-between p-4 border border-border-color bg-bg-card"
-          >
-            <div className="min-w-0">
-              <p className="font-semibold text-text-primary truncate">{item.category}</p>
-              <p className="text-sm text-text-secondary truncate">{item.skills.join(", ")}</p>
-            </div>
-            <div className="flex items-center gap-1 shrink-0 ml-4">
-              <Link
-                href={`/admin/skills/${item.id}`}
-                className="p-2 text-text-secondary hover:text-link hover:bg-link-subtle transition-colors"
-                aria-label="Edit"
-              >
-                <Pencil size={16} />
-              </Link>
-              <DeleteButton action={deleteSkill.bind(null, item.id)} label="Delete skill category" />
-            </div>
-          </div>
-        ))}
-        {items.length === 0 && <p className="text-sm text-text-tertiary">No skill categories yet.</p>}
-      </div>
+      <SortableList
+        items={items.map((item) => ({
+          id: item.id,
+          content: (
+            <>
+              <div className="min-w-0">
+                <p className="font-semibold text-text-primary truncate">{item.category}</p>
+                <p className="text-sm text-text-secondary truncate">{item.skills.join(", ")}</p>
+              </div>
+              <div className="flex items-center gap-1 shrink-0 ml-4">
+                <Link
+                  href={`/admin/skills/${item.id}`}
+                  className="p-2 text-text-secondary hover:text-link hover:bg-link-subtle transition-colors"
+                  aria-label="Edit"
+                >
+                  <Pencil size={16} />
+                </Link>
+                <DeleteButton action={deleteSkill.bind(null, item.id)} label="Delete skill category" />
+              </div>
+            </>
+          ),
+        }))}
+        onReorder={reorderSkills}
+        emptyMessage="No skill categories yet."
+      />
     </div>
   );
 }

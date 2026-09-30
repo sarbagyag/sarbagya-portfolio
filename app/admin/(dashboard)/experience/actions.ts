@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { adminFetch, ApiError } from "@/lib/api/server";
-import { getExperienceById } from "@/lib/api/queries";
+import { getExperience, getExperienceById } from "@/lib/api/queries";
+import { nextSortOrder } from "@/lib/api/sort-order";
 import { experienceSchema, type ExperienceSubRoleInput } from "@/lib/validations";
 
 function parseFormData(formData: FormData) {
@@ -47,8 +48,8 @@ export async function createExperience(_prevState: { error?: string } | undefine
 
   // The Go API upserts by id — do the "already exists" check here to keep
   // create from silently overwriting an existing entry.
-  const existing = await getExperienceById(data.id);
-  if (existing) {
+  const entries = await getExperience();
+  if (entries.some((e) => e.id === data.id)) {
     return { error: `An experience entry with id "${data.id}" already exists.` };
   }
 
@@ -60,6 +61,7 @@ export async function createExperience(_prevState: { error?: string } | undefine
         endDate: data.endDate || null,
         location: data.location || null,
         companyUrl: data.companyUrl || null,
+        sortOrder: nextSortOrder(entries),
         subRoles: buildSubRolesPayload(subRoles),
       }),
     });
@@ -79,6 +81,10 @@ export async function updateExperience(id: string, _prevState: { error?: string 
 
   const { subRoles, ...data } = parsed.data;
 
+  // sortOrder isn't editable from the form (it's set by dragging on the list
+  // page) — carry the existing value through so a save doesn't reset it.
+  const existing = await getExperienceById(id);
+
   try {
     await adminFetch(`/api/admin/experience/${id}`, {
       method: "PUT",
@@ -87,6 +93,7 @@ export async function updateExperience(id: string, _prevState: { error?: string 
         endDate: data.endDate || null,
         location: data.location || null,
         companyUrl: data.companyUrl || null,
+        sortOrder: existing?.sortOrder ?? 0,
         subRoles: buildSubRolesPayload(subRoles),
       }),
     });
@@ -100,5 +107,13 @@ export async function updateExperience(id: string, _prevState: { error?: string 
 
 export async function deleteExperience(id: string) {
   await adminFetch(`/api/admin/experience/${id}`, { method: "DELETE" });
+  revalidateExperiencePages();
+}
+
+export async function reorderExperience(ids: string[]) {
+  await adminFetch("/api/admin/experience/reorder", {
+    method: "PATCH",
+    body: JSON.stringify({ ids }),
+  });
   revalidateExperiencePages();
 }
