@@ -130,6 +130,7 @@ type Post struct {
 	Tags            []string   `json:"tags"`
 	Status          string     `json:"status"` // draft | published
 	PublishedAt     *time.Time `json:"publishedAt"`
+	SortOrder       int        `json:"sortOrder"`
 	CreatedAt       time.Time  `json:"createdAt"`
 	UpdatedAt       time.Time  `json:"updatedAt"`
 }

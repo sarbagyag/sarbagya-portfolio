@@ -107,6 +107,7 @@ func (s *Server) Router() http.Handler {
 				r.Post("/posts", s.handleCreatePost)
 				r.Put("/posts/{id}", s.handleUpdatePost)
 				r.Delete("/posts/{id}", s.handleDeletePost)
+				r.Patch("/posts/reorder", s.handleReorderPosts)
 
 				r.Get("/messages", s.handleListMessages)
 				r.Patch("/messages/{id}/read", s.handleMarkMessageRead)

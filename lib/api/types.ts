@@ -130,6 +130,7 @@ export interface Post {
   tags: string[];
   status: "draft" | "published";
   publishedAt: string | null;
+  sortOrder: number;
   createdAt: string;
   updatedAt: string;
 }

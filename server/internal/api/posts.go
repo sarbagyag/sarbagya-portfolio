@@ -11,12 +11,12 @@ import (
 )
 
 const postColumns = `id, type, slug, title, excerpt, content_markdown, cover_image_url,
-	tags, status, published_at, created_at, updated_at`
+	tags, status, published_at, sort_order, created_at, updated_at`
 
 func scanPost(row interface{ Scan(...interface{}) error }) (models.Post, error) {
 	var p models.Post
 	err := row.Scan(&p.ID, &p.Type, &p.Slug, &p.Title, &p.Excerpt, &p.ContentMarkdown,
-		&p.CoverImageURL, &p.Tags, &p.Status, &p.PublishedAt, &p.CreatedAt, &p.UpdatedAt)
+		&p.CoverImageURL, &p.Tags, &p.Status, &p.PublishedAt, &p.SortOrder, &p.CreatedAt, &p.UpdatedAt)
 	return p, err
 }
 
@@ -30,7 +30,7 @@ func (s *Server) handlePublicListPosts(w http.ResponseWriter, r *http.Request) {
 		query += ` AND type = $1`
 		args = append(args, postType)
 	}
-	query += ` ORDER BY published_at DESC`
+	query += ` ORDER BY sort_order ASC, published_at DESC`
 
 	s.listPosts(w, r, query, args)
 }
@@ -43,7 +43,7 @@ func (s *Server) handleAdminListPosts(w http.ResponseWriter, r *http.Request) {
 		query += ` WHERE type = $1`
 		args = append(args, postType)
 	}
-	query += ` ORDER BY created_at DESC`
+	query += ` ORDER BY sort_order ASC, created_at DESC`
 
 	s.listPosts(w, r, query, args)
 }
@@ -89,6 +89,7 @@ type postRequest struct {
 	CoverImageURL   *string  `json:"coverImageUrl"`
 	Tags            []string `json:"tags"`
 	Status          string   `json:"status"`
+	SortOrder       int      `json:"sortOrder"`
 }
 
 func (s *Server) handleCreatePost(w http.ResponseWriter, r *http.Request) {
@@ -138,11 +139,11 @@ func (s *Server) upsertPost(w http.ResponseWriter, r *http.Request, req postRequ
 	if id == "" {
 		err := s.db.QueryRow(r.Context(), `
 			INSERT INTO posts (type, slug, title, excerpt, content_markdown, cover_image_url,
-				tags, status, published_at, updated_at)
-			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, now())
+				tags, status, published_at, sort_order, updated_at)
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, now())
 			RETURNING id`,
 			postType, req.Slug, req.Title, req.Excerpt, req.ContentMarkdown, req.CoverImageURL,
-			orEmptySlice(req.Tags), status, publishedAt,
+			orEmptySlice(req.Tags), status, publishedAt, req.SortOrder,
 		).Scan(&returnedID)
 		if err != nil {
 			writeError(w, http.StatusInternalServerError, "failed to create post — slug may already be taken")
@@ -154,10 +155,10 @@ func (s *Server) upsertPost(w http.ResponseWriter, r *http.Request, req postRequ
 		_, err := s.db.Exec(r.Context(), `
 			UPDATE posts SET type = $1, slug = $2, title = $3, excerpt = $4,
 				content_markdown = $5, cover_image_url = $6, tags = $7, status = $8,
-				published_at = COALESCE(published_at, $9), updated_at = now()
-			WHERE id = $10`,
+				published_at = COALESCE(published_at, $9), sort_order = $10, updated_at = now()
+			WHERE id = $11`,
 			postType, req.Slug, req.Title, req.Excerpt, req.ContentMarkdown, req.CoverImageURL,
-			orEmptySlice(req.Tags), status, publishedAt, id)
+			orEmptySlice(req.Tags), status, publishedAt, req.SortOrder, id)
 		if err != nil {
 			writeError(w, http.StatusInternalServerError, "failed to update post")
 			return

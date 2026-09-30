@@ -59,3 +59,7 @@ func (s *Server) handleReorderSkills(w http.ResponseWriter, r *http.Request) {
 func (s *Server) handleReorderShowcase(w http.ResponseWriter, r *http.Request) {
 	s.reorderTable(w, r, "showcase_categories")
 }
+
+func (s *Server) handleReorderPosts(w http.ResponseWriter, r *http.Request) {
+	s.reorderTable(w, r, "posts")
+}
